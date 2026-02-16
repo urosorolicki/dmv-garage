@@ -1,5 +1,4 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
 import serviceLed from "@/assets/service-led.jpg";
 import serviceInterior from "@/assets/service-interior.jpg";
@@ -8,36 +7,36 @@ import serviceChiptuning from "@/assets/service-chiptuning.jpg";
 
 const services = [
   {
+    num: "01",
     title: "LED Svetla & Oprema",
-    icon: "💡",
     description:
-      "Profesionalna ugradnja premium LED svetala i dodatne opreme. Povećajte vidljivost i dajte svom vozilu moderan izgled.",
+      "Profesionalna ugradnja premium LED svetala i dodatne opreme. Povećajte vidljivost i dajte svom vozilu agresivan, moderan izgled.",
     image: serviceLed,
   },
   {
-    title: "Enterijer — Zamena Boje",
-    icon: "🔹",
+    num: "02",
+    title: "Promena Boje Enterijera",
     description:
-      "Kompletna transformacija enterijera vašeg vozila. Kožni elementi, presvlake i detalji po vašoj meri.",
+      "Kompletna transformacija unutrašnjosti — tabla, prekidači, dekorativne lajsne i trim elementi. Carbon fiber, piano black, mat ili sjajni finiš po vašoj želji.",
     image: serviceInterior,
   },
   {
+    num: "03",
     title: "Auto Elektronika & Dijagnostika",
-    icon: "💻",
     description:
-      "Napredna dijagnostika i rešavanje svih elektronskih problema. Precizna analiza i brzo otklanjanje kvarova.",
+      "Napredna dijagnostika i rešavanje svih elektronskih problema. Kodiranje, aktivacija skrivenih opcija i precizna analiza sistema.",
     image: serviceDiagnostics,
   },
   {
+    num: "04",
     title: "Custom Chiptuning",
-    icon: "🚀",
     description:
-      "Povećanje performansi motora kroz profesionalno podešavanje ECU-a. Više snage, bolji odziv, optimizovana potrošnja.",
+      "Povećanje performansi kroz profesionalno podešavanje ECU-a. Više snage, bolji odziv, optimizovana potrošnja — rešenja prilagođena vašem vozilu.",
     image: serviceChiptuning,
   },
 ];
 
-const ServiceCard = ({
+const ServiceRow = ({
   service,
   index,
 }: {
@@ -45,32 +44,74 @@ const ServiceCard = ({
   index: number;
 }) => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: "-15%" });
+  const isReversed = index % 2 !== 0;
 
   return (
     <motion.div
       ref={ref}
-      initial={{ opacity: 0, y: 60 }}
-      animate={isInView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.7, delay: index * 0.15 }}
-      className="card-luxury group"
+      initial={{ opacity: 0 }}
+      animate={isInView ? { opacity: 1 } : {}}
+      transition={{ duration: 0.8 }}
+      className={`grid grid-cols-1 lg:grid-cols-2 gap-0 min-h-[500px] ${
+        isReversed ? "lg:direction-rtl" : ""
+      }`}
     >
-      <div className="relative h-56 overflow-hidden">
-        <img
+      {/* Image */}
+      <motion.div
+        initial={{ opacity: 0, x: isReversed ? 60 : -60 }}
+        animate={isInView ? { opacity: 1, x: 0 } : {}}
+        transition={{ duration: 0.9, delay: 0.1 }}
+        className={`service-image-wrapper h-[300px] lg:h-auto ${isReversed ? "lg:order-2" : ""}`}
+      >
+        <motion.img
+          whileHover={{ scale: 1.05 }}
+          transition={{ duration: 0.7 }}
           src={service.image}
           alt={service.title}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          className="w-full h-full object-cover"
         />
-        <div className="absolute inset-0 bg-background/40 group-hover:bg-background/20 transition-colors duration-500" />
-        <span className="absolute top-4 right-4 text-3xl">{service.icon}</span>
-      </div>
-      <div className="p-6 md:p-8">
-        <h3 className="font-display text-xl md:text-2xl font-semibold text-foreground mb-3">
+      </motion.div>
+
+      {/* Text */}
+      <div
+        className={`flex flex-col justify-center px-6 md:px-16 lg:px-20 py-12 lg:py-0 ${
+          isReversed ? "lg:order-1 lg:text-right lg:items-end" : ""
+        }`}
+      >
+        <motion.span
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="font-display text-7xl md:text-8xl text-accent/20 mb-4"
+        >
+          {service.num}
+        </motion.span>
+
+        <motion.h3
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.3 }}
+          className="font-display text-3xl md:text-5xl text-foreground mb-6 uppercase"
+        >
           {service.title}
-        </h3>
-        <p className="font-body text-sm text-muted-foreground leading-relaxed">
+        </motion.h3>
+
+        <motion.div
+          initial={{ scaleX: 0 }}
+          animate={isInView ? { scaleX: 1 } : {}}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className={`line-accent mb-6 ${isReversed ? "lg:origin-right" : "origin-left"}`}
+        />
+
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.5 }}
+          className="font-body text-sm md:text-base font-light text-muted-foreground leading-relaxed max-w-md"
+        >
           {service.description}
-        </p>
+        </motion.p>
       </div>
     </motion.div>
   );
@@ -78,32 +119,30 @@ const ServiceCard = ({
 
 const Services = () => {
   const headerRef = useRef(null);
-  const headerInView = useInView(headerRef, { once: true, margin: "-80px" });
+  const headerInView = useInView(headerRef, { once: true, margin: "-10%" });
 
   return (
-    <section id="usluge" className="section-padding bg-background relative">
-      <div className="max-w-7xl mx-auto">
+    <section id="usluge" className="section-spacing">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10 mb-20">
         <motion.div
           ref={headerRef}
-          initial={{ opacity: 0, y: 40 }}
-          animate={headerInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-16 md:mb-20"
+          initial={{ opacity: 0 }}
+          animate={headerInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.8 }}
         >
-          <p className="font-body text-xs tracking-[0.3em] uppercase text-primary mb-4">
-            Šta radimo
-          </p>
-          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-            Naše <span className="text-gradient">Usluge</span>
+          <span className="font-body text-[11px] tracking-[0.3em] uppercase text-accent mb-4 block">
+            Naše Usluge
+          </span>
+          <h2 className="font-display text-5xl md:text-7xl lg:text-8xl text-foreground uppercase">
+            Šta <span className="text-accent-gradient">Radimo</span>
           </h2>
-          <div className="divider-luxury max-w-xs mx-auto" />
         </motion.div>
+      </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
-          {services.map((service, i) => (
-            <ServiceCard key={service.title} service={service} index={i} />
-          ))}
-        </div>
+      <div className="flex flex-col gap-1">
+        {services.map((service, i) => (
+          <ServiceRow key={service.num} service={service} index={i} />
+        ))}
       </div>
     </section>
   );
