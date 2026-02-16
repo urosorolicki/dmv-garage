@@ -1,64 +1,70 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Phone, MapPin, Clock, Instagram } from "lucide-react";
+import { Phone, MapPin, Clock, Instagram, ArrowUpRight } from "lucide-react";
 
 const contactInfo = [
-  { icon: Phone, label: "Telefon", value: "+381 XX XXX XXXX" },
-  { icon: MapPin, label: "Lokacija", value: "Beograd, Srbija" },
-  { icon: Clock, label: "Radno vreme", value: "Pon - Sub: 09:00 - 18:00" },
-  { icon: Instagram, label: "Instagram", value: "@dmvgarage" },
+  { icon: Phone, label: "Telefon", value: "+381 XX XXX XXXX", href: "tel:+381XXXXXXXX" },
+  { icon: MapPin, label: "Lokacija", value: "Beograd, Srbija", href: "#" },
+  { icon: Clock, label: "Radno Vreme", value: "Pon — Sub: 09–18h", href: "#" },
+  { icon: Instagram, label: "Instagram", value: "@dmvgarage", href: "https://instagram.com/dmvgarage" },
 ];
 
 const Contact = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const isInView = useInView(ref, { once: true, margin: "-10%" });
 
   return (
-    <section id="kontakt" className="section-padding bg-card relative">
-      <div className="max-w-7xl mx-auto">
+    <section id="kontakt" className="section-spacing border-t border-border">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10">
         <motion.div
           ref={ref}
-          initial={{ opacity: 0, y: 40 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7 }}
-          className="text-center mb-16"
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.8 }}
         >
-          <p className="font-body text-xs tracking-[0.3em] uppercase text-primary mb-4">
+          <span className="font-body text-[11px] tracking-[0.3em] uppercase text-accent mb-4 block">
             Kontakt
-          </p>
-          <h2 className="font-display text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6">
-            Javite Nam <span className="text-gradient">Se</span>
+          </span>
+          <h2 className="font-display text-5xl md:text-7xl lg:text-8xl text-foreground uppercase mb-16">
+            Javite <span className="text-accent-gradient">Se</span>
           </h2>
-          <div className="divider-luxury max-w-xs mx-auto" />
         </motion.div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border">
           {contactInfo.map((item, i) => (
-            <motion.div
+            <motion.a
               key={item.label}
-              initial={{ opacity: 0, y: 30 }}
+              href={item.href}
+              target={item.href.startsWith("http") ? "_blank" : undefined}
+              rel={item.href.startsWith("http") ? "noopener noreferrer" : undefined}
+              initial={{ opacity: 0, y: 20 }}
               animate={isInView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.2 + i * 0.1 }}
-              className="card-luxury p-8 text-center group"
+              transition={{ duration: 0.5, delay: 0.2 + i * 0.1 }}
+              className="bg-background p-8 md:p-12 flex items-start gap-6 group hover:bg-card transition-colors duration-500 cursor-pointer"
             >
-              <item.icon className="w-8 h-8 text-primary mx-auto mb-4 group-hover:scale-110 transition-transform duration-300" />
-              <p className="font-body text-xs tracking-widest uppercase text-muted-foreground mb-2">
-                {item.label}
-              </p>
-              <p className="font-body text-sm text-foreground">{item.value}</p>
-            </motion.div>
+              <item.icon className="w-5 h-5 text-accent mt-1 shrink-0" />
+              <div className="flex-1">
+                <p className="font-body text-[11px] tracking-[0.2em] uppercase text-muted-foreground mb-2">
+                  {item.label}
+                </p>
+                <p className="font-body text-lg md:text-xl text-foreground font-light">
+                  {item.value}
+                </p>
+              </div>
+              <ArrowUpRight className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-100 group-hover:text-accent transition-all duration-300 mt-1" />
+            </motion.a>
           ))}
         </div>
       </div>
 
       {/* Footer */}
-      <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-border">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10 mt-28 pt-8 border-t border-border">
         <div className="flex flex-col md:flex-row items-center justify-between gap-4">
-          <p className="font-display text-xl font-bold text-foreground">
-            DMV <span className="text-gradient">Garage</span>
-          </p>
-          <p className="font-body text-xs text-muted-foreground tracking-wider">
-            © 2025 DMV Garage. Sva prava zadržana.
+          <span className="font-display text-2xl tracking-wider text-foreground">
+            DMV GARAGE
+          </span>
+          <p className="font-body text-[11px] text-muted-foreground tracking-wider">
+            © 2025 DMV GARAGE — SVA PRAVA ZADRŽANA
           </p>
         </div>
       </div>
