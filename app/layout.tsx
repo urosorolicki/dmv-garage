@@ -14,9 +14,9 @@ const _playfair = Playfair_Display({
 })
 
 export const metadata: Metadata = {
-  title: 'DMV Garage',
+  title: 'DMV Garage — Chiptuning & LED Ugradnja Beograd',
   description:
-    'DMV Garage - Premium privatna garaža za ljubitelje automobila. Profesionalna dijagnostika, tjuning i održavanje.',
+    'DMV Garage — specijalizovana radionica za ECU chiptuning, LED ugradnju, auto elektroniku i enterijer. Ugrinovački put 19. deo 31, Beograd 11080.',
   icons: {
     icon: [
       {

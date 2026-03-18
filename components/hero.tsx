@@ -1,46 +1,63 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import Image from "next/image"
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null)
-  const imageRef = useRef<HTMLDivElement>(null)
-  const [scrollY, setScrollY] = useState(0)
+  const contentRef = useRef<HTMLDivElement>(null)
+  const fogRef = useRef<HTMLDivElement>(null)
+  const rafRef = useRef<number | undefined>(undefined)
   const [isVisible, setIsVisible] = useState(false)
+  const [videoReady, setVideoReady] = useState(false)
 
   useEffect(() => {
     setIsVisible(true)
   }, [])
 
   useEffect(() => {
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    if (prefersReduced) return
+
     const handleScroll = () => {
-      setScrollY(window.scrollY)
+      if (rafRef.current) cancelAnimationFrame(rafRef.current)
+      rafRef.current = requestAnimationFrame(() => {
+        const y = window.scrollY
+        if (contentRef.current)
+          contentRef.current.style.transform = `translateY(${-(y * 0.3 * 0.15)}px)`
+        if (fogRef.current)
+          fogRef.current.style.opacity = String(Math.min(0.6, 0.3 + y * 0.0005))
+      })
     }
+
     window.addEventListener("scroll", handleScroll, { passive: true })
-    return () => window.removeEventListener("scroll", handleScroll)
+    return () => {
+      window.removeEventListener("scroll", handleScroll)
+      if (rafRef.current) cancelAnimationFrame(rafRef.current)
+    }
   }, [])
-
-  const parallaxOffset = scrollY * 0.3
-  const fogOpacity = Math.min(0.6, 0.3 + scrollY * 0.0005)
-
 
   return (
     <section
       ref={sectionRef}
       id="hero"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+      aria-label="Hero - DMV Garage"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[oklch(0.08_0_0)]"
     >
       {/* Video background */}
       <video
-        className="absolute inset-0 w-full h-full object-cover z-0"
-        src="/13127448_1920_1080_60fps.mp4"
+        className={`absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-700 ${
+          videoReady ? "opacity-100" : "opacity-0"
+        }`}
         autoPlay
         loop
         muted
         playsInline
-        poster="/images/hero-car.jpg"
-      />
+        preload="auto"
+        onCanPlay={() => setVideoReady(true)}
+      >
+        <source src="/13127448_1920_1080_60fps.webm" type="video/webm" />
+        <source src="/13127448_1920_1080_60fps.mp4" type="video/mp4" />
+      </video>
 
       {/* Radial ambient light */}
       <div
@@ -53,29 +70,27 @@ export function Hero() {
 
       {/* Animated fog */}
       <div
-        className="absolute inset-0 pointer-events-none transition-opacity duration-1000"
+        ref={fogRef}
+        className="absolute inset-0 pointer-events-none"
         style={{
-          opacity: fogOpacity,
+          opacity: 0.3,
           background:
             "radial-gradient(ellipse 100% 40% at 50% 80%, oklch(0.18 0 0 / 0.8), transparent)",
+          willChange: "opacity",
         }}
       />
 
       {/* Subtle moving light effect */}
       <div
-        className="absolute top-[20%] left-[30%] w-[500px] h-[300px] pointer-events-none rounded-full blur-[120px] opacity-[0.04]"
-        style={{
-          background: "oklch(0.95 0 0)",
-          animation: "lightMove 12s ease-in-out infinite alternate",
-        }}
+        className="absolute top-[20%] left-[30%] w-[500px] h-[300px] pointer-events-none rounded-full blur-[120px] opacity-[0.04] hero-light-move"
+        style={{ background: "oklch(0.95 0 0)", willChange: "transform" }}
       />
 
       {/* Content overlay */}
       <div
+        ref={contentRef}
         className="relative z-10 text-center px-6 flex flex-col items-center"
-        style={{
-          transform: `translateY(${-parallaxOffset * 0.15}px)`,
-        }}
+        style={{ willChange: "transform" }}
       >
         <p
           className={`text-muted-foreground text-xs tracking-[0.3em] uppercase mb-4 transition-all duration-[1500ms] delay-300 ${
@@ -84,14 +99,25 @@ export function Hero() {
         >
           DMV Garage
         </p>
-        <h1
-          className={`text-4xl md:text-6xl lg:text-7xl font-sans font-light tracking-[-0.03em] text-foreground leading-[1.1] text-balance transition-all duration-[1500ms] delay-500 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-          }`}
-        >
-          Performanse bez
-          <br />
-          kompromisa.
+        <h1 className="text-4xl md:text-6xl lg:text-7xl font-sans font-light tracking-[-0.03em] text-foreground leading-[1.15]">
+          {["Performanse bez", "kompromisa."].map((line, lineIdx) => (
+            <span key={lineIdx} className="block overflow-hidden">
+              {line.split("").map((char, charIdx) => (
+                <span
+                  key={charIdx}
+                  className="inline-block transition-all duration-700"
+                  style={{
+                    transitionTimingFunction: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+                    transitionDelay: `${500 + lineIdx * 350 + charIdx * 32}ms`,
+                    opacity: isVisible ? 1 : 0,
+                    transform: isVisible ? "translateY(0)" : "translateY(110%)",
+                  }}
+                >
+                  {char === " " ? "\u00A0" : char}
+                </span>
+              ))}
+            </span>
+          ))}
         </h1>
         <p
           className={`mt-6 text-muted-foreground text-sm md:text-base max-w-md leading-relaxed transition-all duration-[1500ms] delay-700 ${
@@ -128,37 +154,12 @@ export function Hero() {
         }`}
       >
         <span className="text-muted-foreground/50 text-[10px] tracking-[0.3em] uppercase">
-          Scroll
+          Skroluj
         </span>
         <div className="w-[1px] h-8 bg-muted-foreground/20 relative overflow-hidden">
-          <div
-            className="absolute top-0 left-0 w-full h-3 bg-muted-foreground/60"
-            style={{ animation: "scrollLine 2s ease-in-out infinite" }}
-          />
+          <div className="absolute top-0 left-0 w-full h-3 bg-muted-foreground/60 hero-scroll-line" />
         </div>
       </div>
-
-      <style jsx>{`
-        @keyframes lightMove {
-          0% {
-            transform: translateX(-50px) translateY(0);
-          }
-          100% {
-            transform: translateX(50px) translateY(-30px);
-          }
-        }
-        @keyframes scrollLine {
-          0% {
-            transform: translateY(-12px);
-          }
-          50% {
-            transform: translateY(32px);
-          }
-          100% {
-            transform: translateY(-12px);
-          }
-        }
-      `}</style>
     </section>
   )
 }

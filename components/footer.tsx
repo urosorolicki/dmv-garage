@@ -5,7 +5,15 @@ export function Footer() {
         <p className="text-muted-foreground/50 text-xs tracking-[0.1em]">
           {"© DMV Garage"}
         </p>
-        <div className="flex items-center gap-6">
+        <div className="flex flex-wrap items-center justify-center gap-6">
+          <a
+            href="https://www.google.com/maps/search/?api=1&query=Ugrinovački+put+19+Beograd+11080"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-muted-foreground/50 hover:text-muted-foreground text-xs tracking-[0.05em] transition-colors duration-300"
+          >
+            Ugrinovački put 19. deo 31, Beograd
+          </a>
           <a
             href="tel:+381628727274"
             className="text-muted-foreground/50 hover:text-muted-foreground text-xs tracking-[0.05em] transition-colors duration-300"
