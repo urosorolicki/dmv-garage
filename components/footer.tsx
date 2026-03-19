@@ -7,7 +7,7 @@ export function Footer() {
         </p>
         <div className="flex flex-wrap items-center justify-center gap-6">
           <a
-            href="https://www.google.com/maps/search/?api=1&query=Ugrinovački+put+19+Beograd+11080"
+            href="https://www.google.com/maps?q=44.85585268309917,20.3525775137743"
             target="_blank"
             rel="noopener noreferrer"
             className="text-muted-foreground/50 hover:text-muted-foreground text-xs tracking-[0.05em] transition-colors duration-300"

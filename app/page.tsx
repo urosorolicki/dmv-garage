@@ -3,6 +3,7 @@ import { Hero } from "@/components/hero"
 import { Marquee } from "@/components/marquee"
 import { Configurator } from "@/components/configurator"
 import { Performance } from "@/components/performance"
+import { VehicleLookup } from "@/components/vehicle-lookup"
 import { Services } from "@/components/services"
 import { About } from "@/components/about"
 import { Gallery } from "@/components/gallery"
@@ -18,6 +19,7 @@ export default function Page() {
       <Marquee />
       <Configurator />
       <Performance />
+      <VehicleLookup />
       <Services />
       <About />
       <Gallery />

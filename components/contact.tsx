@@ -129,7 +129,7 @@ export function Contact() {
                   Adresa
                 </p>
                 <a
-                  href="https://www.google.com/maps/search/?api=1&query=Ugrinovački+put+19+Beograd+11080"
+                  href="https://www.google.com/maps?q=44.85585268309917,20.3525775137743"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-sm text-foreground/80 font-light leading-relaxed hover:text-foreground transition-colors duration-300 group inline-flex flex-col"
