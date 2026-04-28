@@ -1,16 +1,24 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter, Playfair_Display } from 'next/font/google'
+import { Barlow, Bebas_Neue, DM_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 
-const _inter = Inter({
+const _barlow = Barlow({
   subsets: ['latin', 'latin-ext'],
-  variable: '--font-inter',
+  weight: ['300', '400', '500', '600'],
+  variable: '--font-barlow',
 })
 
-const _playfair = Playfair_Display({
-  subsets: ['latin', 'latin-ext'],
-  variable: '--font-playfair',
+const _bebas = Bebas_Neue({
+  subsets: ['latin'],
+  weight: '400',
+  variable: '--font-bebas',
+})
+
+const _dmMono = DM_Mono({
+  subsets: ['latin'],
+  weight: ['300', '400', '500'],
+  variable: '--font-dm-mono',
 })
 
 export const metadata: Metadata = {
@@ -50,7 +58,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#0a0a0a',
+  themeColor: '#141414',
   userScalable: false,
 }
 
@@ -61,7 +69,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="sr">
-      <body className="font-sans antialiased">
+      <body className={`${_barlow.variable} ${_bebas.variable} ${_dmMono.variable} font-sans antialiased`}>
         {children}
         <Analytics />
       </body>

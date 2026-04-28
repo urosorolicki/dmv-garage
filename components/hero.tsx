@@ -61,10 +61,10 @@ export function Hero() {
 
       {/* Radial ambient light */}
       <div
-        className="absolute inset-0 opacity-40 pointer-events-none"
+        className="absolute inset-0 opacity-50 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 80% 60% at 50% 40%, oklch(0.20 0 0), transparent)",
+            "radial-gradient(ellipse 80% 60% at 50% 40%, oklch(0.14 0 0), transparent)",
         }}
       />
 
@@ -73,16 +73,22 @@ export function Hero() {
         ref={fogRef}
         className="absolute inset-0 pointer-events-none"
         style={{
-          opacity: 0.3,
+          opacity: 0.45,
           background:
-            "radial-gradient(ellipse 100% 40% at 50% 80%, oklch(0.18 0 0 / 0.8), transparent)",
+            "radial-gradient(ellipse 100% 50% at 50% 100%, oklch(0.08 0 0), transparent)",
           willChange: "opacity",
         }}
       />
 
+      {/* Brand orange glow — bottom-left ember */}
+      <div
+        className="absolute bottom-0 left-[-10%] w-[600px] h-[400px] pointer-events-none blur-[140px] opacity-[0.18]"
+        style={{ background: "var(--brand)" }}
+      />
+
       {/* Subtle moving light effect */}
       <div
-        className="absolute top-[20%] left-[30%] w-[500px] h-[300px] pointer-events-none rounded-full blur-[120px] opacity-[0.04] hero-light-move"
+        className="absolute top-[20%] left-[30%] w-[500px] h-[300px] pointer-events-none rounded-full blur-[120px] opacity-[0.05] hero-light-move"
         style={{ background: "oklch(0.95 0 0)", willChange: "transform" }}
       />
 
@@ -93,22 +99,23 @@ export function Hero() {
         style={{ willChange: "transform" }}
       >
         <p
-          className={`text-muted-foreground text-xs tracking-[0.3em] uppercase mb-4 transition-all duration-[1500ms] delay-300 ${
+          className={`text-xs tracking-[0.4em] uppercase mb-4 transition-all duration-[1500ms] delay-300 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`}
+          style={{ color: "var(--brand)" }}
         >
-          DMV Garage
+          DMV Garage — Beograd
         </p>
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-sans font-light tracking-[-0.03em] text-foreground leading-[1.15]">
-          {["Performanse bez", "kompromisa."].map((line, lineIdx) => (
+        <h1 className="font-display text-[72px] md:text-[100px] lg:text-[130px] leading-[0.92] tracking-[0.02em] text-foreground uppercase">
+          {["Performanse", "bez", "kompromisa"].map((line, lineIdx) => (
             <span key={lineIdx} className="block overflow-hidden">
               {line.split("").map((char, charIdx) => (
                 <span
                   key={charIdx}
                   className="inline-block transition-all duration-700"
                   style={{
-                    transitionTimingFunction: "cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                    transitionDelay: `${500 + lineIdx * 350 + charIdx * 32}ms`,
+                    transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
+                    transitionDelay: `${400 + lineIdx * 280 + charIdx * 22}ms`,
                     opacity: isVisible ? 1 : 0,
                     transform: isVisible ? "translateY(0)" : "translateY(110%)",
                   }}
@@ -119,47 +126,54 @@ export function Hero() {
             </span>
           ))}
         </h1>
+        {/* Thin brand accent line */}
+        <div
+          className={`mt-6 self-start transition-all duration-[1200ms] delay-[900ms] ${
+            isVisible ? "opacity-100" : "opacity-0"
+          }`}
+        >
+          <div
+            className="h-[2px] transition-all duration-[1000ms] delay-[1000ms]"
+            style={{
+              background: "var(--brand)",
+              width: isVisible ? "64px" : "0px",
+            }}
+          />
+        </div>
         <p
-          className={`mt-6 text-muted-foreground text-sm md:text-base max-w-md leading-relaxed transition-all duration-[1500ms] delay-700 ${
+          className={`mt-5 text-muted-foreground text-sm md:text-base max-w-sm leading-relaxed tracking-wide transition-all duration-[1500ms] delay-700 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`}
         >
-          LED ugradnja, auto elektronika, dijagnostika
-          <br className="hidden md:block" /> i custom chiptuning rešenja.
+          ECU remap, Stage 1–3 chiptuning, LED ugradnja,
+          <br className="hidden md:block" /> auto elektronika i enterijer po meri.
         </p>
         <div
-          className={`mt-10 flex flex-col sm:flex-row items-center gap-4 transition-all duration-[1500ms] delay-1000 ${
+          className={`mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-4 transition-all duration-[1500ms] delay-1000 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`}
         >
           <a
             href="#configurator"
-            className="px-8 py-3 text-sm tracking-[0.1em] uppercase bg-foreground text-background hover:bg-foreground/90 transition-all duration-300 rounded-sm"
+            className="px-8 py-3 text-sm tracking-[0.12em] uppercase font-medium transition-all duration-300"
+            style={{
+              background: "var(--brand)",
+              color: "oklch(0.08 0 0)",
+            }}
+            onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.88")}
+            onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
           >
             Konfiguriši
           </a>
           <a
             href="#gallery"
-            className="px-8 py-3 text-sm tracking-[0.1em] uppercase border border-border text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-all duration-300 rounded-sm"
+            className="px-8 py-3 text-sm tracking-[0.12em] uppercase border border-border/50 text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-all duration-300"
           >
             Naši Radovi
           </a>
         </div>
       </div>
 
-      {/* Scroll indicator */}
-      <div
-        className={`absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 transition-all duration-[1500ms] delay-[1500ms] ${
-          isVisible ? "opacity-100" : "opacity-0"
-        }`}
-      >
-        <span className="text-muted-foreground/50 text-[10px] tracking-[0.3em] uppercase">
-          Skroluj
-        </span>
-        <div className="w-[1px] h-8 bg-muted-foreground/20 relative overflow-hidden">
-          <div className="absolute top-0 left-0 w-full h-3 bg-muted-foreground/60 hero-scroll-line" />
-        </div>
-      </div>
     </section>
   )
 }

@@ -1,6 +1,6 @@
 export function Footer() {
   return (
-    <footer className="relative py-8 border-t border-border/30">
+    <footer className="relative py-8 border-t" style={{ borderTopColor: "var(--brand)", borderTopWidth: "1px" }}>
       <div className="max-w-[1440px] mx-auto px-6 lg:px-12 flex flex-col sm:flex-row items-center justify-between gap-4">
         <p className="text-muted-foreground/50 text-xs tracking-[0.1em]">
           {"© DMV Garage"}

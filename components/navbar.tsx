@@ -41,9 +41,13 @@ export function Navbar() {
             <li key={link.href}>
               <a
                 href={link.href}
-                className="text-muted-foreground hover:text-foreground text-sm tracking-[0.08em] uppercase transition-colors duration-300"
+                className="group relative text-muted-foreground hover:text-foreground text-sm tracking-[0.08em] uppercase transition-colors duration-300"
               >
                 {link.label}
+                <span
+                  className="absolute -bottom-0.5 left-0 h-[1px] w-0 group-hover:w-full transition-all duration-300"
+                  style={{ background: "var(--brand)" }}
+                />
               </a>
             </li>
           ))}
@@ -51,7 +55,8 @@ export function Navbar() {
 
         <a
           href="#contact"
-          className="hidden md:inline-flex items-center justify-center px-5 py-2 text-sm tracking-[0.06em] uppercase bg-foreground text-background hover:bg-foreground/90 transition-colors duration-300 rounded-sm"
+          className="hidden md:inline-flex items-center justify-center px-5 py-2 text-sm tracking-[0.06em] uppercase font-medium transition-all duration-300 hover:opacity-85"
+          style={{ background: "var(--brand)", color: "oklch(0.08 0 0)" }}
         >
           Zakaži Termin
         </a>
@@ -103,7 +108,8 @@ export function Navbar() {
           <a
             href="#contact"
             onClick={() => setMenuOpen(false)}
-            className="mt-4 inline-flex items-center justify-center px-5 py-2.5 text-sm tracking-[0.06em] uppercase bg-foreground text-background rounded-sm w-full"
+            className="mt-4 inline-flex items-center justify-center px-5 py-2.5 text-sm tracking-[0.06em] uppercase font-medium w-full"
+            style={{ background: "var(--brand)", color: "oklch(0.08 0 0)" }}
           >
             Zakaži Termin
           </a>

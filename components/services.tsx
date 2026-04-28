@@ -100,43 +100,59 @@ export function Services() {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <p className="text-muted-foreground text-xs tracking-[0.3em] uppercase mb-3">
+          <p className="text-xs tracking-[0.4em] uppercase mb-3 font-mono" style={{ color: "var(--brand)" }}>
             Šta nudimo
           </p>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-sans font-light tracking-[-0.03em] text-foreground">
+          <h2 className="font-display text-5xl md:text-6xl lg:text-7xl text-foreground tracking-wide uppercase">
             Usluge
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[1px] bg-border/30">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[1px] bg-border/20">
           {services.map((service, index) => (
             <TiltCard
               key={service.number}
-              className={`group bg-background p-8 transition-colors duration-700 hover:bg-secondary/40 ${
+              className={`group relative bg-background p-8 transition-all duration-500 hover:bg-secondary/50 overflow-hidden ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
             >
+              {/* Top brand accent line — expands on hover */}
               <div
-                className={`transition-all duration-700`}
+                className="absolute top-0 left-0 h-[2px] w-0 group-hover:w-full transition-all duration-500"
+                style={{ background: "var(--brand)" }}
+              />
+              {/* Subtle brand glow on hover */}
+              <div
+                className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+                style={{ background: "radial-gradient(ellipse 60% 40% at 50% 0%, var(--brand-subtle), transparent)" }}
+              />
+              <div
+                className="relative transition-all duration-700"
                 style={{ transitionDelay: `${200 + index * 150}ms` }}
               >
-                <span className="text-muted-foreground/40 text-xs font-mono tracking-wider block mb-6">
+                <span
+                  className="text-xs font-mono tracking-wider block mb-6 transition-colors duration-300"
+                  style={{ color: "var(--brand)" }}
+                >
                   {service.number}
                 </span>
-                <div className="w-full aspect-[4/3] mb-4 rounded overflow-hidden">
+                <div className="w-full aspect-[4/3] mb-4 overflow-hidden">
                   <img
                     src={service.image}
                     alt={service.title}
                     className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
                   />
                 </div>
-                <h3 className="text-foreground text-lg font-sans font-light tracking-[-0.01em] mb-3 group-hover:translate-x-1 transition-transform duration-500">
+                <h3 className="text-foreground text-lg font-sans tracking-wide uppercase mb-3 group-hover:translate-x-1 transition-transform duration-500">
                   {service.title}
                 </h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">
                   {service.description}
                 </p>
-                <div className="mt-6 w-8 h-[1px] bg-border group-hover:w-16 group-hover:bg-foreground/30 transition-all duration-500" />
+                <div
+                  className="mt-6 h-[1px] w-8 group-hover:w-16 transition-all duration-500"
+                  style={{ background: "var(--brand)", opacity: 0.7 }}
+                />
               </div>
             </TiltCard>
           ))}

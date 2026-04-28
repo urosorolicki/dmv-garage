@@ -632,13 +632,35 @@ export function VehicleLookup() {
     return () => observer.disconnect()
   }, [])
 
-  // Trigger bar animation when result appears
+  const [countHp, setCountHp] = useState(0)
+  const [countNm, setCountNm] = useState(0)
+
+  // Trigger bar animation + number count-up when result appears
   useEffect(() => {
-    if (!result) { setAnimateBars(false); return }
+    if (!result) { setAnimateBars(false); setCountHp(0); setCountNm(0); return }
     setAnimateBars(false)
+    setCountHp(result.stockHp)
+    setCountNm(result.stockNm)
     const t = setTimeout(() => setAnimateBars(true), 80)
     return () => clearTimeout(t)
   }, [result])
+
+  useEffect(() => {
+    if (!animateBars || !result) return
+    const duration = 900
+    const steps = 40
+    const interval = duration / steps
+    const hpStep = (result.stage1Hp - result.stockHp) / steps
+    const nmStep = (result.stage1Nm - result.stockNm) / steps
+    let step = 0
+    const timer = setInterval(() => {
+      step++
+      setCountHp(Math.round(result.stockHp + hpStep * Math.min(step, steps)))
+      setCountNm(Math.round(result.stockNm + nmStep * Math.min(step, steps)))
+      if (step >= steps) clearInterval(timer)
+    }, interval)
+    return () => clearInterval(timer)
+  }, [animateBars, result])
 
   const models = database.find((m) => m.make === make)?.models ?? []
   const engines = models.find((m) => m.model === modelName)?.engines ?? []
@@ -799,21 +821,21 @@ export function VehicleLookup() {
 
                   {/* Stock */}
                   <div className="md:pr-8">
-                    <p className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground/60 mb-4">
+                    <p className="text-[10px] tracking-[0.3em] uppercase mb-4" style={{ color: "var(--muted-foreground)", opacity: 0.6, fontFamily: "var(--font-dm-mono)" }}>
                       Serijska
                     </p>
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-1">
                       <div className="flex items-baseline gap-2">
-                        <span className="text-4xl font-light text-muted-foreground tabular-nums">
+                        <span className="text-6xl leading-none tabular-nums" style={{ fontFamily: "var(--font-bebas)", color: "var(--muted-foreground)", letterSpacing: "0.02em" }}>
                           {result.stockHp}
                         </span>
-                        <span className="text-sm text-muted-foreground/60">KS</span>
+                        <span className="text-sm" style={{ color: "var(--muted-foreground)", opacity: 0.6, fontFamily: "var(--font-dm-mono)" }}>KS</span>
                       </div>
                       <div className="flex items-baseline gap-2">
-                        <span className="text-2xl font-light text-muted-foreground/70 tabular-nums">
+                        <span className="text-3xl leading-none tabular-nums" style={{ fontFamily: "var(--font-bebas)", color: "var(--muted-foreground)", opacity: 0.7, letterSpacing: "0.02em" }}>
                           {result.stockNm}
                         </span>
-                        <span className="text-sm text-muted-foreground/50">Nm</span>
+                        <span className="text-sm" style={{ color: "var(--muted-foreground)", opacity: 0.5, fontFamily: "var(--font-dm-mono)" }}>Nm</span>
                       </div>
                     </div>
                   </div>
@@ -828,30 +850,39 @@ export function VehicleLookup() {
 
                   {/* Stage 1 */}
                   <div className="md:pl-8 md:border-l border-border/30">
-                    <p className="text-[10px] tracking-[0.3em] uppercase text-muted-foreground/60 mb-4">
+                    <p className="text-[10px] tracking-[0.3em] uppercase mb-4" style={{ color: "var(--brand)", fontFamily: "var(--font-dm-mono)" }}>
                       Stage 1
                     </p>
-                    <div className="flex flex-col gap-2">
+                    <div className="flex flex-col gap-1">
                       <div className="flex items-baseline gap-3 flex-wrap">
                         <div className="flex items-baseline gap-2">
-                          <span className="text-4xl font-light text-foreground tabular-nums">
-                            {result.stage1Hp}
+                          <span className="text-6xl leading-none tabular-nums" style={{ fontFamily: "var(--font-bebas)", color: "var(--foreground)", letterSpacing: "0.02em" }}>
+                            {countHp}
                           </span>
-                          <span className="text-sm text-muted-foreground/60">KS</span>
+                          <span className="text-sm" style={{ color: "var(--muted-foreground)", opacity: 0.6, fontFamily: "var(--font-dm-mono)" }}>KS</span>
                         </div>
-                        <span className="text-sm text-foreground/90 bg-secondary border border-border/60 px-2 py-0.5 rounded-sm">
-                          +{hpGain} KS &nbsp;(+{hpPct}%)
+                        <span
+                          className="text-xs px-2 py-0.5"
+                          style={{
+                            background: "var(--brand-subtle)",
+                            border: "1px solid var(--brand-dim)",
+                            color: "var(--brand)",
+                            fontFamily: "var(--font-dm-mono)",
+                            letterSpacing: "0.06em",
+                          }}
+                        >
+                          +{hpGain} KS (+{hpPct}%)
                         </span>
                       </div>
                       <div className="flex items-baseline gap-3 flex-wrap">
                         <div className="flex items-baseline gap-2">
-                          <span className="text-2xl font-light text-foreground/80 tabular-nums">
-                            {result.stage1Nm}
+                          <span className="text-3xl leading-none tabular-nums" style={{ fontFamily: "var(--font-bebas)", color: "var(--foreground)", opacity: 0.8, letterSpacing: "0.02em" }}>
+                            {countNm}
                           </span>
-                          <span className="text-sm text-muted-foreground/50">Nm</span>
+                          <span className="text-sm" style={{ color: "var(--muted-foreground)", opacity: 0.5, fontFamily: "var(--font-dm-mono)" }}>Nm</span>
                         </div>
-                        <span className="text-xs text-muted-foreground/80">
-                          +{nmGain} Nm &nbsp;(+{nmPct}%)
+                        <span className="text-xs" style={{ color: "var(--brand)", opacity: 0.8, fontFamily: "var(--font-dm-mono)" }}>
+                          +{nmGain} Nm (+{nmPct}%)
                         </span>
                       </div>
                     </div>
@@ -859,28 +890,36 @@ export function VehicleLookup() {
                 </div>
 
                 {/* Gain bars */}
-                <div className="flex flex-col gap-4">
+                <div className="flex flex-col gap-5">
                   <div>
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground/70">Snaga</span>
-                      <span className="text-xs text-foreground/80 tabular-nums font-light">+{hpPct}%</span>
+                      <span className="text-[10px] tracking-[0.25em] uppercase" style={{ color: "var(--muted-foreground)", opacity: 0.7, fontFamily: "var(--font-dm-mono)" }}>Snaga</span>
+                      <span className="text-xs tabular-nums" style={{ color: "var(--brand)", fontFamily: "var(--font-dm-mono)" }}>+{hpPct}%</span>
                     </div>
-                    <div className="h-[3px] bg-border rounded-full overflow-hidden">
+                    <div className="h-[4px] overflow-hidden" style={{ background: "var(--border)" }}>
                       <div
-                        className="h-full bg-foreground rounded-full transition-[width] duration-1000 ease-out"
-                        style={{ width: `${hpBarW}%` }}
+                        className="h-full transition-[width] duration-1000 ease-out"
+                        style={{
+                          width: `${hpBarW}%`,
+                          background: "var(--brand)",
+                          boxShadow: "0 0 8px var(--brand)",
+                        }}
                       />
                     </div>
                   </div>
                   <div>
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-[10px] tracking-[0.2em] uppercase text-muted-foreground/70">Obrtni moment</span>
-                      <span className="text-xs text-foreground/80 tabular-nums font-light">+{nmPct}%</span>
+                      <span className="text-[10px] tracking-[0.25em] uppercase" style={{ color: "var(--muted-foreground)", opacity: 0.7, fontFamily: "var(--font-dm-mono)" }}>Obrtni moment</span>
+                      <span className="text-xs tabular-nums" style={{ color: "var(--brand)", opacity: 0.85, fontFamily: "var(--font-dm-mono)" }}>+{nmPct}%</span>
                     </div>
-                    <div className="h-[3px] bg-border rounded-full overflow-hidden">
+                    <div className="h-[4px] overflow-hidden" style={{ background: "var(--border)" }}>
                       <div
-                        className="h-full bg-foreground/70 rounded-full transition-[width] duration-1000 delay-100 ease-out"
-                        style={{ width: `${nmBarW}%` }}
+                        className="h-full transition-[width] duration-1000 delay-150 ease-out"
+                        style={{
+                          width: `${nmBarW}%`,
+                          background: "oklch(0.55 0.18 40)",
+                          boxShadow: "0 0 8px oklch(0.55 0.18 40)",
+                        }}
                       />
                     </div>
                   </div>
@@ -896,7 +935,8 @@ export function VehicleLookup() {
                   href={`https://wa.me/381628727274?text=${encodeURIComponent(waText)}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex-shrink-0 px-8 py-3 text-xs tracking-[0.12em] uppercase bg-foreground text-background hover:bg-foreground/90 transition-colors duration-300 rounded-sm font-medium"
+                  className="flex-shrink-0 px-8 py-3 text-xs tracking-[0.12em] uppercase transition-opacity duration-300 hover:opacity-85 font-medium"
+                  style={{ background: "var(--brand)", color: "oklch(0.08 0 0)" }}
                 >
                   Zakaži chiptuning
                 </a>

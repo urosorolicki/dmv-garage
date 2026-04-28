@@ -77,11 +77,11 @@ const stats = [
 function CustomTooltip({ active, payload, label }: any) {
   if (!active || !payload?.length) return null
   return (
-    <div className="bg-[oklch(0.13_0_0)] border border-border/60 rounded-sm px-4 py-3 text-xs">
-      <p className="text-muted-foreground mb-2 tracking-[0.1em] uppercase">{label} RPM</p>
+    <div className="bg-[oklch(0.11_0_0)] border px-4 py-3 text-xs" style={{ borderColor: "oklch(0.65 0.22 40 / 0.4)" }}>
+      <p className="mb-2 tracking-[0.12em] uppercase font-mono" style={{ color: "var(--brand)" }}>{label} RPM</p>
       {payload.map((p: any) => (
-        <p key={p.dataKey} style={{ color: p.color }} className="mb-1">
-          {p.name}: <span className="font-mono">{p.value} KS</span>
+        <p key={p.dataKey} style={{ color: p.color }} className="mb-1 font-mono">
+          {p.name}: <span>{p.value} KS</span>
         </p>
       ))}
     </div>
@@ -124,10 +124,10 @@ export function Performance() {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <p className="text-muted-foreground text-xs tracking-[0.3em] uppercase mb-3">
+          <p className="text-xs tracking-[0.4em] uppercase mb-3 font-mono" style={{ color: "var(--brand)" }}>
             Chiptuning rezultati
           </p>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-sans font-light tracking-[-0.03em] text-foreground text-balance">
+          <h2 className="font-display text-5xl md:text-6xl lg:text-7xl text-foreground tracking-wide uppercase">
             Otključajte puni potencijal
           </h2>
           <p className="mt-4 text-muted-foreground text-sm md:text-base leading-relaxed max-w-xl">
@@ -184,19 +184,20 @@ export function Performance() {
                     type="monotone"
                     dataKey="original"
                     name="Original"
-                    stroke="oklch(0.40 0 0)"
-                    strokeWidth={2}
+                    stroke="oklch(0.35 0 0)"
+                    strokeWidth={1.5}
+                    strokeDasharray="4 2"
                     dot={false}
-                    activeDot={{ r: 4, fill: "oklch(0.40 0 0)" }}
+                    activeDot={{ r: 3, fill: "oklch(0.45 0 0)" }}
                   />
                   <Line
                     type="monotone"
                     dataKey="remap"
                     name="Remap"
-                    stroke="oklch(0.88 0 0)"
-                    strokeWidth={2}
+                    stroke="oklch(0.65 0.22 40)"
+                    strokeWidth={2.5}
                     dot={false}
-                    activeDot={{ r: 4, fill: "oklch(0.88 0 0)" }}
+                    activeDot={{ r: 5, fill: "oklch(0.65 0.22 40)", stroke: "none" }}
                   />
                 </LineChart>
               </ResponsiveContainer>
@@ -215,7 +216,7 @@ export function Performance() {
                   <span className="text-xs text-muted-foreground font-mono">{car.model}</span>
                   <span className="text-xs font-mono">
                     <span className="text-muted-foreground/50">{car.before} KS</span>
-                    <span className="text-muted-foreground/30 mx-2">→</span>
+                    <span className="mx-2" style={{ color: "var(--brand)", opacity: 0.7 }}>→</span>
                     <span className="text-foreground">{car.after} KS</span>
                   </span>
                 </div>
@@ -245,7 +246,7 @@ export function Performance() {
                     <span className="text-xs tracking-[0.15em] uppercase text-muted-foreground">
                       {stat.label}
                     </span>
-                    <span className="text-2xl md:text-3xl font-light text-foreground">
+                    <span className="text-2xl md:text-3xl font-display tracking-wide" style={{ color: "var(--brand)" }}>
                       <AnimatedCounter
                         target={stat.value}
                         prefix={stat.prefix}
@@ -255,12 +256,14 @@ export function Performance() {
                       />
                     </span>
                   </div>
-                  <div className="w-full h-[2px] bg-border rounded-full overflow-hidden">
+                  <div className="w-full h-[2px] bg-border overflow-hidden">
                     <div
-                      className="h-full bg-foreground/60 rounded-full transition-all duration-[2000ms] ease-out"
+                      className="h-full transition-all duration-[2000ms] ease-out"
                       style={{
                         width: isVisible ? `${stat.bar}%` : "0%",
                         transitionDelay: `${600 + index * 200}ms`,
+                        background: "var(--brand)",
+                        boxShadow: "0 0 8px var(--brand)",
                       }}
                     />
                   </div>
