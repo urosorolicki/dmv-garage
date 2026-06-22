@@ -3,11 +3,11 @@
 import { useState, useEffect } from "react"
 
 const navLinks = [
-  { label: "Početna", href: "#hero" },
-  { label: "Konfigurator", href: "#configurator" },
-  { label: "Usluge", href: "#services" },
-  { label: "Galerija", href: "#gallery" },
-  { label: "Kontakt", href: "#contact" },
+  { label: "Početna", href: "/#hero" },
+  { label: "Konfigurator", href: "/#configurator" },
+  { label: "Usluge", href: "/#services" },
+  { label: "Galerija", href: "/#gallery" },
+  { label: "Kontakt", href: "/#contact" },
 ]
 
 export function Navbar() {
@@ -31,7 +31,7 @@ export function Navbar() {
       }`}
     >
       <nav className="flex items-center justify-between px-6 lg:px-12 py-4 max-w-[1440px] mx-auto">
-        <a href="#hero" className="flex items-center gap-2">
+        <a href="/" className="flex items-center gap-2">
           <img src="/logo.png" alt="DMV Garage logo" className="h-20 w-auto" />
         </a>
 
@@ -54,7 +54,7 @@ export function Navbar() {
         </ul>
 
         <a
-          href="#contact"
+          href="/#contact"
           className="hidden md:inline-flex items-center justify-center px-5 py-2 text-sm tracking-[0.06em] uppercase font-medium transition-all duration-300 hover:opacity-85"
           style={{ background: "var(--brand)", color: "oklch(0.08 0 0)" }}
         >
@@ -106,7 +106,7 @@ export function Navbar() {
             ))}
           </ul>
           <a
-            href="#contact"
+            href="/#contact"
             onClick={() => setMenuOpen(false)}
             className="mt-4 inline-flex items-center justify-center px-5 py-2.5 text-sm tracking-[0.06em] uppercase font-medium w-full"
             style={{ background: "var(--brand)", color: "oklch(0.08 0 0)" }}

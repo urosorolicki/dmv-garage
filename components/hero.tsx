@@ -80,18 +80,6 @@ export function Hero() {
         }}
       />
 
-      {/* Brand orange glow — bottom-left ember */}
-      <div
-        className="absolute bottom-0 left-[-10%] w-[600px] h-[400px] pointer-events-none blur-[140px] opacity-[0.18]"
-        style={{ background: "var(--brand)" }}
-      />
-
-      {/* Subtle moving light effect */}
-      <div
-        className="absolute top-[20%] left-[30%] w-[500px] h-[300px] pointer-events-none rounded-full blur-[120px] opacity-[0.05] hero-light-move"
-        style={{ background: "oklch(0.95 0 0)", willChange: "transform" }}
-      />
-
       {/* Content overlay */}
       <div
         ref={contentRef}

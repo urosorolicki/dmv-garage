@@ -1,5 +1,5 @@
-import Link from "next/link"
 import { Navbar } from "@/components/navbar"
+import { BackButton } from "@/components/back-button"
 import { Footer } from "@/components/footer"
 import { GalleryFull } from "@/components/gallery-full"
 import { WhatsAppButton } from "@/components/whatsapp-button"
@@ -22,15 +22,7 @@ export default function GalerijaPage() {
       <Navbar />
 
       <div className="pt-24 pb-4 max-w-[1440px] mx-auto px-6 lg:px-12">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 text-muted-foreground text-xs tracking-[0.15em] uppercase hover:text-foreground transition-colors"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-            <polyline points="15 18 9 12 15 6" />
-          </svg>
-          Nazad
-        </Link>
+        <BackButton />
 
         <div className="mt-8">
           <p className="text-muted-foreground text-xs tracking-[0.3em] uppercase mb-3">Portfolio</p>

@@ -106,6 +106,28 @@ export const galleryImages: { id: string; alt: string; category: Category }[] = 
   { id: "chiptuning-before", alt: "Chiptuning – before", category: "Chiptuning" },
 ]
 
+// Evenly spread categories across the "Sve" view so the grid shows variety
+// instead of 47 LED clusters first and 4 chiptuning shots last. Each category's
+// items are distributed proportionally across [0,1] and merged by position —
+// deterministic (no shuffle), so SSR and client render identically.
+function spreadEvenly(images: typeof galleryImages) {
+  const counts = new Map<Category, number>()
+  for (const img of images) counts.set(img.category, (counts.get(img.category) ?? 0) + 1)
+
+  const seen = new Map<Category, number>()
+  return images
+    .map((img, i) => {
+      const idx = seen.get(img.category) ?? 0
+      seen.set(img.category, idx + 1)
+      const total = counts.get(img.category) ?? 1
+      return { img, pos: (idx + 0.5) / total, i }
+    })
+    .sort((a, b) => a.pos - b.pos || a.i - b.i)
+    .map((x) => x.img)
+}
+
+export const galleryImagesAll = spreadEvenly(galleryImages)
+
 const PREVIEW_IDS = [
   "IMG_0654", "IMG_7777", "IMG_8358", "IMG_5920", "IMG_6252",
   "chiptuning-after", "IMG_7778", "IMG_6650", "IMG_6877",

@@ -19,13 +19,6 @@ const configOptions = [
     afterImage: "/images/interior-after.jpg",
   },
   {
-    id: "chiptuning",
-    label: "ECU / Chiptuning",
-    description: "Custom remap softvera za optimalan balans snage, potrošnje i pouzdanosti.",
-    beforeImage: "/images/chiptuning-before.jpg",
-    afterImage: "/images/chiptuning-after.jpg",
-  },
-  {
     id: "electronics",
     label: "Elektronika",
     description: "Napredna dijagnostika i ugradnja kompleksnih elektronskih sistema.",

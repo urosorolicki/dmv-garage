@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from "react"
 import Image from "next/image"
-import { cdnThumb, cdnFull, galleryImages, categories, type Category } from "@/lib/gallery-data"
+import { cdnThumb, cdnFull, galleryImages, galleryImagesAll, categories, type Category } from "@/lib/gallery-data"
 
 export function GalleryFull() {
   const [activeCategory, setActiveCategory] = useState<Category>("Sve")
@@ -16,7 +16,7 @@ export function GalleryFull() {
 
   const filtered =
     activeCategory === "Sve"
-      ? galleryImages
+      ? galleryImagesAll
       : galleryImages.filter((img) => img.category === activeCategory)
 
   // Lock body scroll and focus close button when lightbox opens
@@ -29,6 +29,11 @@ export function GalleryFull() {
     }
     return () => { document.body.style.overflow = "" }
   }, [lightboxIndex])
+
+  // Guarantee scroll unlock on unmount (client-side navigation cleanup)
+  useEffect(() => {
+    return () => { document.body.style.overflow = "" }
+  }, [])
 
   const closeLightbox = useCallback(() => setLightboxIndex(null), [])
 
