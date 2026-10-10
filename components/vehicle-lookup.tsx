@@ -5,6 +5,15 @@ import Script from "next/script"
 import { BENSKY_ORIGIN, useBenskyVehicle } from "@/hooks/use-bensky-vehicle"
 
 const WIDGET_ID = "1977"
+
+// Widget look — Bensky reads these from the URL (hex without "#")
+const WIDGET_THEME = new URLSearchParams({
+  theme: "dark",
+  color: "f64b00",          // accent — brand orange
+  textcolor: "b8b3ad",      // labels / body text
+  buttontext: "141414",     // dark text on orange buttons, as on the rest of the site
+  differencecolor: "f64b00", // performance gain figures
+}).toString()
 const IFRAME_ID = "dmv-tuning-widget"
 
 declare global {
@@ -77,16 +86,18 @@ export function VehicleLookup() {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <iframe
-            id={IFRAME_ID}
-            src={`${BENSKY_ORIGIN}/w.php?id=${WIDGET_ID}`}
-            title="Pretraga vozila — chiptuning"
-            referrerPolicy="origin"
-            width="100%"
-            height={200}
-            className="block w-full border-0"
-            style={{ transition: "height 0.5s", colorScheme: "normal" }}
-          />
+          <div className="px-3 pt-3 md:px-5 md:pt-5">
+            <iframe
+              id={IFRAME_ID}
+              src={`${BENSKY_ORIGIN}/w.php?id=${WIDGET_ID}&${WIDGET_THEME}`}
+              title="Pretraga vozila — chiptuning"
+              referrerPolicy="origin"
+              width="100%"
+              height={200}
+              className="block w-full border-0"
+              style={{ transition: "height 0.5s", colorScheme: "normal" }}
+            />
+          </div>
           <Script
             src={`${BENSKY_ORIGIN}/assets/js/iframeResizer.min.js`}
             strategy="afterInteractive"
