@@ -316,7 +316,7 @@ export function Configurator() {
                         className="grid transition-all duration-500 ease-in-out"
                         style={{ gridTemplateRows: activeOption === index ? "1fr" : "0fr" }}
                       >
-                        <p className="text-xs text-muted-foreground/70 leading-relaxed overflow-hidden pt-1">
+                        <p className="text-xs text-muted-foreground leading-relaxed overflow-hidden pt-1">
                           {opt.description}
                         </p>
                       </div>

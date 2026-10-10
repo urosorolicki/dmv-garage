@@ -7,12 +7,15 @@ import { Suspense } from "react"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "Galerija radova — DMV Garage Beograd",
+  title: "Galerija radova — LED, chiptuning, enterijer",
   description: "Galerija radova DMV Garage — LED ugradnja, chiptuning, auto elektronika i enterijer. Beograd.",
+  alternates: { canonical: "/galerija" },
   openGraph: {
     title: "Galerija radova — DMV Garage",
     description: "Pogledajte naše radove: LED ugradnja, chiptuning, Android multimedija, ambijentalno osvetljenje.",
-    url: "https://www.garagedmv.com/galerija",
+    url: "/galerija",
+    locale: "sr_RS",
+    siteName: "DMV Garage",
     images: [{ url: `https://res.cloudinary.com/dd9xjzu8c/image/upload/q_auto,f_auto,w_1200/dmv-garage/IMG_0654` }],
   },
 }

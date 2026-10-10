@@ -123,11 +123,11 @@ export function Hero() {
           }`}
           style={{ color: "var(--brand)" }}
         >
-          DMV Garage — Beograd
+          Chiptuning & LED ugradnja — Beograd
         </p>
-        <h1 className="font-display text-[72px] md:text-[100px] lg:text-[130px] leading-[0.92] tracking-[0.02em] text-foreground uppercase">
+        <h1 aria-label="Performanse bez kompromisa" className="font-display text-[72px] md:text-[100px] lg:text-[130px] leading-[0.92] tracking-[0.02em] text-foreground uppercase">
           {["Performanse", "bez", "kompromisa"].map((line, lineIdx) => (
-            <span key={lineIdx} className="block overflow-hidden">
+            <span key={lineIdx} className="block overflow-hidden" aria-hidden="true">
               {line.split("").map((char, charIdx) => (
                 <span
                   key={charIdx}

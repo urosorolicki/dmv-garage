@@ -24,7 +24,7 @@ const faqs = [
     a: "Da, u svakom trenutku. Pre svakog projekta arhiviramo originalnu kopiju fabričkog softvera. Vraćanje na originalne vrednosti traje svega 30–60 minuta i vozilo postaje identično fabričkom stanju bez ikakvih tragova modifikacije.",
   },
   {
-    q: "Koje LED svetlosne sisteme ugradujete?",
+    q: "Koje LED svetlosne sisteme ugrađujete?",
     a: "Ugradujemo premium bi-LED i laser LED sisteme za dnevna svetla (DRL), kratka i duga, kao i ambijentalno i unutrašnje osvetljenje. Koristimo isključivo proverene sisteme sa adekvatnom homologacijom i garantujemo profesionalnu ugradnju bez modifikacije originalnog kabliranja.",
   },
 ]
@@ -93,7 +93,7 @@ export function FAQ() {
                   {faq.q}
                 </span>
                 <span
-                  className={`flex-shrink-0 w-5 h-5 flex items-center justify-center text-muted-foreground/60 transition-transform duration-300 ${
+                  className={`flex-shrink-0 w-5 h-5 flex items-center justify-center text-muted-foreground transition-transform duration-300 ${
                     openIndex === i ? "rotate-45" : ""
                   }`}
                 >

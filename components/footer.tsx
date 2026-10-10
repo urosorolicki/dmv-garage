@@ -2,7 +2,7 @@ export function Footer() {
   return (
     <footer className="relative py-8 border-t" style={{ borderTopColor: "var(--brand)", borderTopWidth: "1px" }}>
       <div className="max-w-[1440px] mx-auto px-6 lg:px-12 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p className="text-muted-foreground/50 text-xs tracking-[0.1em]">
+        <p className="text-muted-foreground text-xs tracking-[0.1em]">
           {"© DMV Garage"}
         </p>
         <div className="flex flex-wrap items-center justify-center gap-6">
@@ -10,13 +10,13 @@ export function Footer() {
             href="https://www.google.com/maps?q=44.85585268309917,20.3525775137743"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-muted-foreground/50 hover:text-muted-foreground text-xs tracking-[0.05em] transition-colors duration-300"
+            className="text-muted-foreground hover:text-foreground text-xs tracking-[0.05em] transition-colors duration-300"
           >
             Ugrinovački put 19. deo 31, Beograd
           </a>
           <a
             href="tel:+381628727274"
-            className="text-muted-foreground/50 hover:text-muted-foreground text-xs tracking-[0.05em] transition-colors duration-300"
+            className="text-muted-foreground hover:text-foreground text-xs tracking-[0.05em] transition-colors duration-300"
           >
             062 872 7274
           </a>
@@ -24,7 +24,7 @@ export function Footer() {
             href="https://instagram.com/dmv__garage"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-muted-foreground/50 hover:text-muted-foreground text-xs tracking-[0.05em] transition-colors duration-300"
+            className="text-muted-foreground hover:text-foreground text-xs tracking-[0.05em] transition-colors duration-300"
           >
             Instagram
           </a>

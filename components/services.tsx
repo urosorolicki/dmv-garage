@@ -106,7 +106,7 @@ export function Services() {
               {/* Header red: broj + spec, kao part-number / data sheet */}
               <div className="flex items-baseline justify-between mb-5 font-mono text-[11px] tracking-wider">
                 <span style={{ color: "var(--brand)" }}>{service.number}</span>
-                <span className="text-muted-foreground/70">{service.spec}</span>
+                <span className="text-muted-foreground">{service.spec}</span>
               </div>
 
               <div className="w-full aspect-[4/3] mb-5 overflow-hidden rounded-sm bg-secondary/30">

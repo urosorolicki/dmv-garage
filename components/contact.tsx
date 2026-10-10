@@ -66,12 +66,16 @@ export function Contact() {
       .filter(Boolean)
       .join("\n")
 
-    window.open(`https://wa.me/381628727274?text=${encodeURIComponent(text)}`, "_blank")
+    // Popup blockers (and iOS Safari after the async validation) can block
+    // window.open — fall back to navigating in the same tab
+    const url = `https://wa.me/381628727274?text=${encodeURIComponent(text)}`
+    const win = window.open(url, "_blank")
+    if (!win) window.location.href = url
     setSubmitted(true)
   }
 
   const inputClass =
-    "w-full bg-transparent border border-border/50 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/40 focus:outline-none transition-all duration-200 focus:[border-color:var(--brand)] focus:[box-shadow:0_0_0_1px_var(--brand-subtle)]"
+    "w-full bg-transparent border border-border/50 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/70 focus:outline-none transition-all duration-200 focus:[border-color:var(--brand)] focus:[box-shadow:0_0_0_1px_var(--brand-subtle)]"
   const errorClass = "text-[11px] text-red-400/80 mt-1"
 
   return (
@@ -176,9 +180,9 @@ export function Contact() {
                     <polyline points="20 6 9 17 4 12" />
                   </svg>
                 </div>
-                <p className="text-foreground font-light text-lg">Zahtev poslat</p>
+                <p className="text-foreground font-light text-lg">Još jedan korak</p>
                 <p className="text-muted-foreground text-sm max-w-xs">
-                  WhatsApp poruka je pripremljena. Kontaktiraćemo vas u najkraćem roku.
+                  Otvorili smo WhatsApp sa vašom porukom — pritisnite „Pošalji“ da potvrdite termin. Ako se WhatsApp nije otvorio, pozovite nas na 062 872 7274.
                 </p>
                 <button
                   onClick={() => setSubmitted(false)}

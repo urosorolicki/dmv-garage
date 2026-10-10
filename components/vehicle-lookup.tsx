@@ -139,7 +139,7 @@ export function VehicleLookup() {
           </div>
         </div>
 
-        <p className="mt-4 text-xs text-muted-foreground/60 leading-relaxed max-w-xl">
+        <p className="mt-4 text-xs text-muted-foreground leading-relaxed max-w-xl">
           * Procenjene vrednosti. Konačni rezultati zavise od stanja vozila.
         </p>
       </div>
