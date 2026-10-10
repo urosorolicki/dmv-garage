@@ -1,7 +1,6 @@
 import { Navbar } from "@/components/navbar"
 import { Hero } from "@/components/hero"
 import { Configurator } from "@/components/configurator"
-import { Performance } from "@/components/performance"
 import { VehicleLookup } from "@/components/vehicle-lookup"
 import { Services } from "@/components/services"
 import { About } from "@/components/about"
@@ -15,9 +14,8 @@ export default function Page() {
     <main className="min-h-screen bg-background">
       <Navbar />
       <Hero />
-      <Configurator />
-      <Performance />
       <VehicleLookup />
+      <Configurator />
       <Services />
       <About />
       <Gallery />

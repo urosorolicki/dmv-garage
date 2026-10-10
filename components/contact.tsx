@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
+import { useBenskyVehicle } from "@/hooks/use-bensky-vehicle"
 
 const schema = z.object({
   name: z.string().min(2, "Unesite ime i prezime"),
@@ -30,8 +31,15 @@ export function Contact() {
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm<FormData>({ resolver: zodResolver(schema) })
+
+  // Prefill from the chiptuning widget once a vehicle is selected
+  useBenskyVehicle((vehicleName) => {
+    setValue("car", vehicleName, { shouldValidate: true })
+    setValue("service", "chiptuning", { shouldValidate: true })
+  })
 
   useEffect(() => {
     const observer = new IntersectionObserver(
