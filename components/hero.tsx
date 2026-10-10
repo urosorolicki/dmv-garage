@@ -2,8 +2,7 @@
 
 import { useEffect, useRef, useState } from "react"
 import dynamic from "next/dynamic"
-
-const CAR_MODEL_URL = "/models/audi.glb"
+import { HERO_3D_ENABLED } from "@/lib/hero-3d"
 
 // three.js is client-only and heavy — load it lazily, never during SSR
 const HeroCar3D = dynamic(() => import("@/components/hero-car-3d"), { ssr: false })
@@ -23,16 +22,12 @@ export function Hero() {
     setIsVisible(true)
   }, [])
 
-  // Enable the 3D car only on desktop, and only once the model exists
+  // Enable the 3D car only on desktop, and only when the model is shipped
   useEffect(() => {
     setReducedMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches)
     const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection
-    if (window.innerWidth < 1024 || conn?.saveData) return
-    let cancelled = false
-    fetch(CAR_MODEL_URL, { method: "HEAD" })
-      .then((res) => { if (!cancelled && res.ok) setUse3D(true) })
-      .catch(() => {})
-    return () => { cancelled = true }
+    if (!HERO_3D_ENABLED || window.innerWidth < 1024 || conn?.saveData) return
+    setUse3D(true)
   }, [])
 
   useEffect(() => {
@@ -73,10 +68,9 @@ export function Hero() {
         loop
         muted
         playsInline
-        preload="auto"
+        preload="metadata"
         onCanPlay={() => setVideoReady(true)}
       >
-        <source src="/13127448_1920_1080_60fps.webm" type="video/webm" />
         <source src="/13127448_1920_1080_60fps.mp4" type="video/mp4" />
       </video>
 

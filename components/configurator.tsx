@@ -22,8 +22,8 @@ const configOptions = [
     id: "electronics",
     label: "Elektronika",
     description: "Napredna dijagnostika i ugradnja kompleksnih elektronskih sistema.",
-    beforeImage: "/images/electronics-before.png",
-    afterImage: "/images/electronics-after.png",
+    beforeImage: "/images/electronics-before-hd.jpg",
+    afterImage: "/images/electronics-after-hd.jpg",
   },
 ]
 

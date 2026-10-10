@@ -18,7 +18,7 @@ const services = [
     spec: "Dijagnostika · Ugradnja · Servis",
     description:
       "Napredna dijagnostika, ugradnja i popravka kompleksnih elektronskih sistema.",
-    image: "/images/electronics-after.png",
+    image: "/images/electronics-after-hd.jpg",
   },
   {
     number: "03",

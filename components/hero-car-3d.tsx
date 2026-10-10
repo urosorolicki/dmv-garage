@@ -4,8 +4,7 @@ import { Suspense, useLayoutEffect, useMemo, useRef } from "react"
 import { Canvas, useFrame } from "@react-three/fiber"
 import { ContactShadows, Environment, Lightformer, useGLTF } from "@react-three/drei"
 import * as THREE from "three"
-
-export const CAR_MODEL_URL = "/models/audi.glb"
+import { CAR_MODEL_URL } from "@/lib/hero-3d"
 
 // Longest side of the car in scene units, and a yaw offset in case the
 // generated model is not facing +X.

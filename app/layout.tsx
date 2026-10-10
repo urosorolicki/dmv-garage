@@ -10,13 +10,13 @@ const _barlow = Barlow({
 })
 
 const _bebas = Bebas_Neue({
-  subsets: ['latin'],
+  subsets: ['latin', 'latin-ext'],
   weight: '400',
   variable: '--font-bebas',
 })
 
 const _dmMono = DM_Mono({
-  subsets: ['latin'],
+  subsets: ['latin', 'latin-ext'],
   weight: ['300', '400', '500'],
   variable: '--font-dm-mono',
 })
@@ -47,7 +47,6 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: '#141414',
-  userScalable: false,
 }
 
 export default function RootLayout({
@@ -56,7 +55,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="sr">
+    <html lang="sr" data-scroll-behavior="smooth">
       <body className={`${_barlow.variable} ${_bebas.variable} ${_dmMono.variable} font-sans antialiased`}>
         {children}
         <Analytics />
