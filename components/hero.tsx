@@ -1,6 +1,12 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import dynamic from "next/dynamic"
+
+const CAR_MODEL_URL = "/models/audi.glb"
+
+// three.js is client-only and heavy — load it lazily, never during SSR
+const HeroCar3D = dynamic(() => import("@/components/hero-car-3d"), { ssr: false })
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null)
@@ -9,9 +15,24 @@ export function Hero() {
   const rafRef = useRef<number | undefined>(undefined)
   const [isVisible, setIsVisible] = useState(false)
   const [videoReady, setVideoReady] = useState(false)
+  const [use3D, setUse3D] = useState(false)
+  const [carReady, setCarReady] = useState(false)
+  const [reducedMotion, setReducedMotion] = useState(false)
 
   useEffect(() => {
     setIsVisible(true)
+  }, [])
+
+  // Enable the 3D car only on desktop, and only once the model exists
+  useEffect(() => {
+    setReducedMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+    const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection
+    if (window.innerWidth < 1024 || conn?.saveData) return
+    let cancelled = false
+    fetch(CAR_MODEL_URL, { method: "HEAD" })
+      .then((res) => { if (!cancelled && res.ok) setUse3D(true) })
+      .catch(() => {})
+    return () => { cancelled = true }
   }, [])
 
   useEffect(() => {
@@ -45,8 +66,8 @@ export function Hero() {
     >
       {/* Video background */}
       <video
-        className={`absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-700 ${
-          videoReady ? "opacity-100" : "opacity-0"
+        className={`absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-1000 ${
+          !videoReady ? "opacity-0" : carReady ? "opacity-25" : "opacity-100"
         }`}
         autoPlay
         loop
@@ -80,10 +101,26 @@ export function Hero() {
         }}
       />
 
+      {/* 3D car — right half on desktop, copy moves to the left */}
+      {use3D && (
+        <div
+          className={`absolute inset-y-0 right-0 w-[58%] z-[5] pointer-events-none transition-opacity duration-1000 ${
+            carReady ? "opacity-100" : "opacity-0"
+          }`}
+          aria-hidden="true"
+        >
+          <HeroCar3D reducedMotion={reducedMotion} onReady={() => setCarReady(true)} />
+        </div>
+      )}
+
       {/* Content overlay */}
       <div
         ref={contentRef}
-        className="relative z-10 text-center px-6 flex flex-col items-center"
+        className={`relative z-10 px-6 flex flex-col ${
+          use3D
+            ? "w-full max-w-[1440px] lg:px-12 items-start text-left"
+            : "text-center items-center"
+        }`}
         style={{ willChange: "transform" }}
       >
         <p
