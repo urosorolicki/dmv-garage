@@ -1,11 +1,21 @@
 export const CDN = "https://res.cloudinary.com/dd9xjzu8c/image/upload"
 export const cdnThumb = (id: string) => `${CDN}/q_auto,f_auto,w_800/dmv-garage/${id}`
 export const cdnFull = (id: string) => `${CDN}/q_auto,f_auto,w_1920/dmv-garage/${id}`
+export const cdnWidth = (id: string, w: number) => `${CDN}/q_auto,f_auto,w_${w}/dmv-garage/${id}`
+// Responsive srcset — next/image runs with `unoptimized`, so Cloudinary does the resizing
+export const cdnSrcSet = (id: string, widths: number[]) =>
+  widths.map((w) => `${cdnWidth(id, w)} ${w}w`).join(", ")
 
 export type Category = "Sve" | "LED" | "Chiptuning" | "Enterijer" | "Elektronika"
 export const categories: Category[] = ["Sve", "LED", "Chiptuning", "Enterijer", "Elektronika"]
 
-export const galleryImages: { id: string; alt: string; category: Category }[] = [
+export interface GalleryImage {
+  id: string
+  alt: string
+  category: Exclude<Category, "Sve">
+}
+
+export const galleryImages: GalleryImage[] = [
   // LED
   { id: "IMG_0056", alt: "VW Golf cluster – plavi LED", category: "LED" },
   { id: "IMG_0116", alt: "Opel Astra cluster – zeleni LED", category: "LED" },
@@ -26,7 +36,7 @@ export const galleryImages: { id: string; alt: string; category: Category }[] = 
   { id: "IMG_1540", alt: "Opel Astra radio – plavi LED", category: "LED" },
   { id: "IMG_1544", alt: "Opel Astra cluster – plavi LED", category: "LED" },
   { id: "IMG_1609", alt: "VW cluster – plavi LED", category: "LED" },
-  { id: "IMG_1623", alt: "VW Golf cluster – bijeli/plavi LED", category: "LED" },
+  { id: "IMG_1623", alt: "VW Golf cluster – beli/plavi LED", category: "LED" },
   { id: "IMG_1624", alt: "VW Golf cluster – plavi LED", category: "LED" },
   { id: "IMG_1654", alt: "VW A3 cluster – plavi LED", category: "LED" },
   { id: "IMG_1671", alt: "Opel Vectra cluster – crveni LED", category: "LED" },
@@ -35,16 +45,16 @@ export const galleryImages: { id: string; alt: string; category: Category }[] = 
   { id: "IMG_6093", alt: "BMW E46 cluster – narandžasti LED", category: "LED" },
   { id: "IMG_6096", alt: "BMW E46 cluster – plavi LED", category: "LED" },
   { id: "IMG_6252", alt: "Audi A6 enterijer – crveni LED", category: "LED" },
-  { id: "IMG_6311", alt: "Audi A4 cluster – bijeli LED", category: "LED" },
+  { id: "IMG_6311", alt: "Audi A4 cluster – beli LED", category: "LED" },
   { id: "IMG_6349", alt: "Enterijer – crveni/plavi LED", category: "LED" },
   { id: "IMG_6459", alt: "VW Passat CC cluster – ljubičasti LED", category: "LED" },
   { id: "IMG_6573", alt: "Peugeot cluster – narandžasti LED", category: "LED" },
   { id: "IMG_6579", alt: "Peugeot cluster – plavi LED", category: "LED" },
-  { id: "IMG_6612", alt: "BMW E46 cluster – bijeli LED", category: "LED" },
-  { id: "IMG_6758", alt: "BMW cluster – bijeli LED", category: "LED" },
+  { id: "IMG_6612", alt: "BMW E46 cluster – beli LED", category: "LED" },
+  { id: "IMG_6758", alt: "BMW cluster – beli LED", category: "LED" },
   { id: "IMG_6762", alt: "VW Caddy cluster – crveni/plavi LED", category: "LED" },
   { id: "IMG_6876", alt: "BMW E90 cluster – narandžasti LED", category: "LED" },
-  { id: "IMG_6877", alt: "BMW E90 cluster – bijeli LED", category: "LED" },
+  { id: "IMG_6877", alt: "BMW E90 cluster – beli LED", category: "LED" },
   { id: "IMG_7168", alt: "Audi A3 cluster – crveni LED", category: "LED" },
   { id: "IMG_7773", alt: "VW cluster – plavi LED", category: "LED" },
   { id: "IMG_7776", alt: "BMW E90 cluster – narandžasti LED", category: "LED" },
@@ -134,4 +144,4 @@ const PREVIEW_IDS = [
 ]
 
 const _byId = new Map(galleryImages.map((img) => [img.id, img]))
-export const previewImages = PREVIEW_IDS.map((id) => _byId.get(id)).filter(Boolean) as typeof galleryImages
+export const previewImages = PREVIEW_IDS.map((id) => _byId.get(id)).filter(Boolean) as GalleryImage[]

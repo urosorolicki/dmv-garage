@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import Link from "next/link"
 
 const navLinks = [
   { label: "Početna", href: "/#hero" },
@@ -32,15 +33,16 @@ export function Navbar() {
       }`}
     >
       <nav className="flex items-center justify-between px-6 lg:px-12 py-4 max-w-[1440px] mx-auto">
-        <a href="/" className="flex items-center gap-2">
-          <img src="/logo.png" alt="DMV Garage logo" className="h-20 w-auto" />
-        </a>
+        <Link href="/" className="flex items-center gap-2">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.png" alt="DMV Garage" width={112} height={56} className="h-14 md:h-16 w-auto" />
+        </Link>
 
         {/* Desktop nav */}
         <ul className="hidden md:flex items-center gap-8">
           {navLinks.map((link) => (
             <li key={link.href}>
-              <a
+              <Link
                 href={link.href}
                 className="group relative text-muted-foreground hover:text-foreground text-sm tracking-[0.08em] uppercase transition-colors duration-300"
               >
@@ -49,7 +51,7 @@ export function Navbar() {
                   className="absolute -bottom-0.5 left-0 h-[1px] w-0 group-hover:w-full transition-all duration-300"
                   style={{ background: "var(--brand)" }}
                 />
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
@@ -96,13 +98,13 @@ export function Navbar() {
           <ul className="flex flex-col gap-4">
             {navLinks.map((link) => (
               <li key={link.href}>
-                <a
+                <Link
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
                   className="text-muted-foreground hover:text-foreground text-sm tracking-[0.08em] uppercase transition-colors duration-300 block py-1"
                 >
                   {link.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>

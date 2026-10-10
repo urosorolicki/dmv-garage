@@ -50,8 +50,8 @@ export function Gallery() {
           {previewImages.map((image, index) => (
             <Link
               key={image.id}
-              href="/galerija"
-              className={`group relative aspect-[4/3] overflow-hidden rounded-sm cursor-pointer ${
+              href={`/galerija?img=${image.id}`}
+              className={`group relative aspect-[4/5] overflow-hidden rounded-sm cursor-pointer ${
                 reducedMotion ? "opacity-100 translate-y-0" : `transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`
               }`}
               style={reducedMotion ? undefined : { transitionDelay: `${200 + index * 80}ms` }}

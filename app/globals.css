@@ -161,3 +161,10 @@ body::after {
   .hero-light-move,
   .hero-scroll-line { animation: none; }
 }
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
