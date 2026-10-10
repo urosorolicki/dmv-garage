@@ -32,7 +32,7 @@ export function Footer() {
       </div>
       <div className="max-w-[1440px] mx-auto px-6 lg:px-12 mt-6 flex justify-center">
         <a
-          href="https://foldnine.com"
+          href="https://www.foldnine.com"
           target="_blank"
           rel="noopener"
           className="text-muted-foreground/60 hover:text-foreground text-[10px] uppercase tracking-[0.2em] transition-colors duration-300"
