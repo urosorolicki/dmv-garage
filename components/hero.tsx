@@ -12,16 +12,12 @@ export function Hero() {
   const contentRef = useRef<HTMLDivElement>(null)
   const fogRef = useRef<HTMLDivElement>(null)
   const rafRef = useRef<number | undefined>(undefined)
-  const [isVisible, setIsVisible] = useState(false)
   const [videoReady, setVideoReady] = useState(false)
   const [use3D, setUse3D] = useState(false)
   const [carReady, setCarReady] = useState(false)
   const [reducedMotion, setReducedMotion] = useState(false)
   const [showVideo, setShowVideo] = useState(false)
 
-  useEffect(() => {
-    setIsVisible(true)
-  }, [])
 
   // Video only after hydration, and not for reduced-motion / data-saver users —
   // the poster stays as a still. Enable the 3D car only on desktop, and only
@@ -151,10 +147,8 @@ export function Hero() {
         style={{ willChange: "transform" }}
       >
         <p
-          className={`text-xs tracking-[0.4em] uppercase mb-4 transition-all duration-[1500ms] delay-300 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-          }`}
-          style={{ color: "var(--brand)" }}
+          className="hero-rise text-xs tracking-[0.4em] uppercase mb-4"
+          style={{ color: "var(--brand)", animationDelay: "200ms" }}
         >
           Chiptuning & LED ugradnja — Beograd
         </p>
@@ -164,13 +158,8 @@ export function Hero() {
               {line.split("").map((char, charIdx) => (
                 <span
                   key={charIdx}
-                  className="inline-block transition-all duration-700"
-                  style={{
-                    transitionTimingFunction: "cubic-bezier(0.16, 1, 0.3, 1)",
-                    transitionDelay: `${400 + lineIdx * 280 + charIdx * 22}ms`,
-                    opacity: isVisible ? 1 : 0,
-                    transform: isVisible ? "translateY(0)" : "translateY(110%)",
-                  }}
+                  className="hero-char"
+                  style={{ animationDelay: `${300 + lineIdx * 240 + charIdx * 22}ms` }}
                 >
                   {char === " " ? "\u00A0" : char}
                 </span>
@@ -180,30 +169,23 @@ export function Hero() {
         </h1>
         {/* Thin brand accent line */}
         <div
-          className={`mt-6 ${use3D ? "self-start" : "self-center"} transition-all duration-[1200ms] delay-[900ms] ${
-            isVisible ? "opacity-100" : "opacity-0"
-          }`}
+          className={`mt-6 ${use3D ? "self-start" : "self-center"}`}
         >
           <div
-            className="h-[2px] transition-all duration-[1000ms] delay-[1000ms]"
-            style={{
-              background: "var(--brand)",
-              width: isVisible ? "64px" : "0px",
-            }}
+            className="hero-line h-[2px] w-16"
+            style={{ background: "var(--brand)", animationDelay: "900ms" }}
           />
         </div>
         <p
-          className={`mt-5 text-muted-foreground text-sm md:text-base max-w-sm leading-relaxed tracking-wide transition-all duration-[1500ms] delay-700 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-          }`}
+          className="hero-rise mt-5 text-muted-foreground text-sm md:text-base max-w-sm leading-relaxed tracking-wide"
+          style={{ animationDelay: "350ms" }}
         >
           ECU remap, Stage 1–3 chiptuning, LED ugradnja,
           <br className="hidden md:block" /> auto elektronika i enterijer po meri.
         </p>
         <div
-          className={`mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-4 transition-all duration-[1500ms] delay-1000 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-          }`}
+          className="hero-rise mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-4"
+          style={{ animationDelay: "700ms" }}
         >
           <a
             href="#configurator"

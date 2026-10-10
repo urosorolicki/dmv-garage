@@ -35,7 +35,7 @@ export function Footer() {
           href="https://foldnine.dev"
           target="_blank"
           rel="noopener"
-          className="text-muted-foreground/60 hover:text-foreground text-[10px] uppercase tracking-[0.2em] transition-colors duration-300"
+          className="text-muted-foreground hover:text-foreground text-[10px] uppercase tracking-[0.2em] transition-colors duration-300"
         >
           Sajt izradio <span className="font-semibold">Foldnine</span>
         </a>

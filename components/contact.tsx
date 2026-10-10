@@ -76,7 +76,7 @@ export function Contact() {
 
   const inputClass =
     "w-full bg-transparent border border-border/50 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/70 focus:outline-none transition-all duration-200 focus:[border-color:var(--brand)] focus:[box-shadow:0_0_0_1px_var(--brand-subtle)]"
-  const errorClass = "text-[11px] text-red-400/80 mt-1"
+  const errorClass = "text-xs text-red-400 mt-1"
 
   return (
     <section
@@ -199,6 +199,9 @@ export function Contact() {
                     <input
                       {...register("name")}
                       placeholder="Ime i prezime"
+                      aria-label="Ime i prezime"
+                      autoComplete="name"
+                      aria-invalid={!!errors.name}
                       className={inputClass}
                       suppressHydrationWarning
                     />
@@ -210,6 +213,10 @@ export function Contact() {
                     <input
                       {...register("phone")}
                       placeholder="Broj telefona"
+                      aria-label="Broj telefona"
+                      autoComplete="tel"
+                      inputMode="tel"
+                      aria-invalid={!!errors.phone}
                       type="tel"
                       className={inputClass}
                       suppressHydrationWarning
@@ -224,6 +231,8 @@ export function Contact() {
                     <input
                       {...register("car")}
                       placeholder="Model vozila (npr. BMW 320d)"
+                      aria-label="Model vozila"
+                      aria-invalid={!!errors.car}
                       className={inputClass}
                       suppressHydrationWarning
                     />
@@ -234,6 +243,8 @@ export function Contact() {
                   <div>
                     <select
                       {...register("service")}
+                      aria-label="Usluga"
+                      aria-invalid={!!errors.service}
                       className={`${inputClass} appearance-none cursor-pointer`}
                       defaultValue=""
                       suppressHydrationWarning
@@ -256,6 +267,7 @@ export function Contact() {
                   <textarea
                     {...register("message")}
                     placeholder="Napomena (opciono)"
+                    aria-label="Napomena"
                     rows={4}
                     className={`${inputClass} resize-none`}
                     suppressHydrationWarning
