@@ -17,15 +17,20 @@ export function Hero() {
   const [use3D, setUse3D] = useState(false)
   const [carReady, setCarReady] = useState(false)
   const [reducedMotion, setReducedMotion] = useState(false)
+  const [showVideo, setShowVideo] = useState(false)
 
   useEffect(() => {
     setIsVisible(true)
   }, [])
 
-  // Enable the 3D car only on desktop, and only when the model is shipped
+  // Video only after hydration, and not for reduced-motion / data-saver users —
+  // the poster stays as a still. Enable the 3D car only on desktop, and only
+  // when the model is shipped.
   useEffect(() => {
-    setReducedMotion(window.matchMedia("(prefers-reduced-motion: reduce)").matches)
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    setReducedMotion(reduced)
     const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection
+    setShowVideo(!reduced && !conn?.saveData)
     if (!HERO_3D_ENABLED || window.innerWidth < 1024 || conn?.saveData) return
     setUse3D(true)
   }, [])
@@ -59,20 +64,48 @@ export function Hero() {
       aria-label="Hero - DMV Garage"
       className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[oklch(0.08_0_0)]"
     >
-      {/* Video background */}
-      <video
-        className={`absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-1000 ${
-          !videoReady ? "opacity-0" : carReady ? "opacity-25" : "opacity-100"
-        }`}
-        autoPlay
-        loop
-        muted
-        playsInline
-        preload="metadata"
-        onCanPlay={() => setVideoReady(true)}
-      >
-        <source src="/13127448_1920_1080_60fps.mp4" type="video/mp4" />
-      </video>
+      {/* Poster — paints immediately, video fades in over it */}
+      <picture>
+        <source media="(max-width: 767px)" srcSet="/video/hero-poster-mobile.jpg" />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/video/hero-poster.jpg"
+          alt=""
+          fetchPriority="high"
+          className={`absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-1000 ${
+            carReady ? "opacity-25" : "opacity-100"
+          }`}
+        />
+      </picture>
+
+      {/* Video background — 720p30 desktop, portrait crop on phones */}
+      {showVideo && (
+        <video
+          className={`absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-1000 ${
+            !videoReady ? "opacity-0" : carReady ? "opacity-25" : "opacity-100"
+          }`}
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="metadata"
+          aria-hidden="true"
+          onCanPlay={() => setVideoReady(true)}
+        >
+          <source media="(max-width: 767px)" src="/video/hero-mobile.mp4" type="video/mp4" />
+          <source src="/video/hero-720.webm" type="video/webm" />
+          <source src="/video/hero-720.mp4" type="video/mp4" />
+        </video>
+      )}
+
+      {/* Scrim — keeps the copy and the transparent navbar readable over the footage */}
+      <div
+        className="absolute inset-0 z-[1] pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(to bottom, oklch(0.08 0 0 / 0.6), oklch(0.08 0 0 / 0.25) 35%, oklch(0.08 0 0 / 0.35) 65%, oklch(0.08 0 0 / 0.85))",
+        }}
+      />
 
       {/* Radial ambient light */}
       <div
@@ -147,7 +180,7 @@ export function Hero() {
         </h1>
         {/* Thin brand accent line */}
         <div
-          className={`mt-6 self-start transition-all duration-[1200ms] delay-[900ms] ${
+          className={`mt-6 ${use3D ? "self-start" : "self-center"} transition-all duration-[1200ms] delay-[900ms] ${
             isVisible ? "opacity-100" : "opacity-0"
           }`}
         >
@@ -186,7 +219,7 @@ export function Hero() {
           </a>
           <a
             href="#gallery"
-            className="px-8 py-3 text-sm tracking-[0.12em] uppercase border border-border/50 text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-all duration-300"
+            className="px-8 py-3 text-sm tracking-[0.12em] uppercase border border-foreground/40 text-foreground hover:bg-foreground/10 hover:border-foreground/60 transition-all duration-300"
           >
             Naši Radovi
           </a>
