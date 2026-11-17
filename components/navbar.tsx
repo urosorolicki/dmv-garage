@@ -9,7 +9,7 @@ import { business } from "@/lib/site-config"
 const navLinks = [
   { label: "Chiptuning", href: "/#vehicle-lookup" },
   { label: "Usluge", href: "/#services" },
-  { label: "Pre / posle", href: "/#pre-posle" },
+  { label: "Pre i posle", href: "/#pre-posle" },
   { label: "Galerija", href: "/#gallery" },
   { label: "O nama", href: "/#about" },
   { label: "Kontakt", href: "/#contact" },
@@ -38,10 +38,10 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 border-b border-white/15 transition-all duration-300 ${
-        scrolled
-          ? "bg-background/95 backdrop-blur-xl"
-          : "bg-background/85 backdrop-blur-md"
+      className={`fixed top-0 left-0 right-0 z-50 border-b transition-colors duration-300 ${
+        scrolled || menuOpen
+          ? "border-border bg-background"
+          : "border-transparent bg-gradient-to-b from-black/60 to-transparent"
       }`}
     >
       <nav className="garage-navigation flex items-center justify-between gap-4 px-6 lg:px-12 py-2 max-w-[1540px] mx-auto">
@@ -56,7 +56,7 @@ export function Navbar() {
             <li key={link.href}>
               <Link
                 href={link.href}
-                className="group relative text-white/90 hover:text-white text-sm transition-colors duration-300"
+                className="group relative text-foreground/90 hover:text-foreground text-[15px] transition-colors duration-300"
               >
                 {link.label}
                 <span
@@ -68,7 +68,7 @@ export function Navbar() {
           ))}
         </ul>
 
-        <a href={`tel:${business.phone}`} className="hidden xl:inline-flex items-center gap-2 text-sm text-white/90"><Phone size={16} aria-hidden="true" />{business.phoneDisplay}</a>
+        <a href={`tel:${business.phone}`} className="hidden xl:inline-flex items-center gap-2 text-[15px] text-foreground/90 hover:text-foreground"><Phone size={16} aria-hidden="true" />{business.phoneDisplay}</a>
         <a
           href="/#contact"
           className="btn btn-primary hidden min-h-11 px-5 lg:inline-flex"
@@ -115,14 +115,14 @@ export function Navbar() {
           menuOpen ? "max-h-[calc(100dvh-60px)] overflow-y-auto opacity-100" : "max-h-0 opacity-0"
         }`}
       >
-        <div className="px-6 pb-6 bg-background/95 backdrop-blur-xl border-b border-border/30">
+        <div className="px-6 pb-6 bg-background border-b border-border">
           <ul className="flex flex-col">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  className="text-white/90 hover:text-white text-base transition-colors duration-300 block py-3"
+                  className="text-foreground hover:text-[var(--brand)] text-lg transition-colors duration-300 block py-3"
                 >
                   {link.label}
                 </Link>

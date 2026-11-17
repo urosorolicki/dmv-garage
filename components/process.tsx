@@ -11,17 +11,17 @@ const steps = [
 export function Process() {
   return (
     <section id="proces" className="relative py-16 md:py-28 overflow-hidden">
-      <div className="absolute inset-0 bg-background glow-tl" />
+      <div className="absolute inset-0 bg-background" />
       <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12">
-        <SectionHeading kicker="Kako radimo" title="Od upita do gotovog auta" className="mb-12" />
-        <ol className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <SectionHeading title="Kako radimo" intro="Od prve poruke do gotovog auta, u četiri koraka." className="mb-12" />
+        <ol className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
           {steps.map((step, i) => (
-            <li key={step.title} className="relative rounded-xl border border-white/15 bg-card p-6">
-              <span className="mb-5 flex h-11 w-11 items-center justify-center rounded-full bg-[var(--brand)] font-display text-lg font-extrabold italic text-[#0b1216]" aria-hidden="true">
+            <li key={step.title} className="relative border-t border-border pt-6">
+              <span className="signage mb-4 block text-[64px] text-[var(--brand)]" aria-hidden="true">
                 {i + 1}
               </span>
-              <h3 className="text-lg font-semibold text-heading">{step.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-foreground/80">{step.text}</p>
+              <h3 className="text-xl font-semibold text-heading">{step.title}</h3>
+              <p className="mt-2 text-base leading-relaxed text-muted-foreground">{step.text}</p>
             </li>
           ))}
         </ol>

@@ -1,27 +1,15 @@
 import type { Metadata, Viewport } from 'next'
-import { Barlow, DM_Mono } from 'next/font/google'
+import { Archivo } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import { business, OG_IMAGE, SITE_URL } from '@/lib/site-config'
 
-const _barlow = Barlow({
+// One family, Archivo, with its width axis: condensed and heavy for headlines
+// (workshop signage), normal width for reading text.
+const _archivo = Archivo({
   subsets: ['latin', 'latin-ext'],
-  weight: ['300', '400', '500', '600'],
-  variable: '--font-barlow',
-})
-
-// Section headings: one face only (extra-bold italic), matching the hero.
-const _heading = Barlow({
-  subsets: ['latin', 'latin-ext'],
-  weight: '800',
-  style: 'italic',
-  variable: '--font-heading',
-})
-
-const _dmMono = DM_Mono({
-  subsets: ['latin', 'latin-ext'],
-  weight: ['300', '400', '500'],
-  variable: '--font-dm-mono',
+  axes: ['wdth'],
+  variable: '--font-archivo',
 })
 
 const description =
@@ -67,7 +55,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#061017',
+  themeColor: '#141517',
 }
 
 // Local business data for Google (map pack, knowledge panel)
@@ -108,7 +96,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="sr" data-scroll-behavior="smooth">
-      <body className={`${_barlow.variable} ${_heading.variable} ${_dmMono.variable} font-sans antialiased`}>
+      <body className={`${_archivo.variable} font-sans antialiased`}>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(businessJsonLd) }} />
         {children}
         <Analytics />

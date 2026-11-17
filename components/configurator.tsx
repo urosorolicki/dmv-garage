@@ -7,7 +7,7 @@ import { SectionHeading } from "@/components/section-heading"
 const configOptions = [
   {
     id: "led",
-    label: "LED Svetla",
+    label: "LED svetla",
     description: "Premium LED sistem za maksimalnu vidljivost i vizuelni identitet vozila.",
     beforeImage: "/images/led-before.jpg",
     afterImage: "/images/led-after.jpg",
@@ -193,12 +193,12 @@ function CompareSlider({ beforeSrc, afterSrc, label, resetSignal }: CompareSlide
 
       {/* Before / After labels */}
       <div className="absolute top-4 left-4 z-10 pointer-events-none">
-        <span className="text-[10px] tracking-[0.25em] uppercase text-white/70 bg-black/30 backdrop-blur-sm px-2 py-1 rounded-sm">
+        <span className="text-sm font-medium text-white bg-[#141517]/85 px-2.5 py-1">
           Pre
         </span>
       </div>
       <div className="absolute top-4 right-4 z-10 pointer-events-none">
-        <span className="text-[10px] tracking-[0.25em] uppercase text-white/70 bg-black/30 backdrop-blur-sm px-2 py-1 rounded-sm">
+        <span className="text-sm font-medium text-white bg-[#141517]/85 px-2.5 py-1">
           Posle
         </span>
       </div>
@@ -209,18 +209,14 @@ function CompareSlider({ beforeSrc, afterSrc, label, resetSignal }: CompareSlide
           hintVisible ? "opacity-100" : "opacity-0"
         }`}
       >
-        <div className="flex items-center gap-3 bg-black/40 backdrop-blur-sm rounded-sm px-4 py-2">
+        <div className="flex items-center gap-3 bg-[#141517]/85 px-4 py-2">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
             <path d="M5 8H11M5 8L3 6M5 8L3 10M11 8L13 6M11 8L13 10" stroke="white" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-          <span className="text-[10px] tracking-[0.2em] uppercase text-white/80">Prevuci</span>
+          <span className="text-sm font-medium text-white">Prevuci</span>
         </div>
       </div>
 
-      {/* Active option label */}
-      <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent pointer-events-none z-10">
-        <p className="text-xs tracking-[0.2em] uppercase text-white/60">{label}</p>
-      </div>
     </div>
   )
 }
@@ -259,7 +255,7 @@ export function Configurator() {
         <div
           className={`mb-16 transition-all duration-1000`}
         >
-          <SectionHeading kicker="Radovi" title="Pre i posle ugradnje" />
+          <SectionHeading title="Pre i posle" intro="Prevuci klizač i pogledaj razliku na pravim autima iz radionice." />
         </div>
 
         <div className="flex flex-col lg:flex-row gap-5 lg:gap-16">
@@ -272,21 +268,21 @@ export function Configurator() {
                 <button
                   key={opt.id}
                   onClick={() => handleOptionClick(index)}
-                  className={`group shrink-0 text-left min-h-11 px-3.5 py-2.5 rounded-full border border-white/20 lg:rounded-sm lg:border-0 lg:px-5 lg:py-4 transition-all duration-300 ${
-                    activeOption === index ? "bg-secondary/80" : "hover:bg-secondary/40"
+                  className={`group shrink-0 text-left min-h-11 px-3.5 py-2.5 border border-border lg:border-0 lg:px-5 lg:py-4 transition-all duration-300 ${
+                    activeOption === index ? "bg-background" : "hover:bg-background/60"
                   }`}
                 >
                   <div className="flex items-start gap-4">
                     <span
                       className={`hidden lg:block mt-1 w-[2px] rounded-full flex-shrink-0 transition-all duration-500 ${
                         activeOption === index
-                          ? "h-5 bg-foreground"
+                          ? "h-5 bg-[var(--brand)]"
                           : "h-3 bg-border group-hover:bg-muted-foreground/50"
                       }`}
                     />
                     <div>
                       <p
-                        className={`text-xs lg:text-sm tracking-[0.06em] uppercase transition-colors duration-300 ${
+                        className={`text-[15px] lg:text-base font-semibold transition-colors duration-300 ${
                           activeOption === index
                             ? "text-foreground"
                             : "text-muted-foreground group-hover:text-foreground"
@@ -298,7 +294,7 @@ export function Configurator() {
                         className="hidden lg:grid transition-all duration-500 ease-in-out"
                         style={{ gridTemplateRows: activeOption === index ? "1fr" : "0fr" }}
                       >
-                        <p className="text-xs text-muted-foreground leading-relaxed overflow-hidden pt-1">
+                        <p className="text-[15px] text-muted-foreground leading-relaxed overflow-hidden pt-1">
                           {opt.description}
                         </p>
                       </div>

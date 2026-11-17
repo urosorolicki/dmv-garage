@@ -77,9 +77,9 @@ export function Contact() {
   }
 
   const inputClass =
-    "w-full rounded-[5px] bg-card border border-white/40 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/70 focus:outline-none transition-all duration-200 focus:[border-color:var(--brand)] focus:[box-shadow:0_0_0_1px_var(--brand-subtle)]"
-  const errorClass = "text-xs text-red-400 mt-1"
-  const labelClass = "mb-1.5 block text-xs font-medium text-white/75"
+    "w-full bg-background border border-[var(--input)] px-4 py-3 text-base text-foreground placeholder:text-muted-foreground focus:outline-none transition-all duration-200 focus:[border-color:var(--brand)] focus:[box-shadow:0_0_0_1px_var(--brand-subtle)]"
+  const errorClass = "text-sm text-[var(--destructive)] mt-1"
+  const labelClass = "mb-1.5 block text-[15px] font-medium text-foreground"
 
   return (
     <section
@@ -87,10 +87,7 @@ export function Contact() {
       id="contact"
       className="relative py-16 md:py-32 overflow-hidden"
     >
-      {/* Workshop photo band: the hero photo enlarged on its left side (wall,
-          neon, tool cabinets) so it reads as the workshop, not the hero car again. */}
-      <div className="contact-photo" aria-hidden="true" />
-      <div className="contact-scrim absolute inset-0" aria-hidden="true" />
+      <div className="section-alt absolute inset-0" aria-hidden="true" />
 
       <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12">
         <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-start">
@@ -99,11 +96,7 @@ export function Contact() {
           <div
             className={`lg:w-2/5 transition-all duration-1000`}
           >
-            <SectionHeading kicker="Kontakt" title="Termin i kontakt" className="mb-6" />
-            <p className="text-muted-foreground text-sm leading-relaxed mb-10">
-              Popuni formu i javićemo ti se putem WhatsApp-a. Dostupni smo
-              radnim danima 09–18h i subotom 09–15h.
-            </p>
+            <SectionHeading title="Zakaži termin" intro="Popuni formu i otvoriće se WhatsApp sa tvojim upitom. Javljamo se sa terminom i cenom." className="mb-6" />
 
             <div className="flex flex-col gap-6">
               {/* Phone */}
@@ -113,7 +106,7 @@ export function Contact() {
                 </p>
                 <a
                   href="tel:+381628727274"
-                  className="inline-flex min-h-11 items-center text-xl font-sans font-normal text-foreground hover:opacity-70 transition-opacity duration-300 font-mono"
+                  className="inline-flex min-h-11 items-center text-2xl font-semibold text-foreground hover:text-[var(--brand)] transition-colors duration-300"
                 >
                   062 872 7274
                 </a>
@@ -128,11 +121,11 @@ export function Contact() {
                   href="https://instagram.com/dmv__garage"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex min-h-11 items-center text-xl font-sans font-normal text-foreground hover:opacity-70 transition-opacity duration-300"
+                  className="inline-flex min-h-11 items-center text-2xl font-semibold text-foreground hover:text-[var(--brand)] transition-colors duration-300"
                 >
                   @dmv__garage
                 </a>
-                <p className="mt-1 text-xs text-muted-foreground">4.4K+ pratilaca · radovi i novosti iz radionice</p>
+                <p className="mt-1 text-[15px] text-muted-foreground">4.4K+ pratilaca, radovi i novosti iz radionice</p>
               </div>
 
               {/* Address */}
@@ -144,7 +137,7 @@ export function Contact() {
                   href="https://www.google.com/maps?q=44.85585268309917,20.3525775137743"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-foreground/80 font-normal leading-relaxed hover:text-foreground transition-colors duration-300 group inline-flex flex-col"
+                  className="text-lg text-foreground leading-relaxed hover:text-[var(--brand)] transition-colors duration-300 group inline-flex flex-col"
                 >
                   Ugrinovački put 19. deo 31
                   <span className="text-muted-foreground group-hover:text-foreground/60 transition-colors duration-300">
@@ -163,7 +156,7 @@ export function Contact() {
                 <p className="subhead mb-1">
                   Radno vreme
                 </p>
-                <p className="text-sm text-foreground/80 font-normal leading-relaxed">
+                <p className="text-lg text-foreground leading-relaxed">
                   Pon – Pet: 09:00 – 18:00
                   <br />
                   Sub: 09:00 – 15:00
@@ -189,7 +182,7 @@ export function Contact() {
                 </p>
                 <button
                   onClick={() => setSubmitted(false)}
-                  className="mt-4 text-xs tracking-[0.15em] uppercase text-muted-foreground hover:text-foreground transition-colors duration-300"
+                  className="mt-4 min-h-11 text-[15px] font-medium text-muted-foreground hover:text-foreground transition-colors duration-300"
                 >
                   Novi zahtev
                 </button>
@@ -275,7 +268,7 @@ export function Contact() {
 
                 {/* Message */}
                 <div>
-                  <label htmlFor="f-message" className={labelClass}>Napomena <span className="text-white/45">(opciono)</span></label>
+                  <label htmlFor="f-message" className={labelClass}>Napomena <span className="text-muted-foreground">(opciono)</span></label>
                   <textarea
                     {...register("message")}
                     id="f-message"

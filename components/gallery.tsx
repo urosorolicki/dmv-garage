@@ -16,7 +16,7 @@ export function Gallery() {
       <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12">
         {/* Header */}
         <div className="mb-10">
-          <SectionHeading kicker="Portfolio" title="Galerija" />
+          <SectionHeading title="Galerija" />
         </div>
 
         {/* Preview grid */}
@@ -25,7 +25,7 @@ export function Gallery() {
             <Link
               key={image.id}
               href={`/galerija?img=${image.id}`}
-              className={`group relative overflow-hidden rounded-lg cursor-pointer ${index === 0 ? "col-span-2 row-span-2" : ""} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand`}
+              className={`group relative overflow-hidden cursor-pointer ${index === 0 ? "col-span-2 row-span-2" : ""} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand`}
               aria-label={image.alt}
             >
               <Image
@@ -48,12 +48,8 @@ export function Gallery() {
             className="btn btn-secondary"
           >
             Vidi sve radove
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-              <line x1="5" y1="12" x2="19" y2="12" />
-              <polyline points="12 5 19 12 12 19" />
-            </svg>
           </Link>
-          <span className="text-muted-foreground text-xs tracking-[0.1em]">
+          <span className="text-muted-foreground text-[15px]">
             {previewImages.length} od {galleryImages.length} radova
           </span>
         </div>
