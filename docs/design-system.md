@@ -128,7 +128,7 @@ Ne raditi: verzal sa razmaknutim slovima na dugmadi, oštre ivice bez radijusa, 
 | Tipografija | 3 fonta, jedan stil naslova, `.section-kicker` i `.subhead` za sve oznake. |
 | Dugmad | `.btn` svuda, uključujući navigaciju i prikaz slike u galeriji. |
 | Polja | Jedan stil, vidljive labele, greške povezane sa poljima. |
-| Kod | Nekorišćene shadcn komponente i 38 paketa uklonjeni. |
+| Kod | Nekorišćene shadcn komponente i 40 paketa uklonjeni. |
 
 Šta je ostalo:
 1. Prebaciti boje mobilnih oznaka iz hero CSS-a (`.mobile-callout`, `.mobile-booking`) na tokene.
