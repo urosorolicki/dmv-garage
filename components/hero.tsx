@@ -26,7 +26,7 @@ const features: Feature[] = [
     label: "Performanse",
     detail: "ECU remap i optimizacija motora, prilagođeni konkretnom vozilu.",
     href: "#vehicle-lookup",
-    coordinates: { left: "44%", top: "34%" },
+    coordinates: { left: "30%", top: "42%" },
     icon: Gauge,
   },
   {
@@ -34,7 +34,7 @@ const features: Feature[] = [
     label: "Svetla",
     detail: "LED ugradnja i precizne promene osvetljenja.",
     href: "#gallery",
-    coordinates: { left: "60%", top: "55%" },
+    coordinates: { left: "49%", top: "57%" },
     icon: Lightbulb,
   },
   {
@@ -42,7 +42,7 @@ const features: Feature[] = [
     label: "Enterijer",
     detail: "Ambijentalna svetla i personalizacija unutrašnjosti.",
     href: "#services",
-    coordinates: { left: "77%", top: "29%" },
+    coordinates: { left: "74%", top: "32%" },
     icon: Armchair,
   },
   {
@@ -50,7 +50,7 @@ const features: Feature[] = [
     label: "Elektronika",
     detail: "Dijagnostika, kodiranje i ugradnja elektronskih sistema.",
     href: "#services",
-    coordinates: { left: "84%", top: "68%" },
+    coordinates: { left: "85%", top: "68%" },
     icon: Cpu,
   },
 ]
@@ -73,19 +73,19 @@ export function Hero() {
       aria-labelledby="hero-title"
       className="relative isolate min-h-[100svh] overflow-hidden bg-[#080e13]"
     >
-      {/* Existing approved site imagery remains in use until the cinematic
-          photo asset can be committed independently. No paid widget affected. */}
+      {/* Cinematic still image for the interactive service experience.
+          The paid Bensky tuning calculator is rendered separately below. */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 bg-cover bg-[position:63%_center] opacity-75 lg:bg-[position:center_34%]"
-        style={{ backgroundImage: 'url("/video/hero-poster.jpg")' }}
+        className="absolute inset-0 bg-cover bg-[position:65%_center] opacity-95 lg:bg-[position:center_38%]"
+        style={{ backgroundImage: 'url("/images/garage-dmv-hero.webp")' }}
       />
       <div
         aria-hidden="true"
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(90deg,rgba(4,10,14,.97) 0%,rgba(5,12,16,.89) 30%,rgba(5,12,16,.28) 68%,rgba(5,12,16,.45) 100%),linear-gradient(0deg,#080e13 0%,transparent 32%,rgba(4,9,13,.3) 95%)",
+            "linear-gradient(90deg,rgba(4,10,14,.96) 0%,rgba(5,12,16,.79) 30%,rgba(5,12,16,.1) 66%,rgba(5,12,16,.18) 100%),linear-gradient(0deg,#080e13 0%,transparent 36%,rgba(4,9,13,.2) 95%)",
         }}
       />
       <div
