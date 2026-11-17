@@ -254,7 +254,7 @@ export function Configurator() {
     <section
       ref={sectionRef}
       id="pre-posle"
-      className="relative py-24 md:py-32 overflow-hidden"
+      className="relative py-16 md:py-32 overflow-hidden"
     >
       <div className="absolute inset-0 bg-background" />
       <div
@@ -274,25 +274,25 @@ export function Configurator() {
           <SectionHeading kicker="Pre / posle" title="Pogledaj razliku" />
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
+        <div className="flex flex-col lg:flex-row gap-5 lg:gap-16">
           {/* Left panel */}
           <div
             className={`lg:w-[300px] flex-shrink-0 transition-all duration-1000 delay-200 ${
               isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"
             }`}
           >
-            <div className="flex flex-col gap-1">
+            <div className="no-scrollbar flex gap-2 overflow-x-auto lg:flex-col lg:gap-1 lg:overflow-visible">
               {configOptions.map((opt, index) => (
                 <button
                   key={opt.id}
                   onClick={() => handleOptionClick(index)}
-                  className={`group text-left px-5 py-4 rounded-sm transition-all duration-300 ${
+                  className={`group shrink-0 text-left min-h-11 px-3.5 py-2.5 rounded-full border border-white/20 lg:rounded-sm lg:border-0 lg:px-5 lg:py-4 transition-all duration-300 ${
                     activeOption === index ? "bg-secondary/80" : "hover:bg-secondary/40"
                   }`}
                 >
                   <div className="flex items-start gap-4">
                     <span
-                      className={`mt-1 w-[2px] rounded-full flex-shrink-0 transition-all duration-500 ${
+                      className={`hidden lg:block mt-1 w-[2px] rounded-full flex-shrink-0 transition-all duration-500 ${
                         activeOption === index
                           ? "h-5 bg-foreground"
                           : "h-3 bg-border group-hover:bg-muted-foreground/50"
@@ -300,7 +300,7 @@ export function Configurator() {
                     />
                     <div>
                       <p
-                        className={`text-sm tracking-[0.06em] uppercase transition-colors duration-300 ${
+                        className={`text-xs lg:text-sm tracking-[0.06em] uppercase transition-colors duration-300 ${
                           activeOption === index
                             ? "text-foreground"
                             : "text-muted-foreground group-hover:text-foreground"
@@ -309,7 +309,7 @@ export function Configurator() {
                         {opt.label}
                       </p>
                       <div
-                        className="grid transition-all duration-500 ease-in-out"
+                        className="hidden lg:grid transition-all duration-500 ease-in-out"
                         style={{ gridTemplateRows: activeOption === index ? "1fr" : "0fr" }}
                       >
                         <p className="text-xs text-muted-foreground leading-relaxed overflow-hidden pt-1">
@@ -323,7 +323,7 @@ export function Configurator() {
             </div>
 
             {/* Step indicator */}
-            <div className="mt-3 px-5 flex gap-2">
+            <div className="mt-3 px-5 hidden lg:flex gap-2">
               {configOptions.map((_, i) => (
                 <button
                   key={i}

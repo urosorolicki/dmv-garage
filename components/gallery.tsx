@@ -31,7 +31,7 @@ export function Gallery() {
     <section
       ref={sectionRef}
       id="gallery"
-      className="relative py-24 md:py-32 overflow-hidden"
+      className="relative py-16 md:py-32 overflow-hidden"
     >
       <div className="absolute inset-0 bg-background" />
 

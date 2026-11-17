@@ -214,6 +214,13 @@ body::after {
   #hero nav a > span > span { font-size:10px; }
   .mobile-callout { font-size:10px; padding:6px 8px; gap:5px; }
 }
+/* Phones: the four tiles under the car are the service navigation, so the
+   photo callouts and the kicker (same four services again) are dropped. */
+@media(max-width:639px) {
+  #hero .hero-kicker { display:none; }
+  .mobile-callout, .mobile-callout-wires { display:none; }
+  #hero .hero-shell { padding-top:96px; }
+}
 @media(min-width:640px) and (max-width:1023px) {
   #hero .hero-stage { height:450px; }
   #hero .hero-copy { width:53%; }
