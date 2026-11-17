@@ -22,14 +22,14 @@
   --destructive-foreground: oklch(0.577 0.245 27.325);
   --border: oklch(0.17 0 0);
   --input: oklch(0.17 0 0);
-  --ring: #f3a05b;
-  /* Warm copper / cool workshop light */
-  --brand: #f3a05b;
-  --brand-bright: #ffb475;
-  --brand-dim: #b76a3c;
-  --brand-subtle: rgb(243 160 91 / 0.12);
-  --cool-accent: #78c5d5;
-  --chart-1: #f3a05b;
+  --ring: #ff8a00;
+  /* Brand — one orange site-wide; cyan only for light/LED accents */
+  --brand: #ff8a00;
+  --brand-bright: #ffa52c;
+  --brand-dim: #b36100;
+  --brand-subtle: rgb(255 138 0 / 0.12);
+  --cool-accent: #00d9f5;
+  --chart-1: #ff8a00;
   --chart-2: oklch(0.60 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
@@ -42,7 +42,7 @@
   --sidebar-accent: oklch(0.18 0 0);
   --sidebar-accent-foreground: oklch(0.85 0.006 65);
   --sidebar-border: oklch(0.17 0 0);
-  --sidebar-ring: #f3a05b;
+  --sidebar-ring: #ff8a00;
 }
 
 @theme inline {
@@ -147,24 +147,6 @@ body::after {
   100% { transform: translateX(-50%); }
 }
 
-/* Hero animations */
-@keyframes heroLightMove {
-  0%   { transform: translateX(-50px) translateY(0); }
-  100% { transform: translateX(50px) translateY(-30px); }
-}
-@keyframes heroScrollLine {
-  0%   { transform: translateY(-12px); }
-  50%  { transform: translateY(32px); }
-  100% { transform: translateY(-12px); }
-}
-.hero-light-move  { animation: heroLightMove 12s ease-in-out infinite alternate; }
-.hero-scroll-line { animation: heroScrollLine 2s ease-in-out infinite; }
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-light-move,
-  .hero-scroll-line { animation: none; }
-}
-
 @utility no-scrollbar {
   scrollbar-width: none;
   &::-webkit-scrollbar {
@@ -172,38 +154,19 @@ body::after {
   }
 }
 
-/* Hero intro — pure CSS so it starts on first paint instead of after hydration (LCP) */
-@keyframes hero-rise {
-  from { opacity: 0; transform: translateY(1rem); }
-  to { opacity: 1; transform: none; }
-}
-@keyframes hero-char {
-  from { opacity: 0; transform: translateY(110%); }
-  to { opacity: 1; transform: none; }
-}
-@keyframes hero-line {
-  from { transform: scaleX(0); }
-  to { transform: scaleX(1); }
-}
-.hero-rise { animation: hero-rise 1.2s cubic-bezier(0.16, 1, 0.3, 1) both; }
-.hero-char { display: inline-block; animation: hero-char 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
-.hero-line { transform-origin: left; animation: hero-line 1s cubic-bezier(0.16, 1, 0.3, 1) both; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .hero-rise, .hero-char, .hero-line { animation: none; }
   body::after { animation: none; }
 }
 
-/* Approved Garage DMV composition; scoped to the first-screen UI. */
-#hero, header, #vehicle-lookup { --brand: #ff8a00; --brand-bright: #ffa52c; --cool-accent: #00d9f5; }
+/* Garage DMV first-screen composition. */
 .garage-wordmark { display:flex; align-items:center; gap:5px; color:#fff; font:italic 900 clamp(19px,2vw,28px)/1 Arial, sans-serif; white-space:nowrap; letter-spacing:-1px; }
-.garage-wordmark > svg { width:42px; height:38px; color:#ff681e; stroke-width:4; }
+.garage-wordmark > svg { width:42px; height:38px; color:var(--brand); stroke-width:4; }
 .service-link { box-shadow:inset 0 1px 0 #ffffff15,0 6px 15px #0005; }
 .service-link-light { border-color:#00d9f599; box-shadow:inset 0 0 22px #00c9ef22,0 0 12px #00c9ef30; }
-#hero-title { font-weight:900; }
-@media(min-width:1024px) { #hero > div:last-child { padding-bottom:22px; } }
-
-@media(min-width:1280px) { #hero > div:first-child { background-size:95% auto; background-position:right -55px; background-repeat:no-repeat; } }
+#hero-title { font-family:Arial, Helvetica, sans-serif; font-weight:900; }
+.hero-bg { position:absolute; inset:0; width:100%; height:100%; max-width:none; object-fit:cover; object-position:center 44%; }
+@media(min-width:1280px) { .hero-bg { inset:auto; top:-55px; right:0; width:95%; height:auto; object-fit:fill; } }
 
 .hero-mobile-scene, .mobile-booking { display:none; }
 @media(max-width:1023px) {
@@ -212,8 +175,7 @@ body::after {
   .garage-navigation > button { margin-right:0; flex-shrink:0; }
   .mobile-booking { display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; flex-shrink:0; border-radius:7px; background:var(--brand); color:#071017; }
   .mobile-booking:focus-visible { outline:2px solid white; outline-offset:3px; }
-  #hero > div:first-child { background-image:none !important; }
-  #hero > div:nth-child(2) { display:none; }
+  .hero-bg, .hero-scrim { display:none; }
   #hero .hero-shell { padding-top:88px; padding-bottom:18px; }
   #hero .hero-stage { min-height:0; height:calc(195px + 60vw); }
   #hero .hero-copy { max-width:600px; }

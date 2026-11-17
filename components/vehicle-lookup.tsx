@@ -1,6 +1,8 @@
 "use client"
 
 import Script from "next/script"
+import { MessageCircle } from "lucide-react"
+import { whatsappUrl } from "@/lib/site-config"
 import { BENSKY_ORIGIN, useBenskyVehicle } from "@/hooks/use-bensky-vehicle"
 
 const WIDGET_ID = "1977"
@@ -53,8 +55,9 @@ export function VehicleLookup() {
           <div className="relative z-10 grid items-start gap-5 px-5 py-6 lg:grid-cols-[minmax(265px,0.36fr)_minmax(0,0.64fr)] lg:gap-6 lg:px-9 lg:py-8">
             <div className="lg:border-r lg:border-white/25 lg:pr-6">
               <span className="mb-3 block h-[3px] w-12 bg-[var(--brand)]" aria-hidden="true" />
+              <p className="mb-2 text-[10px] font-mono uppercase tracking-[.16em] text-white/60">Chiptuning kalkulator</p>
               <h2 className="font-sans text-2xl font-black italic tracking-tight text-white sm:text-3xl">
-                Konfigurator tuninga
+                Koliko snage dobijaš?
               </h2>
               <p className="mt-3 max-w-[350px] text-sm leading-6 text-white/75">
                 Pronađi marku, model i motor. Pogledaj procenjene rezultate snage i obrtnog momenta.
@@ -86,21 +89,22 @@ export function VehicleLookup() {
             style={{ gridTemplateRows: vehicleName ? "1fr" : "0fr" }}
           >
             <div className="overflow-hidden">
-              <div className="flex flex-col items-start justify-between gap-4 border-t border-white/15 bg-[#081116]/90 px-6 py-5 sm:flex-row sm:items-center lg:px-9">
+              <div className="flex flex-col items-start justify-between gap-4 border-t-2 border-[var(--brand)] bg-[#0c1a21] px-6 py-6 sm:flex-row sm:items-center lg:px-9">
                 <div>
-                  <p className="mb-1 text-[10px] uppercase tracking-[.16em] text-[var(--cool-accent)]">Izabrano vozilo</p>
-                  <p className="text-sm text-white">{vehicleName}</p>
+                  <p className="mb-1 text-[10px] uppercase tracking-[.16em] text-[var(--brand)]">Tvoje vozilo</p>
+                  <p className="text-lg font-semibold text-white">{vehicleName}</p>
+                  <p className="mt-1 text-xs text-white/60">Pošalji nam upit — javljamo se sa terminom i cenom.</p>
                 </div>
                 <div className="flex flex-wrap gap-3">
-                  <a href="#contact" className="border border-white/30 px-5 py-3 text-xs font-semibold uppercase tracking-wider text-white hover:bg-white/10">Popuni formu</a>
                   <a
-                    href={`https://wa.me/381628727274?text=${encodeURIComponent(waText)}`}
+                    href={whatsappUrl(waText)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="bg-[var(--brand)] px-6 py-3 text-xs font-bold uppercase tracking-wider text-[#071218] hover:bg-[var(--brand-bright)]"
+                    className="inline-flex min-h-11 items-center gap-2 rounded-[5px] bg-[var(--brand)] px-6 text-sm font-bold text-[#071218] hover:bg-[var(--brand-bright)]"
                   >
-                    Zakaži chiptuning
+                    <MessageCircle size={17} aria-hidden="true" /> Zakaži preko WhatsApp-a
                   </a>
+                  <a href="#contact" className="inline-flex min-h-11 items-center rounded-[5px] border border-white/30 px-5 text-sm font-semibold text-white hover:bg-white/10">Popuni formu</a>
                 </div>
               </div>
             </div>

@@ -15,8 +15,8 @@ export default function Page() {
       <Navbar />
       <Hero />
       <VehicleLookup />
-      <Configurator />
       <Services />
+      <Configurator />
       <About />
       <Gallery />
       <FAQ />

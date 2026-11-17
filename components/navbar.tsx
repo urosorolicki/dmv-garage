@@ -5,10 +5,11 @@ import Link from "next/link"
 import { CalendarDays, Phone, ChevronsRight } from "lucide-react"
 import { business } from "@/lib/site-config"
 
+// Logo links home, so no separate "Početna" item.
 const navLinks = [
-  { label: "Početna", href: "/#hero" },
+  { label: "Chiptuning", href: "/#vehicle-lookup" },
   { label: "Usluge", href: "/#services" },
-  { label: "Konfigurator", href: "/#vehicle-lookup" },
+  { label: "Pre / posle", href: "/#pre-posle" },
   { label: "Galerija", href: "/#gallery" },
   { label: "O nama", href: "/#about" },
   { label: "Kontakt", href: "/#contact" },
@@ -44,7 +45,7 @@ export function Navbar() {
       }`}
     >
       <nav className="garage-navigation flex items-center justify-between gap-4 px-6 lg:px-12 py-2 max-w-[1540px] mx-auto">
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/" className="flex items-center gap-2" aria-label="Garage DMV — početna">
           <span className="garage-wordmark"><ChevronsRight aria-hidden="true" /><span>GARAGE<span className="text-[var(--brand)]"> DMV</span></span></span>
         </Link>
 
@@ -58,7 +59,7 @@ export function Navbar() {
               >
                 {link.label}
                 <span
-                  className={`absolute -bottom-4 ${link.label === "Početna" ? "!w-full" : ""} left-0 h-[1px] w-0 group-hover:w-full transition-all duration-300`}
+                  className="absolute -bottom-4 left-0 h-[1px] w-0 group-hover:w-full transition-all duration-300"
                   style={{ background: "var(--brand)" }}
                 />
               </Link>
@@ -131,7 +132,7 @@ export function Navbar() {
           <a
             href="/#contact"
             onClick={() => setMenuOpen(false)}
-            className="mt-4 inline-flex items-center justify-center px-5 py-3 text-sm tracking-[0.06em] uppercase font-medium w-full"
+            className="mt-4 inline-flex items-center justify-center gap-2 px-5 py-3 text-sm tracking-[0.06em] uppercase font-medium w-full"
             style={{ background: "var(--brand)", color: "oklch(0.08 0 0)" }}
           >
             <CalendarDays size={17} aria-hidden="true" /> Zakaži termin

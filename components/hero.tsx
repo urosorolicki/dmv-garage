@@ -1,22 +1,22 @@
 "use client"
 
 import { useState } from "react"
-import { ArrowRight, ChevronRight, Play, Cpu, Lightbulb, Armchair, SlidersHorizontal, Laptop } from "lucide-react"
+import { ChevronRight, Play, Cpu, Gauge, Lightbulb, Armchair, SlidersHorizontal, Laptop } from "lucide-react"
 
 type ServiceID = "performance" | "lighting" | "interior" | "electronics"
 
 const services = [
   { id: "performance" as const, label: "Performanse", detail: "Chiptuning / ECU remap", href: "#vehicle-lookup", icon: Cpu, className: "left-[40%] top-[12%]", point: { x: 805, y: 195 }, line: { x: 738, y: 113 } },
-  { id: "lighting" as const, label: "Svetla", detail: "LED ugradnja i retrofit", href: "#gallery", icon: Lightbulb, className: "left-[47%] top-[77%]", point: { x: 1020, y: 255 }, line: { x: 844, y: 333 } },
+  { id: "lighting" as const, label: "Svetla", detail: "LED ugradnja i retrofit", href: "#services", icon: Lightbulb, className: "left-[47%] top-[77%]", point: { x: 1020, y: 255 }, line: { x: 844, y: 333 } },
   { id: "interior" as const, label: "Enterijer", detail: "Ambijentalno osvetljenje", href: "#services", icon: Armchair, className: "right-[0%] top-[4%]", point: { x: 1195, y: 163 }, line: { x: 1260, y: 85 } },
-  { id: "electronics" as const, label: "Elektronika", detail: "Kodiranje i dijagnostika", href: "#services", icon: Cpu, className: "right-[0%] top-[77%]", point: { x: 1212, y: 285 }, line: { x: 1295, y: 333 } },
+  { id: "electronics" as const, label: "Elektronika", detail: "Kodiranje i dijagnostika", href: "#services", icon: Laptop, className: "right-[0%] top-[77%]", point: { x: 1212, y: 285 }, line: { x: 1295, y: 333 } },
 ]
 
 const links = [
   { label: "Chiptuning", description: "Više snage i obrtnog momenta", href: "#vehicle-lookup", icon: Cpu },
-  { label: "LED ugradnja", description: "Moderniji izgled i bolja vidljivost", href: "#gallery", icon: Lightbulb },
+  { label: "LED ugradnja", description: "Moderniji izgled i bolja vidljivost", href: "#services", icon: Lightbulb },
   { label: "Auto elektronika", description: "Kodiranje, aktivacije i servis", href: "#services", icon: Laptop },
-  { label: "Konfigurator", description: "Proveri potencijal svog vozila", href: "#vehicle-lookup", icon: SlidersHorizontal },
+  { label: "Pre / posle", description: "Pogledaj razliku na pravim autima", href: "#pre-posle", icon: SlidersHorizontal },
 ]
 
 export function Hero() {
@@ -26,27 +26,32 @@ export function Hero() {
     <section id="hero" aria-labelledby="hero-title" className="relative isolate overflow-hidden bg-[#061017]">
       {/* One stationary image, never a faux 3D configurator. The licensed Bensky
           selection tool remains in its own section immediately below. */}
-      <div
-        className="pointer-events-none absolute inset-0 bg-cover bg-[position:66%_center] md:bg-[position:center_44%]"
-        style={{ backgroundImage: "url('/images/garage-dmv-hero.webp')" }}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        src="/images/garage-dmv-hero.webp"
+        alt=""
+        width={1672}
+        height={941}
+        fetchPriority="high"
+        className="hero-bg pointer-events-none"
         aria-hidden="true"
       />
       <div
-        className="pointer-events-none absolute inset-0"
+        className="hero-scrim pointer-events-none absolute inset-0"
         aria-hidden="true"
         style={{
           background: "linear-gradient(90deg,rgba(3,11,16,.78),rgba(3,11,16,.4) 33%,rgba(3,11,16,.04) 67%),linear-gradient(0deg,#061017 0%,transparent 30%,rgba(3,9,13,.17) 100%)",
         }}
       />
 
-      <div className="hero-shell relative mx-auto max-w-[1540px] px-5 pb-7 pt-[107px] sm:px-8 lg:px-12 lg:pt-[100px]">
+      <div className="hero-shell relative mx-auto max-w-[1540px] px-5 pb-7 pt-[107px] sm:px-8 lg:px-12 lg:pb-[22px] lg:pt-[100px]">
         <div className="hero-stage relative min-h-[475px] lg:min-h-0 lg:h-[390px]">
           <div className="hero-copy relative z-10 max-w-[600px]">
             <p className="hero-kicker mb-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] font-medium uppercase tracking-[.02em] text-[#e3e2df]/80 sm:text-xs">
               <span className="mr-1 h-5 w-1 skew-x-[-17deg] bg-[var(--brand)]" aria-hidden="true" />
               Chiptuning <span className="text-[var(--brand)]">/</span> LED ugradnja <span className="text-[var(--brand)]">/</span> Auto elektronika
             </p>
-            <h1 id="hero-title" style={{ fontFamily: "Arial, Helvetica, sans-serif" }} className="max-w-[620px] font-sans text-[clamp(2rem,3.1vw,3.4rem)] font-black italic uppercase leading-[1.08] tracking-[-.025em] text-[#f4f4f2]">
+            <h1 id="hero-title" className="max-w-[620px] text-[clamp(2rem,3.1vw,3.4rem)] font-black italic uppercase leading-[1.08] tracking-[-.025em] text-[#f4f4f2]">
               <span className="block whitespace-nowrap">Više snage.</span>
               <span className="block whitespace-nowrap">Bolji izgled.</span>
               <span className="block text-[var(--brand)] sm:whitespace-nowrap">Potpuna kontrola.</span>
@@ -55,8 +60,8 @@ export function Hero() {
               Specijalizovani za chiptuning, LED ugradnju i napredna elektronska rešenja za vaše vozilo.
             </p>
             <div className="hero-actions mt-6 flex flex-wrap gap-3">
-              <a href="#services" className="inline-flex min-h-12 items-center justify-center gap-3 rounded-[5px] bg-[var(--brand)] px-6 text-sm font-bold text-[#0b1216] transition-colors hover:bg-[var(--brand-bright)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
-                Istraži usluge <ArrowRight size={18} aria-hidden="true" />
+              <a href="#vehicle-lookup" className="inline-flex min-h-12 items-center justify-center gap-3 rounded-[5px] bg-[var(--brand)] px-6 text-sm font-bold text-[#0b1216] transition-colors hover:bg-[var(--brand-bright)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
+                <Gauge size={18} aria-hidden="true" /> Proveri snagu
               </a>
               <a href="#gallery" className="inline-flex min-h-12 items-center justify-center gap-3 rounded-[5px] border border-white/50 bg-[#09141a]/70 px-5 text-sm font-semibold text-white transition-colors hover:bg-white/15 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
                 <Play size={18} aria-hidden="true" /> Pogledaj radove
@@ -70,9 +75,10 @@ export function Hero() {
             </div>
           </div>
 
-          <div className="hero-mobile-scene" aria-label="Usluge na vozilu">
+          <div className="hero-mobile-scene" role="group" aria-label="Usluge na vozilu">
             {/* The same approved photograph, framed to show the whole car on phones. */}
-            <img src="/images/garage-dmv-hero.webp" alt="Crni Audi u Garage DMV radionici" width={1672} height={941} />
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/images/garage-dmv-hero.webp" alt="Crni Audi u Garage DMV radionici" width={1672} height={941} fetchPriority="high" />
             <svg className="mobile-callout-wires" viewBox="0 0 390 234" preserveAspectRatio="none" aria-hidden="true">
               {[
                 { id: "performance", x: 119, y: 131, fromX: 60, fromY: 90 },
@@ -82,8 +88,8 @@ export function Hero() {
               ].map((point) => (
                 <g key={point.id}>
                   <line x1={point.fromX} y1={point.fromY} x2={point.x} y2={point.y} stroke="white" strokeOpacity=".75" strokeWidth="1" />
-                  <circle cx={point.x} cy={point.y} r="7" fill="#ff8a00" fillOpacity=".16" stroke="#ff8a00" strokeOpacity=".7" />
-                  <circle cx={point.x} cy={point.y} r="3.5" fill="#ff8a00" stroke="white" strokeWidth="1" />
+                  <circle cx={point.x} cy={point.y} r="7" style={{ fill: "var(--brand)", stroke: "var(--brand)" }} fillOpacity=".16" strokeOpacity=".7" />
+                  <circle cx={point.x} cy={point.y} r="3.5" style={{ fill: "var(--brand)" }} stroke="white" strokeWidth="1" />
                 </g>
               ))}
             </svg>
@@ -109,9 +115,9 @@ export function Hero() {
           >
             {services.map((s) => (
               <g key={s.id}>
-                <line x1={s.line.x} y1={s.line.y} x2={s.point.x} y2={s.point.y} stroke={active === s.id ? "#f3a05b" : "#f4f6f4"} strokeOpacity=".9" strokeWidth="1.5" />
-                <circle cx={s.point.x} cy={s.point.y} r="7" fill="#ed985e" stroke="#f4f5f3" strokeWidth="2" />
-                <circle cx={s.point.x} cy={s.point.y} r="14" fill="none" stroke="#ef985c" strokeOpacity=".6" />
+                <line x1={s.line.x} y1={s.line.y} x2={s.point.x} y2={s.point.y} style={{ stroke: active === s.id ? "var(--brand)" : "#f4f6f4" }} strokeOpacity=".9" strokeWidth="1.5" />
+                <circle cx={s.point.x} cy={s.point.y} r="7" style={{ fill: "var(--brand)" }} stroke="#f4f5f3" strokeWidth="2" />
+                <circle cx={s.point.x} cy={s.point.y} r="14" fill="none" style={{ stroke: "var(--brand)" }} strokeOpacity=".6" />
               </g>
             ))}
           </svg>
@@ -156,8 +162,6 @@ export function Hero() {
             )
           })}
         </nav>
-
-
       </div>
     </section>
   )
