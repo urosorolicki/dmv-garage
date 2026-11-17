@@ -94,6 +94,7 @@ export function Navbar() {
       <div
         id="mobile-navigation"
         aria-hidden={!menuOpen}
+        inert={!menuOpen}
         className={`md:hidden overflow-hidden transition-all duration-500 ease-out ${
           menuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
         }`}
