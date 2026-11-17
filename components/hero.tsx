@@ -110,7 +110,7 @@ export function Hero() {
         </div>
 
         {/* Directly below the car, like the approved reference. */}
-        <nav aria-label="Usluge" className="grid grid-cols-2 gap-2.5 lg:grid-cols-4">
+        <nav aria-label="Usluge" className="mt-7 grid grid-cols-2 gap-2.5 lg:mt-8 lg:grid-cols-4">
           {links.map((link, index) => {
             const Icon = link.icon
             return (
