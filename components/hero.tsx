@@ -47,10 +47,10 @@ export function Hero() {
               <span className="mr-1 h-5 w-1 skew-x-[-17deg] bg-[var(--brand)]" aria-hidden="true" />
               Chiptuning <span className="text-[var(--brand)]">/</span> LED ugradnja <span className="text-[var(--brand)]">/</span> Auto elektronika
             </p>
-            <h1 id="hero-title" className="max-w-[620px] font-sans text-[clamp(2.4rem,4.1vw,4.35rem)] font-black italic uppercase leading-[.99] tracking-[-.047em] text-[#f4f4f2]">
+            <h1 id="hero-title" className="max-w-[620px] font-sans text-[clamp(2.1rem,4.1vw,4.35rem)] font-black italic uppercase leading-[.99] tracking-[-.047em] text-[#f4f4f2]">
               <span className="block whitespace-nowrap">Više snage.</span>
               <span className="block whitespace-nowrap">Bolji izgled.</span>
-              <span className="block whitespace-nowrap text-[var(--brand)]">Potpuna kontrola.</span>
+              <span className="block text-[var(--brand)] sm:whitespace-nowrap">Potpuna kontrola.</span>
             </h1>
             <p className="mt-6 max-w-[415px] text-sm leading-6 text-[#d9dddf] md:text-base md:leading-7">
               Specijalizovani za chiptuning, LED ugradnju i napredna elektronska rešenja za vaše vozilo.
