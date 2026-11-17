@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { ArrowRight, ChevronRight, Play, Cpu, Gauge, Lightbulb, Armchair, SlidersHorizontal, Laptop } from "lucide-react"
+import { ArrowRight, ChevronRight, Play, Cpu, Lightbulb, Armchair, SlidersHorizontal, Laptop } from "lucide-react"
 
 type ServiceID = "performance" | "lighting" | "interior" | "electronics"
 
@@ -21,7 +21,6 @@ const links = [
 
 export function Hero() {
   const [active, setActive] = useState<ServiceID>("lighting")
-  const selected = services.find((service) => service.id === active) ?? services[1]
 
   return (
     <section id="hero" aria-labelledby="hero-title" className="relative isolate overflow-hidden bg-[#061017]">
@@ -43,7 +42,7 @@ export function Hero() {
       <div className="hero-shell relative mx-auto max-w-[1540px] px-5 pb-7 pt-[107px] sm:px-8 lg:px-12 lg:pt-[100px]">
         <div className="hero-stage relative min-h-[475px] lg:min-h-0 lg:h-[390px]">
           <div className="hero-copy relative z-10 max-w-[600px]">
-            <p className="mb-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] font-medium uppercase tracking-[.02em] text-[#e3e2df]/80 sm:text-xs">
+            <p className="hero-kicker mb-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] font-medium uppercase tracking-[.02em] text-[#e3e2df]/80 sm:text-xs">
               <span className="mr-1 h-5 w-1 skew-x-[-17deg] bg-[var(--brand)]" aria-hidden="true" />
               Chiptuning <span className="text-[var(--brand)]">/</span> LED ugradnja <span className="text-[var(--brand)]">/</span> Auto elektronika
             </p>
@@ -52,10 +51,10 @@ export function Hero() {
               <span className="block whitespace-nowrap">Bolji izgled.</span>
               <span className="block text-[var(--brand)] sm:whitespace-nowrap">Potpuna kontrola.</span>
             </h1>
-            <p className="mt-6 max-w-[415px] text-sm leading-6 text-[#d9dddf] md:text-base md:leading-7">
+            <p className="hero-description mt-6 max-w-[415px] text-sm leading-6 text-[#d9dddf] md:text-base md:leading-7">
               Specijalizovani za chiptuning, LED ugradnju i napredna elektronska rešenja za vaše vozilo.
             </p>
-            <div className="mt-6 flex flex-wrap gap-3">
+            <div className="hero-actions mt-6 flex flex-wrap gap-3">
               <a href="#services" className="inline-flex min-h-12 items-center justify-center gap-3 rounded-[5px] bg-[var(--brand)] px-6 text-sm font-bold text-[#0b1216] transition-colors hover:bg-[var(--brand-bright)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
                 Istraži usluge <ArrowRight size={18} aria-hidden="true" />
               </a>
@@ -74,6 +73,20 @@ export function Hero() {
           <div className="hero-mobile-scene" aria-label="Usluge na vozilu">
             {/* The same approved photograph, framed to show the whole car on phones. */}
             <img src="/images/garage-dmv-hero.webp" alt="Crni Audi u Garage DMV radionici" width={1672} height={941} />
+            <svg className="mobile-callout-wires" viewBox="0 0 390 234" preserveAspectRatio="none" aria-hidden="true">
+              {[
+                { id: "performance", x: 119, y: 131, fromX: 60, fromY: 90 },
+                { id: "lighting", x: 216, y: 153, fromX: 140, fromY: 212 },
+                { id: "interior", x: 263, y: 103, fromX: 330, fromY: 90 },
+                { id: "electronics", x: 285, y: 175, fromX: 326, fromY: 195 },
+              ].map((point) => (
+                <g key={point.id}>
+                  <line x1={point.fromX} y1={point.fromY} x2={point.x} y2={point.y} stroke="white" strokeOpacity=".75" strokeWidth="1" />
+                  <circle cx={point.x} cy={point.y} r="7" fill="#ff8a00" fillOpacity=".16" stroke="#ff8a00" strokeOpacity=".7" />
+                  <circle cx={point.x} cy={point.y} r="3.5" fill="#ff8a00" stroke="white" strokeWidth="1" />
+                </g>
+              ))}
+            </svg>
             {services.map((service) => {
               const Icon = service.icon
               return (

@@ -26,6 +26,15 @@ export function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  useEffect(() => {
+    if (!menuOpen) return
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMenuOpen(false)
+    }
+    window.addEventListener("keydown", closeOnEscape)
+    return () => window.removeEventListener("keydown", closeOnEscape)
+  }, [menuOpen])
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 border-b border-white/15 transition-all duration-300 ${
@@ -34,7 +43,7 @@ export function Navbar() {
           : "bg-[#061017]/85 backdrop-blur-md"
       }`}
     >
-      <nav className="flex items-center justify-between gap-4 px-6 lg:px-12 py-2 max-w-[1540px] mx-auto">
+      <nav className="garage-navigation flex items-center justify-between gap-4 px-6 lg:px-12 py-2 max-w-[1540px] mx-auto">
         <Link href="/" className="flex items-center gap-2">
           <span className="garage-wordmark"><ChevronsRight aria-hidden="true" /><span>GARAGE<span className="text-[var(--brand)]"> DMV</span></span></span>
         </Link>
@@ -64,6 +73,10 @@ export function Navbar() {
           style={{ background: "var(--brand)", color: "oklch(0.08 0 0)" }}
         >
           <CalendarDays size={17} aria-hidden="true" /> Zakaži termin
+        </a>
+
+        <a href="/#contact" className="mobile-booking" aria-label="Zakaži termin" title="Zakaži termin" onClick={() => setMenuOpen(false)}>
+          <CalendarDays size={19} aria-hidden="true" />
         </a>
 
         {/* Mobile menu button */}
@@ -98,7 +111,7 @@ export function Navbar() {
         aria-hidden={!menuOpen}
         inert={!menuOpen}
         className={`lg:hidden overflow-hidden transition-all duration-500 ease-out ${
-          menuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+          menuOpen ? "max-h-[calc(100dvh-60px)] overflow-y-auto opacity-100" : "max-h-0 opacity-0"
         }`}
       >
         <div className="px-6 pb-6 bg-background/95 backdrop-blur-xl border-b border-border/30">
