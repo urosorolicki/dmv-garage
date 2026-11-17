@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { CalendarDays, Phone, ChevronsRight } from "lucide-react"
+import { CalendarDays, Phone } from "lucide-react"
 import { business } from "@/lib/site-config"
 
 // Logo links home, so no separate "Početna" item.
@@ -45,8 +45,9 @@ export function Navbar() {
       }`}
     >
       <nav className="garage-navigation flex items-center justify-between gap-4 px-6 lg:px-12 py-2 max-w-[1540px] mx-auto">
-        <Link href="/" className="flex items-center gap-2" aria-label="Garage DMV — početna">
-          <span className="garage-wordmark"><ChevronsRight aria-hidden="true" /><span>GARAGE<span className="text-[var(--brand)]"> DMV</span></span></span>
+        <Link href="/" className="flex items-center gap-2">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo.png" alt="DMV Garage" width={64} height={64} className="h-14 md:h-16 w-auto" />
         </Link>
 
         {/* Desktop nav */}
