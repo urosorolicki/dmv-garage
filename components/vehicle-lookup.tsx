@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from "react"
 import Script from "next/script"
+import { track } from "@vercel/analytics"
 import { BENSKY_ORIGIN, useBenskyVehicle } from "@/hooks/use-bensky-vehicle"
 
 const WIDGET_ID = "1977"
@@ -126,6 +127,7 @@ export function VehicleLookup() {
                   </a>
                   <a
                     href={`https://wa.me/381628727274?text=${encodeURIComponent(waText)}`}
+                    onClick={() => track("booking_whatsapp_open", { source: "vehicle_lookup" })}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="px-8 py-3 text-xs tracking-[0.12em] uppercase transition-opacity duration-300 hover:opacity-85 font-medium"
