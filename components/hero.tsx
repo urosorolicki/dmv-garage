@@ -101,7 +101,7 @@ export function Hero() {
               <span className="h-[2px] w-8 bg-[var(--brand)]" aria-hidden="true" />
               Chiptuning <span className="text-[var(--brand)]">/</span> LED ugradnja <span className="text-[var(--brand)]">/</span> Auto elektronika
             </p>
-            <h1 id="hero-title" className="font-display text-[clamp(3.45rem,7.3vw,7.5rem)] uppercase leading-[0.9] tracking-[0.005em] text-[#f1f0ed]">
+            <h1 id="hero-title" className="font-display text-[clamp(3rem,5.6vw,5.5rem)] uppercase leading-[0.95] tracking-[0.005em] text-[#f1f0ed]">
               <span className="block">Više snage.</span>
               <span className="block">Bolji izgled.</span>
               <span className="mt-1 block text-[var(--brand)]">Potpuna kontrola.</span>
