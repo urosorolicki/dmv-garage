@@ -1,6 +1,5 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
 import Script from "next/script"
 import { BENSKY_ORIGIN, useBenskyVehicle } from "@/hooks/use-bensky-vehicle"
 
@@ -30,17 +29,12 @@ declare global {
 // a "no permission" notice; it works on the registered production domain.
 
 export function VehicleLookup() {
-  const [isVisible, setIsVisible] = useState(false)
-  const sectionRef = useRef<HTMLElement>(null)
   const vehicleName = useBenskyVehicle()
+  const waText = vehicleName
+    ? `Zdravo! Zanima me chiptuning za ${vehicleName}. Možemo li dogovoriti termin?`
+    : ""
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setIsVisible(true) },
-      { threshold: 0.1 }
-    )
-    if (sectionRef.current) observer.observe(sectionRef.current)
-    return (
+  return (
     <section
       ref={sectionRef}
       id="vehicle-lookup"
