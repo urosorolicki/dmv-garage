@@ -4,53 +4,53 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  /* Workshop navy surfaces, shared by every section */
-  --background: #061017;
-  --foreground: oklch(0.92 0.006 65);
-  --heading: #f4f4f2;
-  --card: #0a1820;
-  --card-foreground: oklch(0.92 0.006 65);
-  --popover: #0a1820;
-  --popover-foreground: oklch(0.92 0.006 65);
-  --primary: oklch(0.92 0.006 65);
-  --primary-foreground: oklch(0.08 0 0);
-  --secondary: #0f2029;
-  --secondary-foreground: oklch(0.78 0.006 65);
-  --muted: #0f2029;
-  --muted-foreground: oklch(0.79 0.008 230);
-  --accent: #152a35;
-  --accent-foreground: oklch(0.85 0.006 65);
-  --destructive: oklch(0.577 0.245 27.325);
-  --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: #1d3340;
-  --input: #2f4654;
-  --ring: #ff8a00;
-  /* Brand — one orange site-wide; cyan only for light/LED accents */
-  --brand: #ff8a00;
-  --brand-bright: #ffa52c;
-  --brand-dim: #b36100;
-  --brand-subtle: rgb(255 138 0 / 0.12);
-  --cool-accent: #00d9f5;
-  --chart-1: #ff8a00;
+  /* Night workshop: motor-oil black, epoxy-floor grey, chalk text, and the
+     logo's own yellow as the only accent. */
+  --background: #141517;            /* ulje */
+  --card: #202225;                  /* beton */
+  --foreground: #ecebe4;            /* kreda */
+  --heading: #ecebe4;
+  --card-foreground: #ecebe4;
+  --popover: #202225;
+  --popover-foreground: #ecebe4;
+  --primary: #ecebe4;
+  --primary-foreground: #141517;
+  --secondary: #202225;
+  --secondary-foreground: #ecebe4;
+  --muted: #202225;
+  --muted-foreground: #9aa0a6;      /* čelik */
+  --accent: #2b2d31;
+  --accent-foreground: #ecebe4;
+  --destructive: #ff6b5b;
+  --destructive-foreground: #ff6b5b;
+  --border: rgb(236 235 228 / 0.12);
+  --input: #7c8086;                 /* field borders, 3:1+ on both greys */
+  --ring: #fcd805;
+  --brand: #fcd805;                 /* the logo's yellow */
+  --brand-bright: #ffe34d;
+  --brand-dim: #c9ac00;
+  --brand-subtle: rgb(252 216 5 / 0.12);
+  --cool-accent: #9aa0a6;
+  --chart-1: #fcd805;
   --chart-2: oklch(0.60 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
   --chart-5: oklch(0.769 0.188 70.08);
   --radius: 0.125rem;
-  --sidebar: oklch(0.10 0 0);
-  --sidebar-foreground: oklch(0.92 0.006 65);
-  --sidebar-primary: oklch(0.92 0.006 65);
-  --sidebar-primary-foreground: oklch(0.08 0 0);
-  --sidebar-accent: oklch(0.18 0 0);
-  --sidebar-accent-foreground: oklch(0.85 0.006 65);
-  --sidebar-border: oklch(0.17 0 0);
-  --sidebar-ring: #ff8a00;
+  --sidebar: #202225;
+  --sidebar-foreground: #ecebe4;
+  --sidebar-primary: #ecebe4;
+  --sidebar-primary-foreground: #141517;
+  --sidebar-accent: #2b2d31;
+  --sidebar-accent-foreground: #ecebe4;
+  --sidebar-border: rgb(236 235 228 / 0.12);
+  --sidebar-ring: #fcd805;
 }
 
 @theme inline {
-  --font-sans: var(--font-barlow), 'Barlow', sans-serif;
-  --font-display: var(--font-heading), 'Barlow', sans-serif;
-  --font-mono: var(--font-dm-mono), 'DM Mono', monospace;
+  --font-sans: var(--font-archivo), 'Archivo', sans-serif;
+  --font-display: var(--font-archivo), 'Archivo', sans-serif;
+  --font-mono: var(--font-archivo), 'Archivo', sans-serif;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-heading: var(--heading);
@@ -106,50 +106,6 @@
   }
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
-  width: 4px;
-}
-::-webkit-scrollbar-track {
-  background: var(--background);
-}
-::-webkit-scrollbar-thumb {
-  background: var(--brand-dim);
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--brand);
-}
-
-/* Film grain overlay */
-body::after {
-  content: "";
-  position: fixed;
-  inset: -100px;
-  width: calc(100% + 200px);
-  height: calc(100% + 200px);
-  pointer-events: none;
-  z-index: 9990;
-  opacity: 0.038;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-repeat: repeat;
-  background-size: 200px;
-  animation: grain 0.4s steps(1) infinite;
-}
-
-@keyframes grain {
-  0%   { transform: translate(0px, 0px); }
-  25%  { transform: translate(-3px, 2px); }
-  50%  { transform: translate(3px, -1px); }
-  75%  { transform: translate(-1px, 3px); }
-  100% { transform: translate(2px, -2px); }
-}
-
-/* Marquee */
-@keyframes marquee {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
-
 @utility no-scrollbar {
   scrollbar-width: none;
   &::-webkit-scrollbar {
@@ -157,129 +113,55 @@ body::after {
   }
 }
 
+/* One orchestrated moment: the hero headline and photo arrive once on load. */
+@keyframes enter {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+@keyframes photo-in {
+  from { opacity: 0; transform: scale(1.04); }
+  to { opacity: 1; transform: none; }
+}
+.hero-enter { animation: enter .8s .1s cubic-bezier(.2,.7,.2,1) both; }
+.hero-photo { animation: photo-in 1.4s cubic-bezier(.2,.7,.2,1) both; }
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  body::after { animation: none; }
+  .hero-enter, .hero-photo { animation: none; }
 }
 
-/* Garage DMV first-screen composition. */
-.service-link { box-shadow:inset 0 1px 0 #ffffff15,0 6px 15px #0005; }
-.service-link-light { border-color:#00d9f599; box-shadow:inset 0 0 22px #00c9ef22,0 0 12px #00c9ef30; }
-#hero-title { font-family:var(--font-heading), 'Barlow', sans-serif; font-weight:800; font-style:italic; }
-.hero-bg { position:absolute; inset:0; width:100%; height:100%; max-width:none; object-fit:cover; object-position:center 44%; }
-@media(min-width:1280px) { .hero-bg { inset:auto; top:-55px; right:0; width:95%; height:auto; object-fit:fill; } }
-
-.hero-mobile-scene, .mobile-booking { display:none; }
+/* Navigation */
+.mobile-booking { display:none; }
 @media(max-width:1023px) {
   .garage-navigation { padding:8px 16px; gap:8px; }
   .garage-navigation > a:first-child { margin-right:auto; }
   .garage-navigation > button { margin-right:0; flex-shrink:0; }
-  .mobile-booking { display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; flex-shrink:0; border-radius:7px; background:var(--brand); color:#071017; }
-  .mobile-booking:focus-visible { outline:2px solid white; outline-offset:3px; }
-  .hero-bg, .hero-scrim { display:none; }
-  #hero .hero-shell { padding-top:88px; padding-bottom:18px; }
-  #hero .hero-stage { min-height:0; height:calc(195px + 60vw); }
-  #hero .hero-copy { max-width:600px; }
-  #hero .hero-kicker { font-size:10px; gap:5px; margin-bottom:12px; letter-spacing:0; }
-  #hero-title { font-size:clamp(26px,8.2vw,35px); line-height:1.04; letter-spacing:-.03em; }
-  #hero-title span { white-space:nowrap; }
-  #hero .hero-description { margin-top:14px; font-size:14px; line-height:1.45; max-width:370px; text-shadow:0 2px 8px #000; }
-  #hero .hero-actions { margin-top:16px; flex-wrap:nowrap; gap:10px; }
-  #hero .hero-actions a { padding:0 16px; gap:8px; min-height:44px; font-size:13px; }
-  #hero .hero-meta { display:none; }
-  .hero-mobile-scene { display:block; position:absolute; top:190px; left:-20px; right:-20px; aspect-ratio:390/234; pointer-events:none; }
-  .hero-mobile-scene > img { position:absolute; top:-10.3%; right:0; width:155%; height:auto; max-width:none; mask-image:linear-gradient(to bottom,transparent,#000 32%,#000 85%,transparent); }
-  .mobile-callout-wires { position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
-  .mobile-callout { position:absolute; display:flex; align-items:center; gap:6px; min-height:44px; padding:7px 10px; border:1px solid #ffffff70; border-radius:7px; color:#fff; background:#061017ed; font-size:11px; font-weight:600; box-shadow:0 3px 12px #0009; pointer-events:auto; }
-  .mobile-callout > svg { color:var(--brand); flex-shrink:0; }
-  .mobile-callout:focus-visible { outline:2px solid var(--brand); outline-offset:3px; }
-  .mobile-callout-performance { left:4%; top:29%; }
-  .mobile-callout-interior { right:4%; top:29%; }
-  .mobile-callout-lighting { left:23%; bottom:0; border-color:var(--brand); }
-  .mobile-callout-electronics { right:3%; bottom:8%; }
-  #hero nav { position:relative; margin-top:12px; gap:6px; grid-template-columns:repeat(4,minmax(0,1fr)); }
-  #hero nav a { padding:10px 4px; gap:7px; min-height:74px; border-radius:9px; flex-direction:column; justify-content:flex-start; align-items:center; text-align:center; }
-  #hero nav a > svg { width:22px; }
-  #hero nav strong { font-size:12px; line-height:1.1; }
-  #hero nav a > span { padding:0; border:0; }
-  #hero nav a > span > span, #hero nav a > svg:last-child { display:none; }
-  #vehicle-lookup { padding-top:8px; }
-}
-@media(max-width:359px) {
-  #hero .hero-kicker { font-size:9px; gap:3px; }
-  #hero .hero-actions a { padding:0 10px; gap:6px; font-size:12px; }
-  #hero nav a { padding:10px 3px; gap:7px; }
-  #hero nav strong { font-size:10px; }
-
-  #hero nav a > span > span { font-size:10px; }
-  .mobile-callout { font-size:10px; padding:6px 8px; gap:5px; }
-}
-/* Phones: the four tiles under the car are the service navigation, so the
-   photo callouts and the kicker (same four services again) are dropped. */
-@media(max-width:639px) {
-  #hero .hero-kicker { display:none; }
-  .mobile-callout, .mobile-callout-wires { display:none; }
-  #hero .hero-shell { padding-top:96px; }
-}
-@media(min-width:640px) and (max-width:1023px) {
-  #hero .hero-stage { height:450px; }
-  #hero .hero-copy { width:53%; }
-  #hero-title { font-size:clamp(28px,4vw,40px); }
-  .hero-mobile-scene { left:auto; top:150px; right:-32px; width:66vw; }
-  .mobile-callout { font-size:12px; padding:8px 12px; }
-  .mobile-callout-performance { top:38%; }
-  #hero nav { grid-template-columns:repeat(4,minmax(0,1fr)); }
-  #hero nav a { flex-direction:row; align-items:flex-start; text-align:left; gap:10px; padding:14px 12px; }
-  #hero nav a > svg { width:22px; }
-  #hero nav strong { font-size:13px; }
-  #hero nav a > span > span { display:block; font-size:11px; line-height:1.35; }
-  #hero nav a > span { padding:0; border:0; }
-  #hero nav a > svg:last-child { display:none; }
+  .mobile-booking { display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; flex-shrink:0; border-radius:2px; background:var(--brand); color:#141517; }
+  .mobile-booking:focus-visible { outline:2px solid var(--foreground); outline-offset:3px; }
 }
 
-/* Engine photo stays visible; scrim only where text needs contrast. */
-.lookup-scrim { background:linear-gradient(180deg,rgba(8,19,27,.72) 0%,rgba(8,19,27,.82) 100%); }
-@media(min-width:1024px) {
-  .lookup-scrim { background:linear-gradient(90deg,rgba(8,19,27,.94) 0%,rgba(8,19,27,.82) 30%,rgba(8,19,27,.45) 62%,rgba(8,19,27,.2) 100%); }
-}
-
-/* Component classes live in the components layer so Tailwind utilities (hidden, px-*, text-*) can override them. */
+/* Component classes live in the components layer so Tailwind utilities can override them. */
 @layer components {
-/* Shared section heading: orange rule, mono kicker, extra-bold italic title */
-.section-kicker { display:block; margin-bottom:.5rem; font-family:var(--font-dm-mono), monospace; font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:var(--brand); }
-.section-title { font-family:var(--font-heading), 'Barlow', sans-serif; font-weight:800; font-style:italic; text-transform:uppercase; font-size:clamp(2.2rem,5.2vw,4.4rem); line-height:1; letter-spacing:-.01em; color:var(--heading); }
-.section-title-sm { font-size:clamp(1.6rem,2.6vw,2.1rem); }
-/* Orange mono label for sub-groups inside a section (Telefon, Adresa, Oprema…) */
-.subhead { display:block; font-family:var(--font-dm-mono), monospace; font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--brand); }
+/* Signage type: Archivo at its narrowest width, heavy, set in capitals */
+.signage { font-stretch:62%; font-weight:850; text-transform:uppercase; line-height:.88; letter-spacing:-.005em; }
+.section-title { font-stretch:62%; font-weight:800; text-transform:uppercase; font-size:clamp(44px, 5.4vw, 84px); line-height:.9; color:var(--heading); }
+.section-title-sm { font-size:clamp(32px, 3vw, 44px); }
+.section-intro { max-width:36rem; margin-top:1.25rem; font-size:1.125rem; line-height:1.6; color:var(--muted-foreground); }
+/* Label for sub-groups inside a section (Telefon, Adresa, Oprema…) */
+.subhead { display:block; font-size:14px; font-weight:500; color:var(--muted-foreground); }
 
-/* Buttons — same shape as the hero CTAs */
-.btn { display:inline-flex; align-items:center; justify-content:center; gap:.6rem; min-height:48px; padding:0 1.5rem; border-radius:5px; font-size:.875rem; font-weight:700; transition:background-color .2s, border-color .2s, color .2s; }
-.btn:focus-visible { outline:2px solid #fff; outline-offset:3px; }
-.btn-primary { background:var(--brand); color:#0b1216; }
+/* Buttons: yellow primary with dark text, chalk outline secondary, near-square corners */
+.btn { display:inline-flex; align-items:center; justify-content:center; gap:.6rem; min-height:52px; padding:0 1.6rem; border-radius:2px; font-size:1rem; font-weight:600; line-height:1.2; transition:background-color .2s, border-color .2s, color .2s; }
+.btn:focus-visible { outline:2px solid var(--foreground); outline-offset:3px; }
+.btn:active { transform:translateY(1px); }
+.btn-primary { background:var(--brand); color:#141517; }
 .btn-primary:hover { background:var(--brand-bright); }
-.btn-secondary { border:1px solid rgb(255 255 255 / .5); background:rgb(9 20 26 / .7); color:#fff; font-weight:600; }
-.btn-secondary:hover { background:rgb(255 255 255 / .15); }
+.btn-secondary { border:1.5px solid var(--foreground); color:var(--foreground); }
+.btn-secondary:hover { background:rgb(236 235 228 / .1); }
 }
 
-/* Section rhythm: every other section sits on the lighter card surface */
-.section-alt { background:var(--card); border-top:1px solid rgb(255 255 255 / .06); border-bottom:1px solid rgb(255 255 255 / .06); }
+/* Alternating section ground */
+.section-alt { background:var(--card); }
 
-/* Contact: workshop photo behind the info column (wall, neon, tool cabinets),
-   fading out before the form so the form stays on a plain surface. */
-.contact-photo { position:absolute; top:0; bottom:0; left:0; right:auto; width:58%; background:url('/images/garage-dmv-hero.webp') no-repeat; background-size:cover; background-position:14% 45%;
-  -webkit-mask-image:linear-gradient(90deg,#000 45%,transparent 100%); mask-image:linear-gradient(90deg,#000 45%,transparent 100%); }
-.contact-scrim { background:linear-gradient(90deg, rgb(6 16 23 / .55) 0%, rgb(6 16 23 / .66) 40%, rgb(6 16 23 / .9) 58%, var(--background) 72%), linear-gradient(0deg, var(--background) 0%, transparent 14%, transparent 86%, var(--background) 100%); }
-@media(max-width:1023px) {
-  .contact-photo { right:0; bottom:auto; width:auto; height:640px; background-position:16% 40%;
-    -webkit-mask-image:linear-gradient(180deg,#000 55%,transparent 100%); mask-image:linear-gradient(180deg,#000 55%,transparent 100%); }
-  .contact-scrim { background:linear-gradient(180deg, rgb(6 16 23 / .5) 0%, rgb(6 16 23 / .66) 40%, rgb(6 16 23 / .92) 560px, var(--background) 640px); }
-}
-
-/* Warm workshop light leaking into a section corner */
-.glow-tl { background-image:radial-gradient(55% 45% at 0% 0%, rgb(255 138 0 / .13), transparent 70%); }
-.glow-br { background-image:radial-gradient(55% 50% at 100% 100%, rgb(255 138 0 / .11), transparent 70%); }
-
-/* Orange surface with diagonal stripes (CTA band, stats, FAQ card, ticker) */
-.orange-surface { background-color:var(--brand); color:#0b1216; background-image:repeating-linear-gradient(-55deg, rgb(0 0 0 / .06) 0 14px, transparent 14px 28px); }
-.ticker-track { animation:marquee 32s linear infinite; }
-@media (prefers-reduced-motion: reduce) { .ticker-track { animation:none; } }
+/* Closing band in the logo yellow, with faint hazard-tape stripes */
+.yellow-band { background-color:var(--brand); color:#141517; background-image:repeating-linear-gradient(-45deg, rgb(0 0 0 / .05) 0 18px, transparent 18px 36px); }

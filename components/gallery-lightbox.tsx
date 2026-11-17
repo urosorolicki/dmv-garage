@@ -90,7 +90,7 @@ function LightboxCarousel({
     <>
       {/* Top bar */}
       <div className="relative z-10 flex items-center justify-between px-4 md:px-8 py-4">
-        <p className="text-xs tracking-[0.25em] uppercase font-mono text-muted-foreground tabular-nums" aria-live="polite">
+        <p className="text-xs text-muted-foreground tabular-nums" aria-live="polite">
           {index + 1} / {images.length}
         </p>
         <Dialog.Close
@@ -159,7 +159,7 @@ function LightboxCarousel({
           rel="noopener noreferrer"
           className="btn btn-primary flex-shrink-0 px-5"
         >
-          Želim isto
+          Pošalji na WhatsApp
         </a>
       </div>
     </>

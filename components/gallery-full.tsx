@@ -118,14 +118,14 @@ export function GalleryFull() {
                 type="button"
                 onClick={() => selectCategory(cat)}
                 aria-pressed={active}
-                className={`flex-shrink-0 px-4 py-2.5 text-xs tracking-[0.15em] uppercase rounded-sm transition-colors duration-300 ${
+                className={`flex-shrink-0 px-4 py-2.5 text-xs rounded-sm transition-colors duration-300 ${
                   active
                     ? "bg-foreground text-background"
                     : "border border-border text-muted-foreground hover:text-foreground hover:border-foreground/30"
                 }`}
               >
                 {cat}
-                <span className={`ml-2 font-mono ${active ? "opacity-60" : "opacity-50"}`}>{count}</span>
+                <span className={`ml-2 ${active ? "opacity-60" : "opacity-50"}`}>{count}</span>
               </button>
             )
           })}
@@ -145,7 +145,7 @@ export function GalleryFull() {
           >
             <Tile id={image.id} alt={image.alt} eager={index < EAGER_TILES} />
             <div className="absolute inset-x-0 bottom-0 p-2.5 md:p-3 bg-gradient-to-t from-black/80 via-black/30 to-transparent text-left md:opacity-0 md:group-hover:opacity-100 md:group-focus-visible:opacity-100 transition-opacity duration-300">
-              <p className="text-[9px] md:text-[10px] tracking-[0.25em] uppercase font-mono" style={{ color: "var(--brand)" }}>
+              <p className="text-[13px]" style={{ color: "var(--brand)" }}>
                 {image.category}
               </p>
               <p className="text-[11px] md:text-xs text-white/90 leading-snug line-clamp-2">{image.alt}</p>
