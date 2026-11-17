@@ -1,213 +1,217 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
-import dynamic from "next/dynamic"
-import { HERO_3D_ENABLED } from "@/lib/hero-3d"
+import { useState } from "react"
+import {
+  ArrowDownRight,
+  ArrowUpRight,
+  Cpu,
+  Gauge,
+  Lightbulb,
+  Armchair,
+  MoveUpRight,
+} from "lucide-react"
 
-// three.js is client-only and heavy — load it lazily, never during SSR
-const HeroCar3D = dynamic(() => import("@/components/hero-car-3d"), { ssr: false })
+type Feature = {
+  id: string
+  label: string
+  detail: string
+  href: string
+  coordinates: { left: string; top: string }
+  icon: typeof Gauge
+}
+
+const features: Feature[] = [
+  {
+    id: "performance",
+    label: "Performanse",
+    detail: "ECU remap i optimizacija motora, prilagođeni konkretnom vozilu.",
+    href: "#vehicle-lookup",
+    coordinates: { left: "44%", top: "34%" },
+    icon: Gauge,
+  },
+  {
+    id: "lighting",
+    label: "Svetla",
+    detail: "LED ugradnja i precizne promene osvetljenja.",
+    href: "#gallery",
+    coordinates: { left: "60%", top: "55%" },
+    icon: Lightbulb,
+  },
+  {
+    id: "interior",
+    label: "Enterijer",
+    detail: "Ambijentalna svetla i personalizacija unutrašnjosti.",
+    href: "#services",
+    coordinates: { left: "77%", top: "29%" },
+    icon: Armchair,
+  },
+  {
+    id: "electronics",
+    label: "Elektronika",
+    detail: "Dijagnostika, kodiranje i ugradnja elektronskih sistema.",
+    href: "#services",
+    coordinates: { left: "84%", top: "68%" },
+    icon: Cpu,
+  },
+]
+
+const quickLinks = [
+  { title: "Chiptuning", caption: "Snaga i obrtni moment", href: "#vehicle-lookup", icon: Gauge },
+  { title: "LED ugradnja", caption: "Osvetljenje po meri", href: "#gallery", icon: Lightbulb },
+  { title: "Auto elektronika", caption: "Dijagnostika i kodiranje", href: "#services", icon: Cpu },
+  { title: "Konfigurator", caption: "Proveri svoje vozilo", href: "#vehicle-lookup", icon: MoveUpRight },
+]
 
 export function Hero() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const contentRef = useRef<HTMLDivElement>(null)
-  const fogRef = useRef<HTMLDivElement>(null)
-  const rafRef = useRef<number | undefined>(undefined)
-  const [videoReady, setVideoReady] = useState(false)
-  const [use3D, setUse3D] = useState(false)
-  const [carReady, setCarReady] = useState(false)
-  const [reducedMotion, setReducedMotion] = useState(false)
-  const [showVideo, setShowVideo] = useState(false)
-
-
-  // Video only after hydration, and not for reduced-motion / data-saver users —
-  // the poster stays as a still. Enable the 3D car only on desktop, and only
-  // when the model is shipped.
-  useEffect(() => {
-    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    setReducedMotion(reduced)
-    const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection
-    setShowVideo(!reduced && !conn?.saveData)
-    if (!HERO_3D_ENABLED || window.innerWidth < 1024 || conn?.saveData) return
-    setUse3D(true)
-  }, [])
-
-  useEffect(() => {
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    if (prefersReduced) return
-
-    const handleScroll = () => {
-      if (rafRef.current) cancelAnimationFrame(rafRef.current)
-      rafRef.current = requestAnimationFrame(() => {
-        const y = window.scrollY
-        if (contentRef.current)
-          contentRef.current.style.transform = `translateY(${-(y * 0.3 * 0.15)}px)`
-        if (fogRef.current)
-          fogRef.current.style.opacity = String(Math.min(0.6, 0.3 + y * 0.0005))
-      })
-    }
-
-    window.addEventListener("scroll", handleScroll, { passive: true })
-    return () => {
-      window.removeEventListener("scroll", handleScroll)
-      if (rafRef.current) cancelAnimationFrame(rafRef.current)
-    }
-  }, [])
+  const [selected, setSelected] = useState("lighting")
+  const active = features.find((feature) => feature.id === selected) ?? features[0]
+  const ActiveIcon = active.icon
 
   return (
     <section
-      ref={sectionRef}
       id="hero"
-      aria-label="Hero - DMV Garage"
-      className="relative min-h-[100svh] flex items-center justify-center overflow-hidden bg-[oklch(0.08_0_0)]"
+      aria-labelledby="hero-title"
+      className="relative isolate min-h-[100svh] overflow-hidden bg-[#080e13]"
     >
-      {/* Poster — paints immediately, video fades in over it */}
-      <picture>
-        <source media="(max-width: 767px)" srcSet="/video/hero-poster-mobile.jpg" />
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src="/video/hero-poster.jpg"
-          alt=""
-          fetchPriority="high"
-          className={`absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-1000 ${
-            carReady ? "opacity-25" : "opacity-100"
-          }`}
-        />
-      </picture>
-
-      {/* Video background — 720p30 desktop, portrait crop on phones */}
-      {showVideo && (
-        <video
-          className={`absolute inset-0 w-full h-full object-cover z-0 transition-opacity duration-1000 ${
-            !videoReady ? "opacity-0" : carReady ? "opacity-25" : "opacity-100"
-          }`}
-          autoPlay
-          loop
-          muted
-          playsInline
-          preload="metadata"
-          aria-hidden="true"
-          onCanPlay={() => setVideoReady(true)}
-        >
-          <source media="(max-width: 767px)" src="/video/hero-mobile.mp4" type="video/mp4" />
-          <source src="/video/hero-720.webm" type="video/webm" />
-          <source src="/video/hero-720.mp4" type="video/mp4" />
-        </video>
-      )}
-
-      {/* Scrim — keeps the copy and the transparent navbar readable over the footage */}
+      {/* Existing approved site imagery remains in use until the cinematic
+          photo asset can be committed independently. No paid widget affected. */}
       <div
-        className="absolute inset-0 z-[1] pointer-events-none"
+        aria-hidden="true"
+        className="absolute inset-0 bg-cover bg-[position:63%_center] opacity-75 lg:bg-[position:center_34%]"
+        style={{ backgroundImage: 'url("/video/hero-poster.jpg")' }}
+      />
+      <div
+        aria-hidden="true"
+        className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(to bottom, oklch(0.08 0 0 / 0.6), oklch(0.08 0 0 / 0.25) 35%, oklch(0.08 0 0 / 0.35) 65%, oklch(0.08 0 0 / 0.85))",
+            "linear-gradient(90deg,rgba(4,10,14,.97) 0%,rgba(5,12,16,.89) 30%,rgba(5,12,16,.28) 68%,rgba(5,12,16,.45) 100%),linear-gradient(0deg,#080e13 0%,transparent 32%,rgba(4,9,13,.3) 95%)",
         }}
       />
-
-      {/* Radial ambient light */}
       <div
-        className="absolute inset-0 opacity-50 pointer-events-none"
-        style={{
-          background:
-            "radial-gradient(ellipse 80% 60% at 50% 40%, oklch(0.14 0 0), transparent)",
-        }}
+        aria-hidden="true"
+        className="absolute -right-24 top-12 h-[500px] w-[500px] rounded-full opacity-20 blur-[130px]"
+        style={{ background: "var(--cool-accent)" }}
       />
 
-      {/* Animated fog */}
-      <div
-        ref={fogRef}
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          opacity: 0.45,
-          background:
-            "radial-gradient(ellipse 100% 50% at 50% 100%, oklch(0.08 0 0), transparent)",
-          willChange: "opacity",
-        }}
-      />
+      <div className="relative mx-auto flex min-h-[100svh] max-w-[1440px] flex-col px-5 pb-10 pt-32 sm:px-6 lg:px-12 lg:pb-14 lg:pt-40">
+        <div className="grid min-h-[570px] flex-1 items-center gap-10 lg:grid-cols-[minmax(0,0.95fr)_minmax(0,1.05fr)] lg:gap-8">
+          <div className="relative z-20 max-w-[660px] pb-6">
+            <p className="mb-7 flex items-center gap-3 text-[10px] font-medium uppercase tracking-[0.26em] text-white/70 sm:text-xs">
+              <span className="h-[2px] w-8 bg-[var(--brand)]" aria-hidden="true" />
+              Chiptuning <span className="text-[var(--brand)]">/</span> LED ugradnja <span className="text-[var(--brand)]">/</span> Auto elektronika
+            </p>
+            <h1 id="hero-title" className="font-display text-[clamp(3.45rem,7.3vw,7.5rem)] uppercase leading-[0.9] tracking-[0.005em] text-[#f1f0ed]">
+              <span className="block">Više snage.</span>
+              <span className="block">Bolji izgled.</span>
+              <span className="mt-1 block text-[var(--brand)]">Potpuna kontrola.</span>
+            </h1>
+            <p className="mt-8 max-w-[440px] text-sm leading-7 text-[#d2d5d6] sm:text-base">
+              Chiptuning, LED ugradnja i elektronika. Sve što radimo,
+              pokazujemo kroz konkretne projekte — bez praznih obećanja.
+            </p>
+            <div className="mt-8 flex flex-wrap gap-3">
+              <a
+                href="#services"
+                className="inline-flex min-h-12 items-center justify-center gap-4 bg-[var(--brand)] px-6 text-sm font-semibold text-[#111315] transition-colors hover:bg-[var(--brand-bright)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[var(--brand)]"
+              >
+                Istraži usluge <ArrowUpRight size={17} aria-hidden="true" />
+              </a>
+              <a
+                href="#gallery"
+                className="inline-flex min-h-12 items-center justify-center gap-4 border border-white/35 bg-[#080e13]/30 px-6 text-sm font-medium text-white transition-colors hover:bg-white/10 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+              >
+                Pogledaj radove <ArrowUpRight size={17} aria-hidden="true" />
+              </a>
+            </div>
+            <div className="mt-10 flex flex-wrap items-center gap-x-7 gap-y-3 border-t border-white/15 pt-5 text-[11px] uppercase tracking-[0.17em] text-white/65">
+              <span>Stage 1–3 / ECU</span>
+              <span>LED / Enterijer</span>
+              <span>Beograd / Zemun</span>
+            </div>
+          </div>
 
-      {/* 3D car — right half on desktop, copy moves to the left */}
-      {use3D && (
-        <div
-          className={`absolute inset-y-0 right-0 w-[58%] z-[5] pointer-events-none transition-opacity duration-1000 ${
-            carReady ? "opacity-100" : "opacity-0"
-          }`}
-          aria-hidden="true"
-        >
-          <HeroCar3D reducedMotion={reducedMotion} onReady={() => setCarReady(true)} />
-        </div>
-      )}
-
-      {/* Content overlay */}
-      <div
-        ref={contentRef}
-        className={`relative z-10 px-5 sm:px-6 pt-28 pb-20 flex flex-col ${
-          use3D
-            ? "w-full max-w-[1440px] lg:px-12 items-start text-left"
-            : "text-center items-center"
-        }`}
-        style={{ willChange: "transform" }}
-      >
-        <p
-          className="hero-rise text-xs tracking-[0.4em] uppercase mb-4"
-          style={{ color: "var(--brand)", animationDelay: "200ms" }}
-        >
-          Chiptuning & LED ugradnja — Beograd
-        </p>
-        <h1 aria-label="Performanse bez kompromisa" className="font-display text-[clamp(2.65rem,11vw,8.125rem)] leading-[0.96] tracking-[0.005em] text-foreground uppercase max-w-full">
-          {["Performanse", "bez", "kompromisa"].map((line, lineIdx) => (
-            <span key={lineIdx} className="block overflow-hidden" aria-hidden="true">
-              {line.split("").map((char, charIdx) => (
-                <span
-                  key={charIdx}
-                  className="hero-char"
-                  style={{ animationDelay: `${300 + lineIdx * 240 + charIdx * 22}ms` }}
+          <div className="relative z-10 hidden min-h-[540px] lg:block" aria-label="Interaktivno istraživanje usluga na automobilu">
+            {features.map((feature) => {
+              const Icon = feature.icon
+              const isActive = selected === feature.id
+              return (
+                <button
+                  key={feature.id}
+                  type="button"
+                  aria-pressed={isActive}
+                  aria-label={"Prikaži uslugu: " + feature.label}
+                  onClick={() => setSelected(feature.id)}
+                  style={{ left: feature.coordinates.left, top: feature.coordinates.top }}
+                  className={
+                    "absolute z-20 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border bg-[#071218]/85 shadow-[0_0_0_7px_rgba(6,15,20,.35)] backdrop-blur-md transition-transform hover:scale-110 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white " +
+                    (isActive ? "border-[var(--brand)] text-[var(--brand)]" : "border-white/50 text-white")
+                  }
                 >
-                  {char === " " ? "\u00A0" : char}
-                </span>
-              ))}
-            </span>
-          ))}
-        </h1>
-        {/* Thin brand accent line */}
-        <div
-          className={`mt-6 ${use3D ? "self-start" : "self-center"}`}
-        >
-          <div
-            className="hero-line h-[2px] w-16"
-            style={{ background: "var(--brand)", animationDelay: "900ms" }}
-          />
+                  <Icon size={20} strokeWidth={1.8} aria-hidden="true" />
+                </button>
+              )
+            })}
+            <div className="absolute bottom-8 right-0 w-[320px] border-l-2 border-[var(--brand)] bg-[#081116]/90 p-5 backdrop-blur-xl">
+              <p className="mb-2 font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--cool-accent)]">Istraži deo vozila</p>
+              <div className="flex items-center gap-2 text-xl font-semibold text-white">
+                <ActiveIcon size={20} aria-hidden="true" />
+                {active.label}
+              </div>
+              <p className="mt-2 min-h-12 text-sm leading-6 text-white/70">{active.detail}</p>
+              <a href={active.href} className="mt-4 inline-flex items-center gap-2 text-xs font-semibold text-[var(--brand)] hover:underline">
+                Saznaj više <ArrowUpRight size={14} aria-hidden="true" />
+              </a>
+            </div>
+          </div>
         </div>
-        <p
-          className="hero-rise mt-5 text-muted-foreground text-sm md:text-base max-w-sm leading-relaxed tracking-wide"
-          style={{ animationDelay: "350ms" }}
-        >
-          ECU remap, Stage 1–3 chiptuning, LED ugradnja,
-          <br className="hidden md:block" /> auto elektronika i enterijer po meri.
-        </p>
-        <div
-          className="hero-rise mt-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto"
-          style={{ animationDelay: "700ms" }}
-        >
-          <a
-            href="#configurator"
-            className="inline-flex justify-center px-8 py-3.5 text-sm tracking-[0.12em] uppercase font-medium transition-all duration-300"
-            style={{
-              background: "var(--brand)",
-              color: "oklch(0.08 0 0)",
-            }}
-            onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.88")}
-            onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-          >
-            Konfiguriši
-          </a>
-          <a
-            href="#gallery"
-            className="inline-flex justify-center px-8 py-3.5 text-sm tracking-[0.12em] uppercase border border-foreground/40 text-foreground hover:bg-foreground/10 hover:border-foreground/60 transition-all duration-300"
-          >
-            Naši Radovi
-          </a>
-        </div>
-      </div>
 
+        {/* Touch-friendly alternative to on-image hotspot placement. */}
+        <div className="mb-7 grid grid-cols-2 gap-2 lg:hidden" aria-label="Usluge koje možete istražiti">
+          {features.map((feature) => {
+            const Icon = feature.icon
+            return (
+              <button
+                key={feature.id}
+                type="button"
+                onClick={() => setSelected(feature.id)}
+                aria-pressed={selected === feature.id}
+                className={"flex min-h-12 items-center gap-2 border px-3 text-left text-xs transition-colors " +
+                  (selected === feature.id ? "border-[var(--brand)] bg-[#1d2428] text-white" : "border-white/20 bg-black/35 text-white/75")}
+              >
+                <Icon size={16} className="shrink-0 text-[var(--brand)]" aria-hidden="true" />
+                {feature.label}
+              </button>
+            )
+          })}
+          <div className="col-span-2 flex items-center justify-between gap-4 bg-[#0b171d]/90 p-4 text-sm text-white/80">
+            <span>{active.detail}</span>
+            <a href={active.href} className="shrink-0 text-[var(--brand)]" aria-label={"Saznaj više: " + active.label}>
+              <ArrowUpRight size={21} />
+            </a>
+          </div>
+        </div>
+
+        <nav aria-label="Istražite usluge" className="grid grid-cols-2 gap-px border border-white/20 bg-white/15 md:grid-cols-4">
+          {quickLinks.map((link, index) => {
+            const Icon = link.icon
+            return (
+              <a
+                href={link.href}
+                key={link.title}
+                className="group flex min-h-[112px] items-center gap-3 bg-[#0b1115]/95 px-4 py-5 transition-colors hover:bg-[#16232a] focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-[var(--brand)] sm:gap-4 sm:px-6"
+              >
+                <Icon size={25} strokeWidth={1.5} className={index === 1 ? "shrink-0 text-[var(--cool-accent)]" : "shrink-0 text-[var(--brand)]"} aria-hidden="true" />
+                <span className="min-w-0">
+                  <strong className="block text-sm font-semibold text-white sm:text-base">{link.title}</strong>
+                  <span className="mt-1 block text-[11px] leading-4 text-white/55 sm:text-xs">{link.caption}</span>
+                </span>
+                <ArrowDownRight size={16} className="ml-auto hidden shrink-0 text-white/40 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1 sm:block" aria-hidden="true" />
+              </a>
+            )
+          })}
+        </nav>
+      </div>
     </section>
   )
 }
