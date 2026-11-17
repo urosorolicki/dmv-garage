@@ -1,19 +1,23 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
-import { cdnFull } from "@/lib/gallery-data"
+import { cdnWidth } from "@/lib/gallery-data"
+import { SectionHeading } from "@/components/section-heading"
+import { requestService, type ServiceValue } from "@/lib/prefill"
 
 const services = [
   {
     number: "01",
+    value: "led" as ServiceValue,
     title: "LED Ugradnja",
     spec: "12V · CANbus · garancija",
     description:
-      "Premium LED svetlosni sistemi za potpunu transformaciju vizuelnog identiteta vašeg vozila.",
+      "Premium LED svetlosni sistemi za potpunu transformaciju vizuelnog identiteta tvog vozila.",
     image: "/images/led-after.jpg",
   },
   {
     number: "02",
+    value: "elektronika" as ServiceValue,
     title: "Auto Elektronika",
     spec: "Dijagnostika · Ugradnja · Servis",
     description:
@@ -22,15 +26,17 @@ const services = [
   },
   {
     number: "03",
+    value: "chiptuning" as ServiceValue,
     title: "ECU Chiptuning",
     spec: "Stage 1–3 · OBD / Bench",
     description:
       "Custom remap softvera za optimalan balans performansi, potrošnje i pouzdanosti.",
     // Prava fotka ECU-a iz galerije umesto AI rendera
-    image: cdnFull("IMG_0579"),
+    image: cdnWidth("IMG_0579", 800),
   },
   {
     number: "04",
+    value: "enterijer" as ServiceValue,
     title: "Enterijer",
     spec: "Boje · Ambijent · Materijali",
     description:
@@ -79,12 +85,7 @@ export function Services() {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <p className="text-xs tracking-[0.3em] uppercase mb-3 font-mono" style={{ color: "var(--brand)" }}>
-            Šta nudimo
-          </p>
-          <h2 className="font-display text-5xl md:text-6xl lg:text-7xl text-foreground tracking-wide uppercase">
-            Usluge
-          </h2>
+          <SectionHeading kicker="Šta nudimo" title="Usluge" />
         </div>
 
         {/* Spec-sheet kartice — hairline grid, mono podaci, bez tilt-a */}
@@ -125,11 +126,13 @@ export function Services() {
                 {service.description}
               </p>
 
-              {/* Bottom hairline — produzava se na hover */}
-              <div
-                className="mt-6 h-[1px] w-8 group-hover:w-full transition-all duration-700"
-                style={{ background: "var(--brand)", opacity: 0.6 }}
-              />
+              <a
+                href="#contact"
+                onClick={() => requestService(service.value)}
+                className="mt-auto inline-flex min-h-11 items-center gap-2 pt-5 text-sm font-semibold text-[var(--brand)] hover:text-[var(--brand-bright)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+              >
+                Pitaj za svoj auto <span aria-hidden="true">→</span>
+              </a>
             </article>
           ))}
         </div>

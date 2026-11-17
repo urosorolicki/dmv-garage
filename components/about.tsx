@@ -1,11 +1,12 @@
 "use client"
 
 import { useEffect, useRef, useState } from "react"
+import { SectionHeading } from "@/components/section-heading"
 
 const stats = [
   { value: "300+", label: "Vozila" },
   { value: "5+",   label: "Godina iskustva" },
-  { value: "4",    label: "Specijalnosti" },
+  { value: "4.4K+", label: "Pratilaca na Instagramu" },
 ]
 
 const carBrands = [
@@ -46,7 +47,7 @@ export function About() {
         className="absolute inset-0 opacity-10 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 70% 50% at 50% 50%, oklch(0.25 0 0), transparent)",
+            "radial-gradient(ellipse 70% 50% at 50% 50%, var(--accent), transparent)",
         }}
       />
 
@@ -54,19 +55,13 @@ export function About() {
 
         {/* Quote */}
         <div
-          className={`text-center max-w-[900px] mx-auto mb-20 transition-all duration-[1500ms] ${
+          className={`max-w-[900px] mb-16 transition-all duration-[1500ms] ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
           }`}
         >
-          <p className="text-xs tracking-[0.4em] uppercase mb-6 font-mono" style={{ color: "var(--brand)" }}>
-            O nama
-          </p>
-          <blockquote className="text-xl md:text-2xl lg:text-3xl font-sans font-light leading-relaxed text-foreground/90 text-balance">
-            {'"DMV Garage je specijalizovana radionica za unapređenje performansi i vizuelnog identiteta vozila. Preciznost, tehnologija i kvalitet su temelj svakog projekta."'}
-          </blockquote>
-          <div className="mt-10 w-16 h-[2px] mx-auto" style={{ background: "var(--brand)" }} />
-          <p className="mt-6 text-muted-foreground text-sm tracking-[0.1em] uppercase font-mono">
-            DMV Garage
+          <SectionHeading kicker="O nama" title="Radionica u Zemunu" />
+          <p className="mt-6 text-lg md:text-xl font-sans font-light leading-relaxed text-foreground/85 text-balance">
+            DMV Garage je specijalizovana radionica za unapređenje performansi i vizuelnog identiteta vozila. Preciznost, tehnologija i kvalitet su temelj svakog projekta.
           </p>
         </div>
 
@@ -79,7 +74,7 @@ export function About() {
           {stats.map((stat) => (
             <div key={stat.label} className="bg-secondary/10 py-10 flex flex-col items-center justify-center text-center relative overflow-hidden group">
               <div className="absolute bottom-0 left-0 right-0 h-[2px] w-0 group-hover:w-full transition-all duration-500" style={{ background: "var(--brand)" }} />
-              <span className="font-display text-4xl md:text-5xl tracking-wide" style={{ color: "var(--brand)" }}>
+              <span className="font-display text-4xl md:text-5xl font-extrabold italic" style={{ color: "var(--brand)" }}>
                 {stat.value}
               </span>
               <span className="text-xs tracking-[0.2em] uppercase text-muted-foreground mt-2 font-mono">
@@ -96,7 +91,7 @@ export function About() {
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
-            <p className="text-xs tracking-[0.4em] uppercase mb-6 font-mono" style={{ color: "var(--brand)" }}>
+            <p className="subhead mb-6">
               Kompatibilne marke
             </p>
             <div className="flex flex-wrap gap-2">
@@ -120,7 +115,7 @@ export function About() {
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
-            <p className="text-xs tracking-[0.4em] uppercase mb-6 font-mono" style={{ color: "var(--brand)" }}>
+            <p className="subhead mb-6">
               Oprema i softver
             </p>
             <div className="grid grid-cols-2 gap-3">

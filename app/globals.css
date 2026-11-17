@@ -4,24 +4,26 @@
 @custom-variant dark (&:is(.dark *));
 
 :root {
-  --background: oklch(0.08 0 0);
+  /* Workshop navy surfaces, shared by every section */
+  --background: #061017;
   --foreground: oklch(0.92 0.006 65);
-  --card: oklch(0.11 0 0);
+  --heading: #f4f4f2;
+  --card: #0a1820;
   --card-foreground: oklch(0.92 0.006 65);
-  --popover: oklch(0.11 0 0);
+  --popover: #0a1820;
   --popover-foreground: oklch(0.92 0.006 65);
   --primary: oklch(0.92 0.006 65);
   --primary-foreground: oklch(0.08 0 0);
-  --secondary: oklch(0.14 0 0);
+  --secondary: #0f2029;
   --secondary-foreground: oklch(0.78 0.006 65);
-  --muted: oklch(0.14 0 0);
+  --muted: #0f2029;
   --muted-foreground: oklch(0.68 0.006 65);
-  --accent: oklch(0.18 0 0);
+  --accent: #152a35;
   --accent-foreground: oklch(0.85 0.006 65);
   --destructive: oklch(0.577 0.245 27.325);
   --destructive-foreground: oklch(0.577 0.245 27.325);
-  --border: oklch(0.17 0 0);
-  --input: oklch(0.17 0 0);
+  --border: #1d3340;
+  --input: #2f4654;
   --ring: #ff8a00;
   /* Brand — one orange site-wide; cyan only for light/LED accents */
   --brand: #ff8a00;
@@ -47,10 +49,11 @@
 
 @theme inline {
   --font-sans: var(--font-barlow), 'Barlow', sans-serif;
-  --font-display: var(--font-bebas), 'Bebas Neue', cursive;
+  --font-display: var(--font-heading), 'Barlow', sans-serif;
   --font-mono: var(--font-dm-mono), 'DM Mono', monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-heading: var(--heading);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
@@ -108,7 +111,7 @@
   width: 4px;
 }
 ::-webkit-scrollbar-track {
-  background: oklch(0.08 0 0);
+  background: var(--background);
 }
 ::-webkit-scrollbar-thumb {
   background: var(--brand-dim);
@@ -162,7 +165,7 @@ body::after {
 /* Garage DMV first-screen composition. */
 .service-link { box-shadow:inset 0 1px 0 #ffffff15,0 6px 15px #0005; }
 .service-link-light { border-color:#00d9f599; box-shadow:inset 0 0 22px #00c9ef22,0 0 12px #00c9ef30; }
-#hero-title { font-family:Arial, Helvetica, sans-serif; font-weight:900; }
+#hero-title { font-family:var(--font-heading), 'Barlow', sans-serif; font-weight:800; font-style:italic; }
 .hero-bg { position:absolute; inset:0; width:100%; height:100%; max-width:none; object-fit:cover; object-position:center 44%; }
 @media(min-width:1280px) { .hero-bg { inset:auto; top:-55px; right:0; width:95%; height:auto; object-fit:fill; } }
 
@@ -231,4 +234,22 @@ body::after {
 .lookup-scrim { background:linear-gradient(180deg,rgba(8,19,27,.72) 0%,rgba(8,19,27,.82) 100%); }
 @media(min-width:1024px) {
   .lookup-scrim { background:linear-gradient(90deg,rgba(8,19,27,.94) 0%,rgba(8,19,27,.82) 30%,rgba(8,19,27,.45) 62%,rgba(8,19,27,.2) 100%); }
+}
+
+/* Component classes live in the components layer so Tailwind utilities (hidden, px-*, text-*) can override them. */
+@layer components {
+/* Shared section heading: orange rule, mono kicker, extra-bold italic title */
+.section-kicker { display:block; margin-bottom:.5rem; font-family:var(--font-dm-mono), monospace; font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:rgb(255 255 255 / .6); }
+.section-title { font-family:var(--font-heading), 'Barlow', sans-serif; font-weight:800; font-style:italic; text-transform:uppercase; font-size:clamp(1.9rem,4.2vw,3.4rem); line-height:1.04; letter-spacing:-.01em; color:var(--heading); }
+.section-title-sm { font-size:clamp(1.6rem,2.6vw,2.1rem); }
+/* Orange mono label for sub-groups inside a section (Telefon, Adresa, Oprema…) */
+.subhead { display:block; font-family:var(--font-dm-mono), monospace; font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--brand); }
+
+/* Buttons — same shape as the hero CTAs */
+.btn { display:inline-flex; align-items:center; justify-content:center; gap:.6rem; min-height:48px; padding:0 1.5rem; border-radius:5px; font-size:.875rem; font-weight:700; transition:background-color .2s, border-color .2s, color .2s; }
+.btn:focus-visible { outline:2px solid #fff; outline-offset:3px; }
+.btn-primary { background:var(--brand); color:#0b1216; }
+.btn-primary:hover { background:var(--brand-bright); }
+.btn-secondary { border:1px solid rgb(255 255 255 / .5); background:rgb(9 20 26 / .7); color:#fff; font-weight:600; }
+.btn-secondary:hover { background:rgb(255 255 255 / .15); }
 }

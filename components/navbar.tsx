@@ -40,8 +40,8 @@ export function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 border-b border-white/15 transition-all duration-300 ${
         scrolled
-          ? "bg-[#061017]/95 backdrop-blur-xl"
-          : "bg-[#061017]/85 backdrop-blur-md"
+          ? "bg-background/95 backdrop-blur-xl"
+          : "bg-background/85 backdrop-blur-md"
       }`}
     >
       <nav className="garage-navigation flex items-center justify-between gap-4 px-6 lg:px-12 py-2 max-w-[1540px] mx-auto">
@@ -71,8 +71,7 @@ export function Navbar() {
         <a href={`tel:${business.phone}`} className="hidden xl:inline-flex items-center gap-2 text-sm text-white/90"><Phone size={16} aria-hidden="true" />{business.phoneDisplay}</a>
         <a
           href="/#contact"
-          className="hidden lg:inline-flex items-center gap-2 justify-center rounded-[8px] px-5 py-2.5 text-sm tracking-[0.04em] font-semibold transition-opacity hover:opacity-85"
-          style={{ background: "var(--brand)", color: "oklch(0.08 0 0)" }}
+          className="btn btn-primary hidden min-h-11 px-5 lg:inline-flex"
         >
           <CalendarDays size={17} aria-hidden="true" /> Zakaži termin
         </a>
@@ -117,13 +116,13 @@ export function Navbar() {
         }`}
       >
         <div className="px-6 pb-6 bg-background/95 backdrop-blur-xl border-b border-border/30">
-          <ul className="flex flex-col gap-4">
+          <ul className="flex flex-col">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  className="text-white/90 hover:text-white text-sm transition-colors duration-300 block py-2"
+                  className="text-white/90 hover:text-white text-base transition-colors duration-300 block py-3"
                 >
                   {link.label}
                 </Link>
@@ -133,8 +132,7 @@ export function Navbar() {
           <a
             href="/#contact"
             onClick={() => setMenuOpen(false)}
-            className="mt-4 inline-flex items-center justify-center gap-2 px-5 py-3 text-sm tracking-[0.06em] uppercase font-medium w-full"
-            style={{ background: "var(--brand)", color: "oklch(0.08 0 0)" }}
+            className="btn btn-primary mt-4 w-full"
           >
             <CalendarDays size={17} aria-hidden="true" /> Zakaži termin
           </a>

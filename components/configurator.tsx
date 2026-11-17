@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect, useCallback } from "react"
 import Image from "next/image"
+import { SectionHeading } from "@/components/section-heading"
 
 const configOptions = [
   {
@@ -259,7 +260,7 @@ export function Configurator() {
       <div
         className="absolute inset-0 opacity-30 pointer-events-none"
         style={{
-          background: "radial-gradient(ellipse 60% 40% at 60% 50%, oklch(0.16 0 0), transparent)",
+          background: "radial-gradient(ellipse 60% 40% at 60% 50%, var(--accent), transparent)",
         }}
       />
 
@@ -270,12 +271,7 @@ export function Configurator() {
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <p className="text-muted-foreground text-xs tracking-[0.3em] uppercase mb-3">
-            Pre / posle
-          </p>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-sans font-light tracking-[-0.03em] text-foreground">
-            Pogledaj razliku
-          </h2>
+          <SectionHeading kicker="Pre / posle" title="Pogledaj razliku" />
         </div>
 
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-16">
@@ -327,16 +323,21 @@ export function Configurator() {
             </div>
 
             {/* Step indicator */}
-            <div className="mt-8 px-5 flex gap-2">
+            <div className="mt-3 px-5 flex gap-2">
               {configOptions.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => handleOptionClick(i)}
-                  className={`h-[2px] flex-1 rounded-full transition-all duration-500 ${
-                    i === activeOption ? "bg-foreground" : "bg-border hover:bg-muted-foreground/40"
-                  }`}
+                  className="group flex-1 py-[21px]"
                   aria-label={configOptions[i].label}
-                />
+                  aria-pressed={i === activeOption}
+                >
+                  <span
+                    className={`block h-[2px] rounded-full transition-all duration-500 ${
+                      i === activeOption ? "bg-foreground" : "bg-border group-hover:bg-muted-foreground/40"
+                    }`}
+                  />
+                </button>
               ))}
             </div>
           </div>
