@@ -46,12 +46,12 @@ export function Gallery() {
         </div>
 
         {/* Preview grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
           {previewImages.map((image, index) => (
             <Link
               key={image.id}
               href={`/galerija?img=${image.id}`}
-              className={`group relative aspect-[4/5] overflow-hidden rounded-sm cursor-pointer ${
+              className={`group relative aspect-[3/4] sm:aspect-[4/5] overflow-hidden rounded-sm cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${
                 reducedMotion ? "opacity-100 translate-y-0" : `transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`
               }`}
               style={reducedMotion ? undefined : { transitionDelay: `${200 + index * 80}ms` }}
@@ -62,7 +62,7 @@ export function Gallery() {
                 alt={image.alt}
                 fill
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                sizes="(max-width: 1024px) 50vw, 33vw"
               />
               <div className="absolute inset-0 bg-background/0 group-hover:bg-background/20 transition-colors duration-300" />
             </Link>
@@ -71,7 +71,7 @@ export function Gallery() {
 
         {/* CTA */}
         <div
-          className={`mt-10 flex items-center gap-6 ${
+          className={`mt-10 flex flex-wrap items-center gap-4 sm:gap-6 ${
             reducedMotion ? "" : `transition-all duration-1000 delay-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"}`
           }`}
         >
