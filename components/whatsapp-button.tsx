@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { track } from "@vercel/analytics"
 
 export function WhatsAppButton() {
   const [visible, setVisible] = useState(false)
@@ -13,6 +14,7 @@ export function WhatsAppButton() {
   return (
     <a
       href="https://wa.me/381628727274"
+      onClick={() => track("booking_whatsapp_open", { source: "floating_button" })}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Pišite nam na WhatsApp"
