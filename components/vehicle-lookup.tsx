@@ -37,7 +37,7 @@ export function VehicleLookup() {
   return (
     <section
       id="vehicle-lookup"
-      className="relative overflow-hidden bg-[#061017] px-5 pb-12 pt-2 sm:px-8 lg:px-12 lg:pb-16"
+      className="relative overflow-hidden bg-[#061017] px-5 pb-12 pt-6 sm:px-8 lg:px-12 lg:pb-16"
     >
       <div className="relative z-10 mx-auto max-w-[1440px]">
         <div className="relative isolate overflow-hidden rounded-xl border border-white/25 bg-[#09131a] shadow-[0_16px_50px_rgba(0,0,0,.27)]">
