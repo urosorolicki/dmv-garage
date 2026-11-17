@@ -99,7 +99,10 @@ export function Contact() {
       id="contact"
       className="relative py-16 md:py-32 overflow-hidden"
     >
-      <div className="absolute inset-0 bg-secondary/20" />
+      {/* Workshop photo band: the hero photo enlarged on its left side (wall,
+          neon, tool cabinets) so it reads as the workshop, not the hero car again. */}
+      <div className="contact-photo" aria-hidden="true" />
+      <div className="contact-scrim absolute inset-0" aria-hidden="true" />
 
       <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12">
         <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-start">

@@ -256,7 +256,7 @@ export function Configurator() {
       id="pre-posle"
       className="relative py-16 md:py-32 overflow-hidden"
     >
-      <div className="absolute inset-0 bg-background" />
+      <div className="section-alt absolute inset-0" />
       <div
         className="absolute inset-0 opacity-30 pointer-events-none"
         style={{

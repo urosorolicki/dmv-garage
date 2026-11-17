@@ -33,7 +33,7 @@ export function Gallery() {
       id="gallery"
       className="relative py-16 md:py-32 overflow-hidden"
     >
-      <div className="absolute inset-0 bg-background" />
+      <div className="section-alt absolute inset-0" />
 
       <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12">
         {/* Header */}

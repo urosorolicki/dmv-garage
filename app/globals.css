@@ -260,3 +260,17 @@ body::after {
 .btn-secondary { border:1px solid rgb(255 255 255 / .5); background:rgb(9 20 26 / .7); color:#fff; font-weight:600; }
 .btn-secondary:hover { background:rgb(255 255 255 / .15); }
 }
+
+/* Section rhythm: every other section sits on the lighter card surface */
+.section-alt { background:var(--card); border-top:1px solid rgb(255 255 255 / .06); border-bottom:1px solid rgb(255 255 255 / .06); }
+
+/* Contact: workshop photo behind the info column (wall, neon, tool cabinets),
+   fading out before the form so the form stays on a plain surface. */
+.contact-photo { position:absolute; top:0; bottom:0; left:0; right:auto; width:58%; background:url('/images/garage-dmv-hero.webp') no-repeat; background-size:cover; background-position:14% 45%;
+  -webkit-mask-image:linear-gradient(90deg,#000 45%,transparent 100%); mask-image:linear-gradient(90deg,#000 45%,transparent 100%); }
+.contact-scrim { background:linear-gradient(90deg, rgb(6 16 23 / .55) 0%, rgb(6 16 23 / .66) 40%, rgb(6 16 23 / .9) 58%, var(--background) 72%), linear-gradient(0deg, var(--background) 0%, transparent 14%, transparent 86%, var(--background) 100%); }
+@media(max-width:1023px) {
+  .contact-photo { right:0; bottom:auto; width:auto; height:640px; background-position:16% 40%;
+    -webkit-mask-image:linear-gradient(180deg,#000 55%,transparent 100%); mask-image:linear-gradient(180deg,#000 55%,transparent 100%); }
+  .contact-scrim { background:linear-gradient(180deg, rgb(6 16 23 / .5) 0%, rgb(6 16 23 / .66) 40%, rgb(6 16 23 / .92) 560px, var(--background) 640px); }
+}
