@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import { CalendarDays, Phone, ChevronsRight } from "lucide-react"
+import { business } from "@/lib/site-config"
 
 const navLinks = [
   { label: "Početna", href: "/#hero" },
@@ -32,23 +34,22 @@ export function Navbar() {
           : "bg-[#061017]/85 backdrop-blur-md"
       }`}
     >
-      <nav className="flex items-center justify-between gap-4 px-6 lg:px-12 py-2.5 max-w-[1540px] mx-auto">
+      <nav className="flex items-center justify-between gap-4 px-6 lg:px-12 py-2 max-w-[1540px] mx-auto">
         <Link href="/" className="flex items-center gap-2">
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo.png" alt="DMV Garage" width={112} height={56} className="h-10 md:h-11 w-auto" />
+          <span className="garage-wordmark"><ChevronsRight aria-hidden="true" /><span>GARAGE<span className="text-[var(--brand)]"> DMV</span></span></span>
         </Link>
 
         {/* Desktop nav */}
-        <ul className="hidden lg:flex items-center gap-7">
+        <ul className="hidden lg:flex items-center gap-6">
           {navLinks.map((link) => (
             <li key={link.href}>
               <Link
                 href={link.href}
-                className="group relative text-muted-foreground hover:text-foreground text-sm tracking-[0.08em] uppercase transition-colors duration-300"
+                className="group relative text-white/90 hover:text-white text-sm transition-colors duration-300"
               >
                 {link.label}
                 <span
-                  className="absolute -bottom-0.5 left-0 h-[1px] w-0 group-hover:w-full transition-all duration-300"
+                  className={`absolute -bottom-4 ${link.label === "Početna" ? "!w-full" : ""} left-0 h-[1px] w-0 group-hover:w-full transition-all duration-300`}
                   style={{ background: "var(--brand)" }}
                 />
               </Link>
@@ -56,12 +57,13 @@ export function Navbar() {
           ))}
         </ul>
 
+        <a href={`tel:${business.phone}`} className="hidden xl:inline-flex items-center gap-2 text-sm text-white/90"><Phone size={16} aria-hidden="true" />{business.phoneDisplay}</a>
         <a
           href="/#contact"
-          className="hidden lg:inline-flex items-center justify-center rounded-[4px] px-5 py-2.5 text-sm tracking-[0.04em] font-semibold transition-opacity hover:opacity-85"
+          className="hidden lg:inline-flex items-center gap-2 justify-center rounded-[8px] px-5 py-2.5 text-sm tracking-[0.04em] font-semibold transition-opacity hover:opacity-85"
           style={{ background: "var(--brand)", color: "oklch(0.08 0 0)" }}
         >
-          Zakaži Termin
+          <CalendarDays size={17} aria-hidden="true" /> Zakaži termin
         </a>
 
         {/* Mobile menu button */}
@@ -106,7 +108,7 @@ export function Navbar() {
                 <Link
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  className="text-muted-foreground hover:text-foreground text-sm tracking-[0.08em] uppercase transition-colors duration-300 block py-2"
+                  className="text-white/90 hover:text-white text-sm transition-colors duration-300 block py-2"
                 >
                   {link.label}
                 </Link>
@@ -119,7 +121,7 @@ export function Navbar() {
             className="mt-4 inline-flex items-center justify-center px-5 py-3 text-sm tracking-[0.06em] uppercase font-medium w-full"
             style={{ background: "var(--brand)", color: "oklch(0.08 0 0)" }}
           >
-            Zakaži Termin
+            <CalendarDays size={17} aria-hidden="true" /> Zakaži termin
           </a>
         </div>
       </div>

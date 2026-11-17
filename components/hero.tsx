@@ -1,22 +1,22 @@
 "use client"
 
 import { useState } from "react"
-import { ArrowUpRight, Cpu, Gauge, Lightbulb, Armchair, SlidersHorizontal } from "lucide-react"
+import { ArrowRight, ChevronRight, Play, Cpu, Gauge, Lightbulb, Armchair, SlidersHorizontal, Laptop } from "lucide-react"
 
 type ServiceID = "performance" | "lighting" | "interior" | "electronics"
 
 const services = [
-  { id: "performance" as const, label: "Performanse", detail: "Chiptuning / ECU remap", href: "#vehicle-lookup", icon: Gauge, className: "left-[42%] top-[14%]", point: { x: 795, y: 213 }, line: { x: 738, y: 113 } },
-  { id: "lighting" as const, label: "Svetla", detail: "LED ugradnja i retrofit", href: "#gallery", icon: Lightbulb, className: "left-[49%] top-[74%]", point: { x: 883, y: 275 }, line: { x: 844, y: 333 } },
-  { id: "interior" as const, label: "Enterijer", detail: "Ambijentalno osvetljenje", href: "#services", icon: Armchair, className: "right-[2%] top-[7%]", point: { x: 1195, y: 163 }, line: { x: 1260, y: 85 } },
-  { id: "electronics" as const, label: "Elektronika", detail: "Kodiranje i dijagnostika", href: "#services", icon: Cpu, className: "right-[1%] top-[74%]", point: { x: 1212, y: 285 }, line: { x: 1295, y: 333 } },
+  { id: "performance" as const, label: "Performanse", detail: "Chiptuning / ECU remap", href: "#vehicle-lookup", icon: Cpu, className: "left-[40%] top-[12%]", point: { x: 805, y: 195 }, line: { x: 738, y: 113 } },
+  { id: "lighting" as const, label: "Svetla", detail: "LED ugradnja i retrofit", href: "#gallery", icon: Lightbulb, className: "left-[47%] top-[77%]", point: { x: 1020, y: 255 }, line: { x: 844, y: 333 } },
+  { id: "interior" as const, label: "Enterijer", detail: "Ambijentalno osvetljenje", href: "#services", icon: Armchair, className: "right-[0%] top-[4%]", point: { x: 1195, y: 163 }, line: { x: 1260, y: 85 } },
+  { id: "electronics" as const, label: "Elektronika", detail: "Kodiranje i dijagnostika", href: "#services", icon: Cpu, className: "right-[0%] top-[77%]", point: { x: 1212, y: 285 }, line: { x: 1295, y: 333 } },
 ]
 
 const links = [
-  { label: "Chiptuning", description: "Snaga i obrtni moment", href: "#vehicle-lookup", icon: Gauge },
-  { label: "LED ugradnja", description: "Svetla i enterijer", href: "#gallery", icon: Lightbulb },
-  { label: "Auto elektronika", description: "Dijagnostika i kodiranje", href: "#services", icon: Cpu },
-  { label: "Konfigurator", description: "Proveri svoje vozilo", href: "#vehicle-lookup", icon: SlidersHorizontal },
+  { label: "Chiptuning", description: "Više snage i obrtnog momenta", href: "#vehicle-lookup", icon: Cpu },
+  { label: "LED ugradnja", description: "Moderniji izgled i bolja vidljivost", href: "#gallery", icon: Lightbulb },
+  { label: "Auto elektronika", description: "Kodiranje, aktivacije i servis", href: "#services", icon: Laptop },
+  { label: "Konfigurator", description: "Proveri potencijal svog vozila", href: "#vehicle-lookup", icon: SlidersHorizontal },
 ]
 
 export function Hero() {
@@ -36,18 +36,18 @@ export function Hero() {
         className="pointer-events-none absolute inset-0"
         aria-hidden="true"
         style={{
-          background: "linear-gradient(90deg,rgba(3,11,16,.92),rgba(3,11,16,.72) 33%,rgba(3,11,16,.04) 67%),linear-gradient(0deg,#061017 0%,transparent 30%,rgba(3,9,13,.17) 100%)",
+          background: "linear-gradient(90deg,rgba(3,11,16,.78),rgba(3,11,16,.4) 33%,rgba(3,11,16,.04) 67%),linear-gradient(0deg,#061017 0%,transparent 30%,rgba(3,9,13,.17) 100%)",
         }}
       />
 
-      <div className="relative mx-auto max-w-[1540px] px-5 pb-7 pt-[107px] sm:px-8 lg:px-12 lg:pt-[116px]">
-        <div className="relative min-h-[475px] lg:min-h-0 lg:h-[433px]">
+      <div className="relative mx-auto max-w-[1540px] px-5 pb-7 pt-[107px] sm:px-8 lg:px-12 lg:pt-[100px]">
+        <div className="relative min-h-[475px] lg:min-h-0 lg:h-[390px]">
           <div className="relative z-10 max-w-[600px]">
-            <p className="mb-6 flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] font-medium uppercase tracking-[.17em] text-[#e3e2df]/80 sm:text-xs">
+            <p className="mb-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] font-medium uppercase tracking-[.02em] text-[#e3e2df]/80 sm:text-xs">
               <span className="mr-1 h-5 w-1 skew-x-[-17deg] bg-[var(--brand)]" aria-hidden="true" />
               Chiptuning <span className="text-[var(--brand)]">/</span> LED ugradnja <span className="text-[var(--brand)]">/</span> Auto elektronika
             </p>
-            <h1 id="hero-title" className="max-w-[620px] font-sans text-[clamp(2.1rem,4.1vw,4.35rem)] font-black italic uppercase leading-[.99] tracking-[-.047em] text-[#f4f4f2]">
+            <h1 id="hero-title" style={{ fontFamily: "Arial, Helvetica, sans-serif" }} className="max-w-[620px] font-sans text-[clamp(2rem,3.1vw,3.4rem)] font-black italic uppercase leading-[1.08] tracking-[-.025em] text-[#f4f4f2]">
               <span className="block whitespace-nowrap">Više snage.</span>
               <span className="block whitespace-nowrap">Bolji izgled.</span>
               <span className="block text-[var(--brand)] sm:whitespace-nowrap">Potpuna kontrola.</span>
@@ -57,10 +57,10 @@ export function Hero() {
             </p>
             <div className="mt-6 flex flex-wrap gap-3">
               <a href="#services" className="inline-flex min-h-12 items-center justify-center gap-3 rounded-[5px] bg-[var(--brand)] px-6 text-sm font-bold text-[#0b1216] transition-colors hover:bg-[var(--brand-bright)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
-                Istraži usluge <ArrowUpRight size={18} aria-hidden="true" />
+                Istraži usluge <ArrowRight size={18} aria-hidden="true" />
               </a>
               <a href="#gallery" className="inline-flex min-h-12 items-center justify-center gap-3 rounded-[5px] border border-white/50 bg-[#09141a]/70 px-5 text-sm font-semibold text-white transition-colors hover:bg-white/15 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
-                Pogledaj radove <ArrowUpRight size={18} aria-hidden="true" />
+                <Play size={18} aria-hidden="true" /> Pogledaj radove
               </a>
             </div>
             {/* No fabricated gain claims, customer totals or review scores. */}
@@ -110,21 +110,21 @@ export function Hero() {
         </div>
 
         {/* Directly below the car, like the approved reference. */}
-        <nav aria-label="Usluge" className="mt-7 grid grid-cols-2 gap-2.5 lg:mt-8 lg:grid-cols-4">
+        <nav aria-label="Usluge" className="mt-7 grid grid-cols-2 gap-5 lg:mt-[22px] lg:grid-cols-4">
           {links.map((link, index) => {
             const Icon = link.icon
             return (
               <a
                 key={link.label}
                 href={link.href}
-                className="group flex min-h-[82px] items-center gap-3 rounded-[7px] border border-white/25 bg-[#091116]/90 px-4 transition-all hover:border-[var(--brand)] hover:bg-[#11232b] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:px-5"
+                className={"service-link " + (index === 1 ? "service-link-light " : "") + "group flex min-h-[76px] items-center gap-3 rounded-[12px] border border-white/25 bg-[#091116]/90 px-4 transition-all hover:border-[var(--brand)] hover:bg-[#11232b] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:px-5"}
               >
                 <Icon size={25} strokeWidth={1.6} className={"shrink-0 " + (index === 1 ? "text-[var(--cool-accent)]" : "text-[var(--brand)]")} aria-hidden="true" />
                 <span className="min-w-0 border-l border-white/20 pl-3">
                   <strong className="block text-sm font-semibold text-white sm:text-base">{link.label}</strong>
                   <span className="mt-1 block text-[11px] leading-4 text-white/65">{link.description}</span>
                 </span>
-                <ArrowUpRight className="ml-auto hidden shrink-0 text-white/55 group-hover:text-white sm:block" size={15} aria-hidden="true" />
+                <ChevronRight className="ml-auto hidden shrink-0 text-white/55 group-hover:text-white sm:block" size={15} aria-hidden="true" />
               </a>
             )
           })}
