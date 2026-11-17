@@ -230,3 +230,9 @@ body::after {
   #hero nav a > span { padding:0; border:0; }
   #hero nav a > svg:last-child { display:none; }
 }
+
+/* Engine photo stays visible; scrim only where text needs contrast. */
+.lookup-scrim { background:linear-gradient(180deg,rgba(8,19,27,.72) 0%,rgba(8,19,27,.82) 100%); }
+@media(min-width:1024px) {
+  .lookup-scrim { background:linear-gradient(90deg,rgba(8,19,27,.94) 0%,rgba(8,19,27,.82) 30%,rgba(8,19,27,.45) 62%,rgba(8,19,27,.2) 100%); }
+}

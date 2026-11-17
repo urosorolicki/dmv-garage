@@ -44,14 +44,11 @@ export function VehicleLookup() {
       <div className="relative z-10 mx-auto max-w-[1440px]">
         <div className="relative isolate overflow-hidden rounded-xl border border-white/25 bg-[#09131a] shadow-[0_16px_50px_rgba(0,0,0,.27)]">
           <div
-            className="pointer-events-none absolute inset-0 bg-cover bg-[position:right_45%] opacity-50"
+            className="pointer-events-none absolute inset-0 bg-cover bg-[position:center_55%]"
             style={{ backgroundImage: 'url("/images/electronics-after-hd.jpg")' }}
             aria-hidden="true"
           />
-          <div className="pointer-events-none absolute inset-0"
-            style={{ background: "linear-gradient(90deg,#08131b 0%,rgba(8,19,27,.96) 43%,rgba(8,19,27,.78) 72%,rgba(8,19,27,.34) 100%)" }}
-            aria-hidden="true"
-          />
+          <div className="lookup-scrim pointer-events-none absolute inset-0" aria-hidden="true" />
           <div className="relative z-10 grid items-start gap-5 px-5 py-6 lg:grid-cols-[minmax(265px,0.36fr)_minmax(0,0.64fr)] lg:gap-6 lg:px-9 lg:py-8">
             <div className="lg:border-r lg:border-white/25 lg:pr-6">
               <span className="mb-3 block h-[3px] w-12 bg-[var(--brand)]" aria-hidden="true" />
