@@ -67,8 +67,10 @@ export function Navbar() {
         {/* Mobile menu button */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden flex flex-col gap-1.5 p-2"
-          aria-label="Toggle menu"
+          className="md:hidden flex flex-col gap-1.5 p-3 -mr-2 min-w-11 min-h-11 items-center justify-center"
+          aria-label={menuOpen ? "Zatvori meni" : "Otvori meni"}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-navigation"
         >
           <span
             className={`w-6 h-[1.5px] bg-foreground transition-all duration-300 ${
@@ -90,6 +92,8 @@ export function Navbar() {
 
       {/* Mobile menu */}
       <div
+        id="mobile-navigation"
+        aria-hidden={!menuOpen}
         className={`md:hidden overflow-hidden transition-all duration-500 ease-out ${
           menuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
         }`}
@@ -101,7 +105,7 @@ export function Navbar() {
                 <Link
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  className="text-muted-foreground hover:text-foreground text-sm tracking-[0.08em] uppercase transition-colors duration-300 block py-1"
+                  className="text-muted-foreground hover:text-foreground text-sm tracking-[0.08em] uppercase transition-colors duration-300 block py-2"
                 >
                   {link.label}
                 </Link>
@@ -111,7 +115,7 @@ export function Navbar() {
           <a
             href="/#contact"
             onClick={() => setMenuOpen(false)}
-            className="mt-4 inline-flex items-center justify-center px-5 py-2.5 text-sm tracking-[0.06em] uppercase font-medium w-full"
+            className="mt-4 inline-flex items-center justify-center px-5 py-3 text-sm tracking-[0.06em] uppercase font-medium w-full"
             style={{ background: "var(--brand)", color: "oklch(0.08 0 0)" }}
           >
             Zakaži Termin
