@@ -58,7 +58,7 @@ export function Hero() {
       ref={sectionRef}
       id="hero"
       aria-label="Hero - DMV Garage"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[oklch(0.08_0_0)]"
+      className="relative min-h-[100svh] flex items-center justify-center overflow-hidden bg-[oklch(0.08_0_0)]"
     >
       {/* Poster — paints immediately, video fades in over it */}
       <picture>
@@ -139,7 +139,7 @@ export function Hero() {
       {/* Content overlay */}
       <div
         ref={contentRef}
-        className={`relative z-10 px-6 flex flex-col ${
+        className={`relative z-10 px-5 sm:px-6 pt-28 pb-20 flex flex-col ${
           use3D
             ? "w-full max-w-[1440px] lg:px-12 items-start text-left"
             : "text-center items-center"
@@ -152,7 +152,7 @@ export function Hero() {
         >
           Chiptuning & LED ugradnja — Beograd
         </p>
-        <h1 aria-label="Performanse bez kompromisa" className="font-display text-[72px] md:text-[100px] lg:text-[130px] leading-[0.92] tracking-[0.02em] text-foreground uppercase">
+        <h1 aria-label="Performanse bez kompromisa" className="font-display text-[clamp(2.65rem,11vw,8.125rem)] leading-[0.96] tracking-[0.005em] text-foreground uppercase max-w-full">
           {["Performanse", "bez", "kompromisa"].map((line, lineIdx) => (
             <span key={lineIdx} className="block overflow-hidden" aria-hidden="true">
               {line.split("").map((char, charIdx) => (
@@ -184,12 +184,12 @@ export function Hero() {
           <br className="hidden md:block" /> auto elektronika i enterijer po meri.
         </p>
         <div
-          className="hero-rise mt-10 flex flex-col sm:flex-row items-start sm:items-center gap-4"
+          className="hero-rise mt-10 flex flex-col sm:flex-row items-stretch sm:items-center gap-3 sm:gap-4 w-full sm:w-auto"
           style={{ animationDelay: "700ms" }}
         >
           <a
             href="#configurator"
-            className="px-8 py-3 text-sm tracking-[0.12em] uppercase font-medium transition-all duration-300"
+            className="inline-flex justify-center px-8 py-3.5 text-sm tracking-[0.12em] uppercase font-medium transition-all duration-300"
             style={{
               background: "var(--brand)",
               color: "oklch(0.08 0 0)",
@@ -201,7 +201,7 @@ export function Hero() {
           </a>
           <a
             href="#gallery"
-            className="px-8 py-3 text-sm tracking-[0.12em] uppercase border border-foreground/40 text-foreground hover:bg-foreground/10 hover:border-foreground/60 transition-all duration-300"
+            className="inline-flex justify-center px-8 py-3.5 text-sm tracking-[0.12em] uppercase border border-foreground/40 text-foreground hover:bg-foreground/10 hover:border-foreground/60 transition-all duration-300"
           >
             Naši Radovi
           </a>
