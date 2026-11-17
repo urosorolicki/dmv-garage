@@ -51,13 +51,22 @@ export function VehicleLookup() {
     <section
       ref={sectionRef}
       id="vehicle-lookup"
-      className="relative py-24 md:py-32 overflow-hidden"
+      className="relative py-20 md:py-28 overflow-hidden bg-[#081218]"
     >
-      <div className="absolute inset-0 bg-[oklch(0.14_0_0)]" />
+      <div className="absolute inset-0 bg-[#081218]" />
+      <div
+        className="absolute right-0 top-0 h-[370px] w-full bg-cover bg-[position:center_45%] opacity-35 md:w-[72%]"
+        style={{
+          backgroundImage: 'url("/images/electronics-after-hd.jpg")',
+          maskImage: "linear-gradient(to right, transparent, black 55%)",
+          WebkitMaskImage: "linear-gradient(to right, transparent, black 55%)",
+        }}
+        aria-hidden="true"
+      />
       <div
         className="absolute inset-0 pointer-events-none"
         style={{
-          background: "radial-gradient(ellipse 80% 60% at 20% 50%, oklch(0.20 0 0), transparent)",
+          background: "linear-gradient(180deg, rgba(8,18,24,.15), #081218 67%),radial-gradient(ellipse 80% 60% at 20% 50%, rgba(120,197,213,.07), transparent)",
         }}
       />
 
@@ -70,19 +79,19 @@ export function VehicleLookup() {
           }`}
         >
           <p className="text-muted-foreground text-xs tracking-[0.3em] uppercase mb-3">
-            Chiptuning kalkulator
+            PROVERI POTENCIJAL
           </p>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-sans font-light tracking-[-0.03em] text-foreground">
-            Koliko možeš dobiti?
+            Konfigurator tuninga
           </h2>
           <p className="mt-4 text-muted-foreground text-sm max-w-lg leading-relaxed">
-            Pronađi svoje vozilo i pogledaj procenjene vrednosti snage i obrtnog momenta nakon chiptuning remapa.
+            Izaberi marku, model i motor. Pogledaj procenjene rezultate remapa za svoje vozilo.
           </p>
         </div>
 
         {/* Widget */}
         <div
-          className={`border border-border rounded-sm overflow-hidden bg-background/40 transition-all duration-1000 delay-200 ${
+          className={`border border-white/20 rounded-sm overflow-hidden bg-[#070c0f]/90 shadow-[0_18px_70px_rgba(0,0,0,.25)] transition-all duration-1000 delay-200 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
