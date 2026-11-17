@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from "react"
 import { whatsappUrl } from "@/lib/site-config"
 import * as Dialog from "@radix-ui/react-dialog"
 import useEmblaCarousel from "embla-carousel-react"
-import { cdnSrcSet, cdnWidth, type GalleryImage } from "@/lib/gallery-data"
+import type { GalleryImage } from "@/lib/gallery-data"
 
 interface GalleryLightboxProps {
   images: GalleryImage[]
@@ -84,7 +84,10 @@ function LightboxCarousel({
     const d = Math.abs(i - index)
     return Math.min(d, images.length - d) <= PRELOAD_RADIUS
   }
-  const waText = `Zdravo! Video sam u galeriji: ${current.alt}. Zanima me slična ugradnja za moje vozilo.`
+  const waText = current.permalink
+    ? `Zdravo! Video sam ovaj rad: ${current.permalink} — zanima me slična ugradnja za moje vozilo.`
+    : `Zdravo! Video sam u galeriji: ${current.alt}. Zanima me slična ugradnja za moje vozilo.`
+  const extra = current.caption ?? null
 
   return (
     <>
@@ -121,9 +124,9 @@ function LightboxCarousel({
                 {near(i) && (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
-                    src={cdnWidth(img.id, 1600)}
-                    srcSet={cdnSrcSet(img.id, [800, 1200, 1600, 2400])}
-                    sizes="100vw"
+                    src={img.full}
+                    srcSet={img.fullSrcSet}
+                    sizes={img.fullSrcSet ? "100vw" : undefined}
                     alt={img.alt}
                     draggable={false}
                     onLoad={() => setLoaded((l) => ({ ...l, [img.id]: true }))}
@@ -148,11 +151,29 @@ function LightboxCarousel({
       {/* Caption + CTA */}
       <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 md:px-8 py-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
         <div className="min-w-0">
-          <p className="subhead mb-1">
-            {current.category}
-          </p>
-          <Dialog.Title className="text-sm md:text-base text-foreground truncate">{current.alt}</Dialog.Title>
+          {current.category && (
+            <p className="subhead mb-1">
+              {current.category}
+            </p>
+          )}
+          <Dialog.Title className="text-sm md:text-base text-foreground line-clamp-2">{current.alt}</Dialog.Title>
+          {extra && (
+            <p className="mt-1 max-h-24 overflow-y-auto text-xs md:text-sm text-muted-foreground leading-relaxed whitespace-pre-line">
+              {extra}
+            </p>
+          )}
         </div>
+        <div className="flex flex-shrink-0 gap-2">
+        {current.permalink && (
+          <a
+            href={current.permalink}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-secondary flex-shrink-0 px-5"
+          >
+            Instagram
+          </a>
+        )}
         <a
           href={whatsappUrl(waText)}
           target="_blank"
@@ -161,6 +182,7 @@ function LightboxCarousel({
         >
           Pošalji na WhatsApp
         </a>
+        </div>
       </div>
     </>
   )

@@ -3,14 +3,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import { GalleryLightbox } from "@/components/gallery-lightbox"
-import {
-  cdnSrcSet,
-  cdnThumb,
-  categories,
-  galleryImages,
-  galleryImagesAll,
-  type Category,
-} from "@/lib/gallery-data"
+import { categories, type Category, type GalleryImage } from "@/lib/gallery-data"
 
 const BATCH = 24
 const EAGER_TILES = 8
@@ -27,18 +20,23 @@ function buildUrl(cat: Category, img: string | null) {
   return qs ? `?${qs}` : window.location.pathname
 }
 
-export function GalleryFull() {
+export function GalleryFull({ images }: { images: GalleryImage[] }) {
   const searchParams = useSearchParams()
   const catParam = searchParams.get("cat")
-  const activeCategory: Category = categories.includes(catParam as Category) ? (catParam as Category) : "Sve"
+  // Only offer filters that have at least one image
+  const counts = useMemo(() => {
+    const m = new Map<Category, number>([["Sve", images.length]])
+    for (const img of images) if (img.category) m.set(img.category, (m.get(img.category) ?? 0) + 1)
+    return m
+  }, [images])
+  const shownCategories = categories.filter((c) => counts.has(c))
+  const activeCategory: Category = shownCategories.includes(catParam as Category) ? (catParam as Category) : "Sve"
   const imgParam = searchParams.get("img")
 
   const filtered = useMemo(
     () =>
-      activeCategory === "Sve"
-        ? galleryImagesAll
-        : galleryImages.filter((img) => img.category === activeCategory),
-    [activeCategory]
+      activeCategory === "Sve" ? images : images.filter((img) => img.category === activeCategory),
+    [activeCategory, images]
   )
 
   const foundIndex = imgParam ? filtered.findIndex((img) => img.id === imgParam) : -1
@@ -109,8 +107,8 @@ export function GalleryFull() {
       {/* Filters — sticky under the navbar */}
       <div className="sticky top-[88px] md:top-[96px] z-30 -mx-4 sm:-mx-6 lg:-mx-12 px-4 sm:px-6 lg:px-12 py-3 mb-6 bg-background/85 backdrop-blur-xl border-b border-border/40">
         <div className="flex items-center gap-2 overflow-x-auto no-scrollbar" role="group" aria-label="Filtriraj po kategoriji">
-          {categories.map((cat) => {
-            const count = cat === "Sve" ? galleryImages.length : galleryImages.filter((i) => i.category === cat).length
+          {shownCategories.length > 1 && shownCategories.map((cat) => {
+            const count = counts.get(cat) ?? 0
             const active = activeCategory === cat
             return (
               <button
@@ -143,11 +141,18 @@ export function GalleryFull() {
             className="group relative aspect-[3/4] overflow-hidden rounded-sm bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand)]"
             aria-label={`Otvori sliku: ${image.alt}`}
           >
-            <Tile id={image.id} alt={image.alt} eager={index < EAGER_TILES} />
+            <Tile image={image} eager={index < EAGER_TILES} />
+            {image.isVideo && (
+              <span className="absolute top-2 right-2 w-7 h-7 flex items-center justify-center rounded-full bg-black/60 text-white" aria-hidden="true">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4v16l13-8z" /></svg>
+              </span>
+            )}
             <div className="absolute inset-x-0 bottom-0 p-2.5 md:p-3 bg-gradient-to-t from-black/80 via-black/30 to-transparent text-left md:opacity-0 md:group-hover:opacity-100 md:group-focus-visible:opacity-100 transition-opacity duration-300">
-              <p className="text-[13px]" style={{ color: "var(--brand)" }}>
-                {image.category}
-              </p>
+              {image.category && (
+                <p className="text-[13px]" style={{ color: "var(--brand)" }}>
+                  {image.category}
+                </p>
+              )}
               <p className="text-[11px] md:text-xs text-white/90 leading-snug line-clamp-2">{image.alt}</p>
             </div>
           </button>
@@ -167,7 +172,7 @@ export function GalleryFull() {
   )
 }
 
-function Tile({ id, alt, eager }: { id: string; alt: string; eager: boolean }) {
+function Tile({ image, eager }: { image: GalleryImage; eager: boolean }) {
   const [loaded, setLoaded] = useState(false)
   const imgRef = useRef<HTMLImageElement>(null)
 
@@ -180,10 +185,10 @@ function Tile({ id, alt, eager }: { id: string; alt: string; eager: boolean }) {
     // eslint-disable-next-line @next/next/no-img-element
     <img
       ref={imgRef}
-      src={cdnThumb(id)}
-      srcSet={cdnSrcSet(id, [400, 600, 800, 1200])}
-      sizes="(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 50vw"
-      alt={alt}
+      src={image.thumb}
+      srcSet={image.thumbSrcSet}
+      sizes={image.thumbSrcSet ? "(min-width: 1280px) 25vw, (min-width: 768px) 33vw, 50vw" : undefined}
+      alt={image.alt}
       loading={eager ? "eager" : "lazy"}
       fetchPriority={eager ? "high" : "auto"}
       decoding="async"

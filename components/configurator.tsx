@@ -6,13 +6,6 @@ import { SectionHeading } from "@/components/section-heading"
 
 const configOptions = [
   {
-    id: "led",
-    label: "LED svetla",
-    description: "Premium LED sistem za maksimalnu vidljivost i vizuelni identitet vozila.",
-    beforeImage: "/images/led-before.jpg",
-    afterImage: "/images/led-after.jpg",
-  },
-  {
     id: "interior",
     label: "Enterijer",
     description: "Kompletan redizajn enterijera — promena boja table i dugmica, ambijentalno osvetljenje i materijalni detalji po meri.",

@@ -6,6 +6,11 @@ import { GalleryFull } from "@/components/gallery-full"
 import { WhatsAppButton } from "@/components/whatsapp-button"
 import { Suspense } from "react"
 import type { Metadata } from "next"
+import { getGallery } from "@/lib/instagram"
+import { spreadEvenly } from "@/lib/gallery-data"
+
+// Re-render at most hourly so new Instagram posts show up
+export const revalidate = 3600
 
 export const metadata: Metadata = {
   title: "Galerija radova — LED, chiptuning, enterijer",
@@ -21,7 +26,11 @@ export const metadata: Metadata = {
   },
 }
 
-export default function GalerijaPage() {
+export default async function GalerijaPage() {
+  const { images, source } = await getGallery()
+  // Instagram stays newest-first; the local set is spread out by category
+  const ordered = source === "local" ? spreadEvenly(images) : images
+
   return (
     <main className="min-h-screen bg-background">
       <Navbar />
@@ -38,7 +47,7 @@ export default function GalerijaPage() {
       </div>
 
       <Suspense>
-        <GalleryFull />
+        <GalleryFull images={ordered} />
       </Suspense>
       <Footer />
       <WhatsAppButton />

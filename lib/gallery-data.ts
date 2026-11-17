@@ -1,3 +1,7 @@
+// Gallery data. The site shows the Instagram feed when INSTAGRAM_ACCESS_TOKEN is
+// set (see lib/instagram.ts); the Cloudinary photos below are the fallback.
+// This file is imported by client components, so it must not touch the token.
+
 export const CDN = "https://res.cloudinary.com/dd9xjzu8c/image/upload"
 export const cdnThumb = (id: string) => `${CDN}/q_auto,f_auto,w_800/dmv-garage/${id}`
 export const cdnFull = (id: string) => `${CDN}/q_auto,f_auto,w_1920/dmv-garage/${id}`
@@ -11,137 +15,158 @@ export const categories: Category[] = ["Sve", "LED", "Chiptuning", "Enterijer", 
 
 export interface GalleryImage {
   id: string
+  /** Short title — tile overlay, lightbox heading, alt text */
   alt: string
-  category: Exclude<Category, "Sve">
+  /** Full description (Instagram caption); falls back to alt */
+  caption?: string
+  /** null = shows only under "Sve" */
+  category: Exclude<Category, "Sve"> | null
+  thumb: string
+  thumbSrcSet?: string
+  full: string
+  fullSrcSet?: string
+  /** Link to the Instagram post */
+  permalink?: string
+  isVideo?: boolean
 }
 
-export const galleryImages: GalleryImage[] = [
+type LocalImage = { id: string; alt: string; category: Exclude<Category, "Sve"> }
+
+const localImages: LocalImage[] = [
   // LED
-  { id: "IMG_0056", alt: "VW Golf cluster – plavi LED", category: "LED" },
-  { id: "IMG_0116", alt: "Opel Astra cluster – zeleni LED", category: "LED" },
+  { id: "IMG_0056", alt: "Instrument tabla – plavi LED", category: "LED" },
+  { id: "IMG_0116", alt: "Instrument tabla – zeleni LED", category: "LED" },
   { id: "IMG_0432", alt: "Noćni enterijer – LED dashboard", category: "LED" },
-  { id: "IMG_0654", alt: "Opel cluster – crveni/plavi LED", category: "LED" },
-  { id: "IMG_0881", alt: "BMW cluster – narandžasti LED", category: "LED" },
-  { id: "IMG_0884", alt: "BMW cluster – ljubičasti LED", category: "LED" },
-  { id: "IMG_0919", alt: "VW Jetta cluster – crveni LED", category: "LED" },
-  { id: "IMG_0925", alt: "VW Jetta cluster – plave igle", category: "LED" },
-  { id: "IMG_0947", alt: "VW Touran cluster – plavi LED", category: "LED" },
-  { id: "IMG_0971", alt: "BMW E46 cluster – plavi LED", category: "LED" },
-  { id: "IMG_1075", alt: "VW Golf – plavi paddles + cluster", category: "LED" },
-  { id: "IMG_1078", alt: "VW Golf – plavi paddles noć", category: "LED" },
-  { id: "IMG_1302", alt: "VW Tiguan cluster – plavi LED", category: "LED" },
-  { id: "IMG_1342", alt: "Peugeot cluster – zeleni LED", category: "LED" },
-  { id: "IMG_1504", alt: "VW Jetta cluster – plavi LED", category: "LED" },
-  { id: "IMG_1507", alt: "VW A3 cluster – plavi LED", category: "LED" },
-  { id: "IMG_1540", alt: "Opel Astra radio – plavi LED", category: "LED" },
-  { id: "IMG_1544", alt: "Opel Astra cluster – plavi LED", category: "LED" },
-  { id: "IMG_1609", alt: "VW cluster – plavi LED", category: "LED" },
-  { id: "IMG_1623", alt: "VW Golf cluster – beli/plavi LED", category: "LED" },
-  { id: "IMG_1624", alt: "VW Golf cluster – plavi LED", category: "LED" },
-  { id: "IMG_1654", alt: "VW A3 cluster – plavi LED", category: "LED" },
-  { id: "IMG_1671", alt: "Opel Vectra cluster – crveni LED", category: "LED" },
-  { id: "IMG_5939", alt: "Skoda cluster – zeleni LED", category: "LED" },
-  { id: "IMG_6040", alt: "Audi A6 cluster – plavi LED", category: "LED" },
-  { id: "IMG_6093", alt: "BMW E46 cluster – narandžasti LED", category: "LED" },
-  { id: "IMG_6096", alt: "BMW E46 cluster – plavi LED", category: "LED" },
-  { id: "IMG_6252", alt: "Audi A6 enterijer – crveni LED", category: "LED" },
-  { id: "IMG_6311", alt: "Audi A4 cluster – beli LED", category: "LED" },
+  { id: "IMG_0654", alt: "Instrument tabla – crveni/plavi LED", category: "LED" },
+  { id: "IMG_0881", alt: "Instrument tabla – narandžasti LED", category: "LED" },
+  { id: "IMG_0884", alt: "Instrument tabla – ljubičasti LED", category: "LED" },
+  { id: "IMG_0919", alt: "Instrument tabla – crveni LED", category: "LED" },
+  { id: "IMG_0925", alt: "Instrument tabla – plave igle", category: "LED" },
+  { id: "IMG_0947", alt: "Instrument tabla – plavi LED", category: "LED" },
+  { id: "IMG_0971", alt: "Instrument tabla – plavi LED", category: "LED" },
+  { id: "IMG_1075", alt: "Plavi LED – paddles i instrument tabla", category: "LED" },
+  { id: "IMG_1078", alt: "Plavi LED paddles – noću", category: "LED" },
+  { id: "IMG_1302", alt: "Instrument tabla – plavi LED", category: "LED" },
+  { id: "IMG_1342", alt: "Instrument tabla – zeleni LED", category: "LED" },
+  { id: "IMG_1504", alt: "Instrument tabla – plavi LED", category: "LED" },
+  { id: "IMG_1507", alt: "Instrument tabla – plavi LED", category: "LED" },
+  { id: "IMG_1540", alt: "Radio – plavi LED", category: "LED" },
+  { id: "IMG_1544", alt: "Instrument tabla – plavi LED", category: "LED" },
+  { id: "IMG_1609", alt: "Instrument tabla – plavi LED", category: "LED" },
+  { id: "IMG_1623", alt: "Instrument tabla – beli/plavi LED", category: "LED" },
+  { id: "IMG_1624", alt: "Instrument tabla – plavi LED", category: "LED" },
+  { id: "IMG_1654", alt: "Instrument tabla – plavi LED", category: "LED" },
+  { id: "IMG_1671", alt: "Instrument tabla – crveni LED", category: "LED" },
+  { id: "IMG_5939", alt: "Instrument tabla – zeleni LED", category: "LED" },
+  { id: "IMG_6040", alt: "Instrument tabla – plavi LED", category: "LED" },
+  { id: "IMG_6093", alt: "Instrument tabla – narandžasti LED", category: "LED" },
+  { id: "IMG_6096", alt: "Instrument tabla – plavi LED", category: "LED" },
+  { id: "IMG_6252", alt: "Enterijer – crveni LED", category: "LED" },
+  { id: "IMG_6311", alt: "Instrument tabla – beli LED", category: "LED" },
   { id: "IMG_6349", alt: "Enterijer – crveni/plavi LED", category: "LED" },
-  { id: "IMG_6459", alt: "VW Passat CC cluster – ljubičasti LED", category: "LED" },
-  { id: "IMG_6573", alt: "Peugeot cluster – narandžasti LED", category: "LED" },
-  { id: "IMG_6579", alt: "Peugeot cluster – plavi LED", category: "LED" },
-  { id: "IMG_6612", alt: "BMW E46 cluster – beli LED", category: "LED" },
-  { id: "IMG_6758", alt: "BMW cluster – beli LED", category: "LED" },
-  { id: "IMG_6762", alt: "VW Caddy cluster – crveni/plavi LED", category: "LED" },
-  { id: "IMG_6876", alt: "BMW E90 cluster – narandžasti LED", category: "LED" },
-  { id: "IMG_6877", alt: "BMW E90 cluster – beli LED", category: "LED" },
-  { id: "IMG_7168", alt: "Audi A3 cluster – crveni LED", category: "LED" },
-  { id: "IMG_7773", alt: "VW cluster – plavi LED", category: "LED" },
-  { id: "IMG_7776", alt: "BMW E90 cluster – narandžasti LED", category: "LED" },
-  { id: "IMG_7777", alt: "BMW E90 cluster – plavi LED", category: "LED" },
-  { id: "IMG_8122", alt: "VW Golf stop svetlo – LED ring crveni", category: "LED" },
-  { id: "IMG_8123", alt: "VW Golf stop svetlo – LED ring narandžasti", category: "LED" },
-  { id: "IMG_8163", alt: "BMW cluster – plavi LED", category: "LED" },
-  { id: "IMG_8360", alt: "BMW F30 klima + radio – plavi LED", category: "LED" },
-  { id: "IMG_9868", alt: "VW Golf 6 cluster – plavi LED", category: "LED" },
-  { id: "04C8C134-1382-4848-A3D2-D9467CD25DA9", alt: "VW Golf stop svetlo – LED", category: "LED" },
+  { id: "IMG_6459", alt: "Instrument tabla – ljubičasti LED", category: "LED" },
+  { id: "IMG_6573", alt: "Instrument tabla – narandžasti LED", category: "LED" },
+  { id: "IMG_6579", alt: "Instrument tabla – plavi LED", category: "LED" },
+  { id: "IMG_6612", alt: "Instrument tabla – beli LED", category: "LED" },
+  { id: "IMG_6758", alt: "Instrument tabla – beli LED", category: "LED" },
+  { id: "IMG_6762", alt: "Instrument tabla – crveni/plavi LED", category: "LED" },
+  { id: "IMG_6876", alt: "Instrument tabla – narandžasti LED", category: "LED" },
+  { id: "IMG_6877", alt: "Instrument tabla – beli LED", category: "LED" },
+  { id: "IMG_7168", alt: "Instrument tabla – crveni LED", category: "LED" },
+  { id: "IMG_7773", alt: "Instrument tabla – plavi LED", category: "LED" },
+  { id: "IMG_7776", alt: "Instrument tabla – narandžasti LED", category: "LED" },
+  { id: "IMG_7777", alt: "Instrument tabla – plavi LED", category: "LED" },
+  { id: "IMG_8122", alt: "Stop svetlo – LED ring crveni", category: "LED" },
+  { id: "IMG_8123", alt: "Stop svetlo – LED ring narandžasti", category: "LED" },
+  { id: "IMG_8163", alt: "Instrument tabla – plavi LED", category: "LED" },
+  { id: "IMG_8360", alt: "Klima + radio – plavi LED", category: "LED" },
+  { id: "IMG_9868", alt: "Instrument tabla – plavi LED", category: "LED" },
+  { id: "04C8C134-1382-4848-A3D2-D9467CD25DA9", alt: "Stop svetlo – LED", category: "LED" },
   // Enterijer
-  { id: "IMG_1541", alt: "Opel Astra enterijer – plavi LED", category: "Enterijer" },
-  { id: "IMG_5947", alt: "BMW E90 – plavo ambijentalno", category: "Enterijer" },
-  { id: "IMG_5952", alt: "BMW E90 enterijer – plavi ambijent", category: "Enterijer" },
-  { id: "IMG_6306", alt: "Audi Q7 enterijer – crveni LED", category: "Enterijer" },
-  { id: "IMG_6308", alt: "Audi Q7 klima – LED", category: "Enterijer" },
-  { id: "IMG_7778", alt: "BMW E90 – plavi ambijent + iDrive", category: "Enterijer" },
-  { id: "IMG_8358", alt: "BMW F30 – plavi ambijent", category: "Enterijer" },
-  { id: "IMG_8361", alt: "BMW F30 enterijer – noćna vožnja", category: "Enterijer" },
-  { id: "IMG_8364", alt: "BMW F30 – volan, plavi ambijent", category: "Enterijer" },
-  { id: "f5804bcc-0dc9-46a6-aff1-0c4293fb44f5", alt: "Opel Astra OPC – Android + LED", category: "Enterijer" },
+  { id: "IMG_1541", alt: "Enterijer – plavi LED", category: "Enterijer" },
+  { id: "IMG_5947", alt: "Ambijentalno osvetljenje – plavo", category: "Enterijer" },
+  { id: "IMG_5952", alt: "Enterijer – plavi ambijent", category: "Enterijer" },
+  { id: "IMG_6306", alt: "Enterijer – crveni LED", category: "Enterijer" },
+  { id: "IMG_6308", alt: "Klima – LED", category: "Enterijer" },
+  { id: "IMG_7778", alt: "Ambijentalno osvetljenje + ekran", category: "Enterijer" },
+  { id: "IMG_8358", alt: "Ambijentalno osvetljenje – plavo", category: "Enterijer" },
+  { id: "IMG_8361", alt: "Enterijer – noćna vožnja", category: "Enterijer" },
+  { id: "IMG_8364", alt: "Volan i ambijentalno osvetljenje", category: "Enterijer" },
+  { id: "f5804bcc-0dc9-46a6-aff1-0c4293fb44f5", alt: "Android multimedija + LED", category: "Enterijer" },
   // Elektronika
-  { id: "IMG_0051", alt: "VW Golf cluster – dijagnostika", category: "Elektronika" },
-  { id: "IMG_0113", alt: "Opel Astra cluster – dijagnostika", category: "Elektronika" },
+  { id: "IMG_0051", alt: "Instrument tabla – dijagnostika", category: "Elektronika" },
+  { id: "IMG_0113", alt: "Instrument tabla – dijagnostika", category: "Elektronika" },
   { id: "IMG_0433", alt: "Android multimedija ugradnja", category: "Elektronika" },
   { id: "IMG_0579", alt: "ECU – motorna komora", category: "Elektronika" },
-  { id: "IMG_0946", alt: "VW Touran cluster – dijagnostika", category: "Elektronika" },
-  { id: "IMG_0967", alt: "BMW E46 cluster – dijagnostika", category: "Elektronika" },
-  { id: "IMG_1124", alt: "BMW E46 cluster – dijagnostika", category: "Elektronika" },
-  { id: "IMG_1300", alt: "VW Tiguan cluster – dijagnostika", category: "Elektronika" },
-  { id: "IMG_1341", alt: "Peugeot cluster – dijagnostika", category: "Elektronika" },
-  { id: "IMG_1515", alt: "Opel Astra cluster – dijagnostika", category: "Elektronika" },
-  { id: "IMG_1516", alt: "Opel Astra radio – originalni", category: "Elektronika" },
-  { id: "IMG_1517", alt: "Opel Astra radio – plavi LED", category: "Elektronika" },
-  { id: "IMG_1533", alt: "VW A3 cluster – dijagnostika", category: "Elektronika" },
-  { id: "IMG_1650", alt: "VW A3 cluster – dijagnostika", category: "Elektronika" },
-  { id: "IMG_1670", alt: "Opel Vectra cluster – dijagnostika", category: "Elektronika" },
-  { id: "IMG_5920", alt: "BMW E90 + Android ekran", category: "Elektronika" },
-  { id: "IMG_5921", alt: "BMW E90 – stock enterijer", category: "Elektronika" },
-  { id: "IMG_5922", alt: "BMW E90 – Android ugradnja", category: "Elektronika" },
-  { id: "IMG_5937", alt: "Skoda cluster – dijagnostika", category: "Elektronika" },
-  { id: "IMG_6034", alt: "Audi A6 cluster – dijagnostika", category: "Elektronika" },
-  { id: "IMG_6454", alt: "VW Passat CC cluster – dijagnostika", category: "Elektronika" },
-  { id: "IMG_6650", alt: "Skoda Columbus navigacija", category: "Elektronika" },
-  { id: "IMG_6755", alt: "BMW cluster – dijagnostika", category: "Elektronika" },
-  { id: "IMG_6759", alt: "VW Caddy cluster – dijagnostika", category: "Elektronika" },
-  { id: "IMG_6760", alt: "JVC radio ugradnja – dnevni prikaz", category: "Elektronika" },
-  { id: "IMG_6763", alt: "JVC radio ugradnja – noćni prikaz", category: "Elektronika" },
-  { id: "IMG_7164", alt: "Audi A3 cluster – dijagnostika", category: "Elektronika" },
+  { id: "IMG_0946", alt: "Instrument tabla – dijagnostika", category: "Elektronika" },
+  { id: "IMG_0967", alt: "Instrument tabla – dijagnostika", category: "Elektronika" },
+  { id: "IMG_1124", alt: "Instrument tabla – dijagnostika", category: "Elektronika" },
+  { id: "IMG_1300", alt: "Instrument tabla – dijagnostika", category: "Elektronika" },
+  { id: "IMG_1341", alt: "Instrument tabla – dijagnostika", category: "Elektronika" },
+  { id: "IMG_1515", alt: "Instrument tabla – dijagnostika", category: "Elektronika" },
+  { id: "IMG_1516", alt: "Radio – originalni", category: "Elektronika" },
+  { id: "IMG_1517", alt: "Radio – plavi LED", category: "Elektronika" },
+  { id: "IMG_1533", alt: "Instrument tabla – dijagnostika", category: "Elektronika" },
+  { id: "IMG_1650", alt: "Instrument tabla – dijagnostika", category: "Elektronika" },
+  { id: "IMG_1670", alt: "Instrument tabla – dijagnostika", category: "Elektronika" },
+  { id: "IMG_5920", alt: "Android ekran", category: "Elektronika" },
+  { id: "IMG_5921", alt: "Fabrički enterijer, pre ugradnje", category: "Elektronika" },
+  { id: "IMG_5922", alt: "Android multimedija ugradnja", category: "Elektronika" },
+  { id: "IMG_5937", alt: "Instrument tabla – dijagnostika", category: "Elektronika" },
+  { id: "IMG_6034", alt: "Instrument tabla – dijagnostika", category: "Elektronika" },
+  { id: "IMG_6454", alt: "Instrument tabla – dijagnostika", category: "Elektronika" },
+  { id: "IMG_6650", alt: "Fabrička navigacija", category: "Elektronika" },
+  { id: "IMG_6755", alt: "Instrument tabla – dijagnostika", category: "Elektronika" },
+  { id: "IMG_6759", alt: "Instrument tabla – dijagnostika", category: "Elektronika" },
+  { id: "IMG_6760", alt: "Radio ugradnja – dnevni prikaz", category: "Elektronika" },
+  { id: "IMG_6763", alt: "Radio ugradnja – noćni prikaz", category: "Elektronika" },
+  { id: "IMG_7164", alt: "Instrument tabla – dijagnostika", category: "Elektronika" },
   { id: "IMG_7634", alt: "Servis instrument ploče", category: "Elektronika" },
-  { id: "IMG_8159", alt: "BMW cluster – dijagnostika", category: "Elektronika" },
-  { id: "IMG_9860", alt: "VW Golf 6 cluster – dijagnostika", category: "Elektronika" },
-  { id: "IMG_9922", alt: "VW cluster – dijagnostika", category: "Elektronika" },
+  { id: "IMG_8159", alt: "Instrument tabla – dijagnostika", category: "Elektronika" },
+  { id: "IMG_9860", alt: "Instrument tabla – dijagnostika", category: "Elektronika" },
+  { id: "IMG_9922", alt: "Instrument tabla – dijagnostika", category: "Elektronika" },
   { id: "copy_44830833-4CDA-456D-AF05-70F5666CC2F1", alt: "Elektronika – servis", category: "Elektronika" },
   // Chiptuning
   { id: "gallery-2", alt: "Chiptuning remap", category: "Chiptuning" },
   { id: "gallery-6", alt: "ECU remap rezultat", category: "Chiptuning" },
   { id: "chiptuning-after", alt: "Chiptuning – rezultat", category: "Chiptuning" },
-  { id: "chiptuning-before", alt: "Chiptuning – before", category: "Chiptuning" },
+  { id: "chiptuning-before", alt: "Chiptuning – pre", category: "Chiptuning" },
 ]
 
+export const localGallery: GalleryImage[] = localImages.map((img) => ({
+  ...img,
+  thumb: cdnThumb(img.id),
+  thumbSrcSet: cdnSrcSet(img.id, [400, 600, 800, 1200]),
+  full: cdnWidth(img.id, 1600),
+  fullSrcSet: cdnSrcSet(img.id, [800, 1200, 1600, 2400]),
+}))
+
 // Evenly spread categories across the "Sve" view so the grid shows variety
-// instead of 47 LED clusters first and 4 chiptuning shots last. Each category's
+// instead of all LED clusters first and chiptuning shots last. Each category's
 // items are distributed proportionally across [0,1] and merged by position —
 // deterministic (no shuffle), so SSR and client render identically.
-function spreadEvenly(images: typeof galleryImages) {
-  const counts = new Map<Category, number>()
-  for (const img of images) counts.set(img.category, (counts.get(img.category) ?? 0) + 1)
+// Instagram items keep their date order (newest first).
+export function spreadEvenly(images: GalleryImage[]) {
+  const counts = new Map<string, number>()
+  for (const img of images) counts.set(img.category ?? "", (counts.get(img.category ?? "") ?? 0) + 1)
 
-  const seen = new Map<Category, number>()
+  const seen = new Map<string, number>()
   return images
     .map((img, i) => {
-      const idx = seen.get(img.category) ?? 0
-      seen.set(img.category, idx + 1)
-      const total = counts.get(img.category) ?? 1
+      const key = img.category ?? ""
+      const idx = seen.get(key) ?? 0
+      seen.set(key, idx + 1)
+      const total = counts.get(key) ?? 1
       return { img, pos: (idx + 0.5) / total, i }
     })
     .sort((a, b) => a.pos - b.pos || a.i - b.i)
     .map((x) => x.img)
 }
 
-export const galleryImagesAll = spreadEvenly(galleryImages)
-
 const PREVIEW_IDS = [
   "IMG_0654", "IMG_7777", "IMG_8358", "IMG_5920", "IMG_6252",
   "chiptuning-after", "IMG_7778", "IMG_6650", "IMG_6877",
 ]
 
-const _byId = new Map(galleryImages.map((img) => [img.id, img]))
-export const previewImages = PREVIEW_IDS.map((id) => _byId.get(id)).filter(Boolean) as GalleryImage[]
+const _byId = new Map(localGallery.map((img) => [img.id, img]))
+export const localPreview = PREVIEW_IDS.map((id) => _byId.get(id)).filter(Boolean) as GalleryImage[]

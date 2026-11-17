@@ -11,7 +11,13 @@ import { FAQ } from "@/components/faq"
 import { Contact } from "@/components/contact"
 import { Footer } from "@/components/footer"
 import { WhatsAppButton } from "@/components/whatsapp-button"
-export default function Page() {
+import { getGallery } from "@/lib/instagram"
+
+// Re-render at most hourly so new Instagram posts show up
+export const revalidate = 3600
+
+export default async function Page() {
+  const gallery = await getGallery()
   return (
     <main className="min-h-screen bg-background">
       <Navbar />
@@ -21,7 +27,7 @@ export default function Page() {
       <Configurator />
       <Process />
       <About />
-      <Gallery />
+      <Gallery gallery={gallery} />
       <CtaBand />
       <FAQ />
       <Contact />
