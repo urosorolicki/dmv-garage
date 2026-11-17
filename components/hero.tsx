@@ -40,9 +40,9 @@ export function Hero() {
         }}
       />
 
-      <div className="relative mx-auto max-w-[1540px] px-5 pb-7 pt-[107px] sm:px-8 lg:px-12 lg:pt-[100px]">
-        <div className="relative min-h-[475px] lg:min-h-0 lg:h-[390px]">
-          <div className="relative z-10 max-w-[600px]">
+      <div className="hero-shell relative mx-auto max-w-[1540px] px-5 pb-7 pt-[107px] sm:px-8 lg:px-12 lg:pt-[100px]">
+        <div className="hero-stage relative min-h-[475px] lg:min-h-0 lg:h-[390px]">
+          <div className="hero-copy relative z-10 max-w-[600px]">
             <p className="mb-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] font-medium uppercase tracking-[.02em] text-[#e3e2df]/80 sm:text-xs">
               <span className="mr-1 h-5 w-1 skew-x-[-17deg] bg-[var(--brand)]" aria-hidden="true" />
               Chiptuning <span className="text-[var(--brand)]">/</span> LED ugradnja <span className="text-[var(--brand)]">/</span> Auto elektronika
@@ -64,11 +64,25 @@ export function Hero() {
               </a>
             </div>
             {/* No fabricated gain claims, customer totals or review scores. */}
-            <div className="mt-8 flex flex-wrap gap-x-5 gap-y-2 text-[11px] font-medium tracking-[.08em] text-white/75">
+            <div className="hero-meta mt-8 flex flex-wrap gap-x-5 gap-y-2 text-[11px] font-medium tracking-[.08em] text-white/75">
               <span>ECU remap</span>
               <span className="border-l border-white/30 pl-5">LED / Enterijer</span>
               <span className="border-l border-white/30 pl-5">Zemun, Beograd</span>
             </div>
+          </div>
+
+          <div className="hero-mobile-scene" aria-label="Usluge na vozilu">
+            {/* The same approved photograph, framed to show the whole car on phones. */}
+            <img src="/images/garage-dmv-hero.webp" alt="Crni Audi u Garage DMV radionici" width={1672} height={941} />
+            {services.map((service) => {
+              const Icon = service.icon
+              return (
+                <a key={service.id} href={service.href} className={"mobile-callout mobile-callout-" + service.id} aria-label={service.label + ": " + service.detail}>
+                  <Icon size={16} aria-hidden="true" />
+                  <span>{service.label}</span>
+                </a>
+              )
+            })}
           </div>
 
           {/* Connector lines + points are bound to the same 1440×433 stage as
@@ -130,15 +144,7 @@ export function Hero() {
           })}
         </nav>
 
-        {/* On phones, the labels are tappable here instead of overlapping
-            the cropped image. */}
-        <div className="mt-3 flex flex-wrap gap-2 xl:hidden" aria-label="Delovi vozila">
-          {services.map((s) => (
-            <a key={s.id} href={s.href} className="rounded-full border border-white/25 bg-[#0a161d]/85 px-3 py-2 text-xs text-white/80 hover:border-[var(--brand)]">
-              {s.label}
-            </a>
-          ))}
-        </div>
+
       </div>
     </section>
   )

@@ -33,3 +33,8 @@ Cloud browser tool itself fails with "the gaas-browser node_repl sandbox cannot 
 
 ## Live preview verification after push
 Vercel succeeded for 2efa0deebbc7dd52c998e7ec3f907818979c79d6. Opened the branch preview with share access in headless Chromium and inspected /workspace/artifacts/vercel-after-1440.png and /workspace/artifacts/vercel-after-mobile.png. Confirmed new navbar, mobile menu closure, #vehicle-lookup navigation, no horizontal overflow at 390 px and no uncaught page errors. Bensky domain refusal remains visible. Formal Cloud browser/combined-artifact QA gate remains blocked.
+
+## Mobile follow-up — desktop hierarchy adaptation
+User requested mobile to resemble desktop more closely. Added a mobile-only photo scene using the same approved asset, with four labeled service links around the complete car. Removed redundant mobile pills. At 640–1023 px the text and vehicle sit side by side; phones keep readable text above the car, paired CTAs and a two-column service strip. Desktop composition and all Bensky code remain untouched.
+
+Local production screenshots: /workspace/artifacts/mobile-revision-{320,390,430,768,1440}.png, DPR 1, viewport heights 1000 px. Inspected 320, 390 and 768 px images. Corrected the initial four-line heading at 320 px to three lines and replaced the tablet vertical stack with a desktop-like split composition, then recaptured. No document overflow at all five widths. Mobile menu/configurator navigation passed, no uncaught page errors. Production build and TypeScript passed. Full reference QA still blocked for the previously documented exact-artwork and Bensky authorization reasons; no claim of pixel parity. No approved mobile visual reference exists, so this adaptation follows the desktop hierarchy.
