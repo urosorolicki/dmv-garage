@@ -5,10 +5,10 @@ import Link from "next/link"
 
 const navLinks = [
   { label: "Početna", href: "/#hero" },
-  { label: "Chiptuning", href: "/#vehicle-lookup" },
-  { label: "Konfigurator", href: "/#configurator" },
   { label: "Usluge", href: "/#services" },
+  { label: "Konfigurator", href: "/#vehicle-lookup" },
   { label: "Galerija", href: "/#gallery" },
+  { label: "O nama", href: "/#about" },
   { label: "Kontakt", href: "/#contact" },
 ]
 
@@ -26,20 +26,20 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-700 ${
+      className={`fixed top-0 left-0 right-0 z-50 border-b border-white/15 transition-all duration-300 ${
         scrolled
-          ? "bg-background/80 backdrop-blur-xl border-b border-border/50"
-          : "bg-transparent"
+          ? "bg-[#061017]/95 backdrop-blur-xl"
+          : "bg-[#061017]/85 backdrop-blur-md"
       }`}
     >
-      <nav className="flex items-center justify-between px-6 lg:px-12 py-4 max-w-[1440px] mx-auto">
+      <nav className="flex items-center justify-between gap-4 px-6 lg:px-12 py-2.5 max-w-[1540px] mx-auto">
         <Link href="/" className="flex items-center gap-2">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo.png" alt="DMV Garage" width={112} height={56} className="h-14 md:h-16 w-auto" />
+          <img src="/logo.png" alt="DMV Garage" width={112} height={56} className="h-10 md:h-11 w-auto" />
         </Link>
 
         {/* Desktop nav */}
-        <ul className="hidden md:flex items-center gap-8">
+        <ul className="hidden lg:flex items-center gap-7">
           {navLinks.map((link) => (
             <li key={link.href}>
               <Link
@@ -58,7 +58,7 @@ export function Navbar() {
 
         <a
           href="/#contact"
-          className="hidden md:inline-flex items-center justify-center px-5 py-2 text-sm tracking-[0.06em] uppercase font-medium transition-all duration-300 hover:opacity-85"
+          className="hidden lg:inline-flex items-center justify-center rounded-[4px] px-5 py-2.5 text-sm tracking-[0.04em] font-semibold transition-opacity hover:opacity-85"
           style={{ background: "var(--brand)", color: "oklch(0.08 0 0)" }}
         >
           Zakaži Termin
@@ -67,7 +67,7 @@ export function Navbar() {
         {/* Mobile menu button */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden flex flex-col gap-1.5 p-3 -mr-2 min-w-11 min-h-11 items-center justify-center"
+          className="lg:hidden flex flex-col gap-1.5 p-3 -mr-2 min-w-11 min-h-11 items-center justify-center"
           aria-label={menuOpen ? "Zatvori meni" : "Otvori meni"}
           aria-expanded={menuOpen}
           aria-controls="mobile-navigation"
@@ -95,7 +95,7 @@ export function Navbar() {
         id="mobile-navigation"
         aria-hidden={!menuOpen}
         inert={!menuOpen}
-        className={`md:hidden overflow-hidden transition-all duration-500 ease-out ${
+        className={`lg:hidden overflow-hidden transition-all duration-500 ease-out ${
           menuOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
         }`}
       >
