@@ -28,5 +28,8 @@ Cloud browser tool itself fails with "the gaas-browser node_repl sandbox cannot 
 - Production build passed with NEXT_TURBOPACK_EXPERIMENTAL_USE_SYSTEM_TLS_CERTS=1 (environment TLS setting only).
 - npx tsc --noEmit passed.
 - Chromium production run: no uncaught page errors; mobile menu opens, selecting Konfigurator closes it and navigates to #vehicle-lookup; no horizontal document overflow at 390 px.
-- Desktop 1440 px and mobile 390 px screenshots inspected. Final crop/marker adjustment requires new capture before a fidelity approval.
+- Desktop 1440 px and mobile 390 px screenshots inspected. Final crop/marker adjustment captured and inspected in the updated production build and live Vercel preview.
 - No merge or production deployment. Keep PR as draft; no claim of reference parity.
+
+## Live preview verification after push
+Vercel succeeded for 2efa0deebbc7dd52c998e7ec3f907818979c79d6. Opened the branch preview with share access in headless Chromium and inspected /workspace/artifacts/vercel-after-1440.png and /workspace/artifacts/vercel-after-mobile.png. Confirmed new navbar, mobile menu closure, #vehicle-lookup navigation, no horizontal overflow at 390 px and no uncaught page errors. Bensky domain refusal remains visible. Formal Cloud browser/combined-artifact QA gate remains blocked.
