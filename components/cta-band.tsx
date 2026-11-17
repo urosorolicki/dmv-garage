@@ -4,8 +4,7 @@ import { whatsappUrl } from "@/lib/site-config"
 // Full-width orange band: the one loud moment between proof (gallery) and questions.
 export function CtaBand() {
   return (
-    <section id="cta" aria-labelledby="cta-band-title" className="relative overflow-hidden bg-[var(--brand)] text-[#0b1216]">
-      <div className="cta-band-stripes pointer-events-none absolute inset-0" aria-hidden="true" />
+    <section id="cta" aria-labelledby="cta-band-title" className="orange-surface relative overflow-hidden">
       <div className="relative mx-auto flex max-w-[1440px] flex-col gap-8 px-6 py-14 md:py-16 lg:flex-row lg:items-center lg:justify-between lg:px-12">
         <div className="max-w-2xl">
           <p className="font-mono text-xs uppercase tracking-[.2em] text-[#0b1216]/70">Spreman za više snage?</p>

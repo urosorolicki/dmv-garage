@@ -2,9 +2,11 @@ export function Footer() {
   return (
     <footer className="relative py-8 border-t" style={{ borderTopColor: "var(--brand)", borderTopWidth: "1px" }}>
       <div className="max-w-[1440px] mx-auto px-6 lg:px-12 flex flex-col sm:flex-row items-center justify-between gap-4">
-        <p className="text-muted-foreground text-xs tracking-[0.1em]">
-          {"© DMV Garage"}
-        </p>
+        <div className="flex items-center gap-4">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src="/logo-mark.png" alt="DMV Garage" width={640} height={280} loading="lazy" className="h-12 w-auto" />
+          <p className="text-muted-foreground text-xs tracking-[0.1em]">© DMV Garage</p>
+        </div>
         <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-0">
           <a
             href="https://www.google.com/maps?q=44.85585268309917,20.3525775137743"

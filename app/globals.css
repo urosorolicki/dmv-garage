@@ -279,5 +279,7 @@ body::after {
 .glow-tl { background-image:radial-gradient(55% 45% at 0% 0%, rgb(255 138 0 / .13), transparent 70%); }
 .glow-br { background-image:radial-gradient(55% 50% at 100% 100%, rgb(255 138 0 / .11), transparent 70%); }
 
-/* Orange call-to-action band */
-.cta-band-stripes { background-image:repeating-linear-gradient(-55deg, rgb(0 0 0 / .06) 0 14px, transparent 14px 28px); }
+/* Orange surface with diagonal stripes (CTA band, stats, FAQ card, ticker) */
+.orange-surface { background-color:var(--brand); color:#0b1216; background-image:repeating-linear-gradient(-55deg, rgb(0 0 0 / .06) 0 14px, transparent 14px 28px); }
+.ticker-track { animation:marquee 32s linear infinite; }
+@media (prefers-reduced-motion: reduce) { .ticker-track { animation:none; } }

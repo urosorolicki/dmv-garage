@@ -125,17 +125,17 @@ export function FAQ() {
         </div>
 
         {/* Fills the empty right column with the next step */}
-        <div className="self-start rounded-xl border border-white/20 bg-card p-6 lg:sticky lg:top-28">
-          <span className="mb-3 block h-[3px] w-10 bg-[var(--brand)]" aria-hidden="true" />
-          <p className="text-lg font-semibold text-white">Nisi našao odgovor?</p>
-          <p className="mt-2 text-sm leading-relaxed text-white/70">
+        <div className="orange-surface self-start rounded-xl p-6 lg:sticky lg:top-28">
+          <span className="mb-3 block h-[3px] w-10 bg-[#0b1216]" aria-hidden="true" />
+          <p className="font-display text-2xl font-extrabold italic uppercase text-[#0b1216]">Nisi našao odgovor?</p>
+          <p className="mt-2 text-sm leading-relaxed text-[#0b1216]/80">
             Pošalji model vozila i pitanje — javićemo ti se u radnom vremenu (pon–pet 09–18, sub 09–15).
           </p>
           <div className="mt-5 flex flex-wrap gap-3">
-            <a href={whatsappUrl("Zdravo! Imam pitanje:")} target="_blank" rel="noopener noreferrer" className="btn btn-primary">
+            <a href={whatsappUrl("Zdravo! Imam pitanje:")} target="_blank" rel="noopener noreferrer" className="btn bg-[#0b1216] text-white hover:bg-black focus-visible:outline-[#0b1216]">
               <MessageCircle size={17} aria-hidden="true" /> Piši na WhatsApp
             </a>
-            <a href={`tel:${business.phone}`} className="btn btn-secondary">
+            <a href={`tel:${business.phone}`} className="btn border-2 border-[#0b1216] text-[#0b1216] hover:bg-[#0b1216]/10 focus-visible:outline-[#0b1216]">
               <Phone size={16} aria-hidden="true" /> Pozovi
             </a>
           </div>
