@@ -252,7 +252,7 @@ export function Configurator() {
   return (
     <section
       ref={sectionRef}
-      id="configurator"
+      id="pre-posle"
       className="relative py-24 md:py-32 overflow-hidden"
     >
       <div className="absolute inset-0 bg-background" />
@@ -271,10 +271,10 @@ export function Configurator() {
           }`}
         >
           <p className="text-muted-foreground text-xs tracking-[0.3em] uppercase mb-3">
-            Interaktivni konfigurator
+            Pre / posle
           </p>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-sans font-light tracking-[-0.03em] text-foreground">
-            Izaberite paket
+            Pogledaj razliku
           </h2>
         </div>
 

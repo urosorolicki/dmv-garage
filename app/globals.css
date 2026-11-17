@@ -22,12 +22,14 @@
   --destructive-foreground: oklch(0.577 0.245 27.325);
   --border: oklch(0.17 0 0);
   --input: oklch(0.17 0 0);
-  --ring: oklch(0.65 0.22 40);
-  /* Brand — burning orange */
-  --brand: oklch(0.65 0.22 40);
-  --brand-dim: oklch(0.45 0.16 40);
-  --brand-subtle: oklch(0.65 0.22 40 / 0.12);
-  --chart-1: oklch(0.65 0.22 40);
+  --ring: #ff8a00;
+  /* Brand — one orange site-wide; cyan only for light/LED accents */
+  --brand: #ff8a00;
+  --brand-bright: #ffa52c;
+  --brand-dim: #b36100;
+  --brand-subtle: rgb(255 138 0 / 0.12);
+  --cool-accent: #00d9f5;
+  --chart-1: #ff8a00;
   --chart-2: oklch(0.60 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
@@ -40,7 +42,7 @@
   --sidebar-accent: oklch(0.18 0 0);
   --sidebar-accent-foreground: oklch(0.85 0.006 65);
   --sidebar-border: oklch(0.17 0 0);
-  --sidebar-ring: oklch(0.65 0.22 40);
+  --sidebar-ring: #ff8a00;
 }
 
 @theme inline {
@@ -145,24 +147,6 @@ body::after {
   100% { transform: translateX(-50%); }
 }
 
-/* Hero animations */
-@keyframes heroLightMove {
-  0%   { transform: translateX(-50px) translateY(0); }
-  100% { transform: translateX(50px) translateY(-30px); }
-}
-@keyframes heroScrollLine {
-  0%   { transform: translateY(-12px); }
-  50%  { transform: translateY(32px); }
-  100% { transform: translateY(-12px); }
-}
-.hero-light-move  { animation: heroLightMove 12s ease-in-out infinite alternate; }
-.hero-scroll-line { animation: heroScrollLine 2s ease-in-out infinite; }
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-light-move,
-  .hero-scroll-line { animation: none; }
-}
-
 @utility no-scrollbar {
   scrollbar-width: none;
   &::-webkit-scrollbar {
@@ -170,24 +154,81 @@ body::after {
   }
 }
 
-/* Hero intro — pure CSS so it starts on first paint instead of after hydration (LCP) */
-@keyframes hero-rise {
-  from { opacity: 0; transform: translateY(1rem); }
-  to { opacity: 1; transform: none; }
-}
-@keyframes hero-char {
-  from { opacity: 0; transform: translateY(110%); }
-  to { opacity: 1; transform: none; }
-}
-@keyframes hero-line {
-  from { transform: scaleX(0); }
-  to { transform: scaleX(1); }
-}
-.hero-rise { animation: hero-rise 1.2s cubic-bezier(0.16, 1, 0.3, 1) both; }
-.hero-char { display: inline-block; animation: hero-char 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
-.hero-line { transform-origin: left; animation: hero-line 1s cubic-bezier(0.16, 1, 0.3, 1) both; }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .hero-rise, .hero-char, .hero-line { animation: none; }
   body::after { animation: none; }
+}
+
+/* Garage DMV first-screen composition. */
+.service-link { box-shadow:inset 0 1px 0 #ffffff15,0 6px 15px #0005; }
+.service-link-light { border-color:#00d9f599; box-shadow:inset 0 0 22px #00c9ef22,0 0 12px #00c9ef30; }
+#hero-title { font-family:Arial, Helvetica, sans-serif; font-weight:900; }
+.hero-bg { position:absolute; inset:0; width:100%; height:100%; max-width:none; object-fit:cover; object-position:center 44%; }
+@media(min-width:1280px) { .hero-bg { inset:auto; top:-55px; right:0; width:95%; height:auto; object-fit:fill; } }
+
+.hero-mobile-scene, .mobile-booking { display:none; }
+@media(max-width:1023px) {
+  .garage-navigation { padding:8px 16px; gap:8px; }
+  .garage-navigation > a:first-child { margin-right:auto; }
+  .garage-navigation > button { margin-right:0; flex-shrink:0; }
+  .mobile-booking { display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; flex-shrink:0; border-radius:7px; background:var(--brand); color:#071017; }
+  .mobile-booking:focus-visible { outline:2px solid white; outline-offset:3px; }
+  .hero-bg, .hero-scrim { display:none; }
+  #hero .hero-shell { padding-top:88px; padding-bottom:18px; }
+  #hero .hero-stage { min-height:0; height:calc(195px + 60vw); }
+  #hero .hero-copy { max-width:600px; }
+  #hero .hero-kicker { font-size:10px; gap:5px; margin-bottom:12px; letter-spacing:0; }
+  #hero-title { font-size:clamp(26px,8.2vw,35px); line-height:1.04; letter-spacing:-.03em; }
+  #hero-title span { white-space:nowrap; }
+  #hero .hero-description { margin-top:14px; font-size:14px; line-height:1.45; max-width:370px; text-shadow:0 2px 8px #000; }
+  #hero .hero-actions { margin-top:16px; flex-wrap:nowrap; gap:10px; }
+  #hero .hero-actions a { padding:0 16px; gap:8px; min-height:44px; font-size:13px; }
+  #hero .hero-meta { display:none; }
+  .hero-mobile-scene { display:block; position:absolute; top:190px; left:-20px; right:-20px; aspect-ratio:390/234; pointer-events:none; }
+  .hero-mobile-scene > img { position:absolute; top:-10.3%; right:0; width:155%; height:auto; max-width:none; mask-image:linear-gradient(to bottom,transparent,#000 32%,#000 85%,transparent); }
+  .mobile-callout-wires { position:absolute; inset:0; width:100%; height:100%; overflow:visible; }
+  .mobile-callout { position:absolute; display:flex; align-items:center; gap:6px; min-height:44px; padding:7px 10px; border:1px solid #ffffff70; border-radius:7px; color:#fff; background:#061017ed; font-size:11px; font-weight:600; box-shadow:0 3px 12px #0009; pointer-events:auto; }
+  .mobile-callout > svg { color:var(--brand); flex-shrink:0; }
+  .mobile-callout:focus-visible { outline:2px solid var(--brand); outline-offset:3px; }
+  .mobile-callout-performance { left:4%; top:29%; }
+  .mobile-callout-interior { right:4%; top:29%; }
+  .mobile-callout-lighting { left:23%; bottom:0; border-color:var(--brand); }
+  .mobile-callout-electronics { right:3%; bottom:8%; }
+  #hero nav { position:relative; margin-top:12px; gap:6px; grid-template-columns:repeat(4,minmax(0,1fr)); }
+  #hero nav a { padding:10px 4px; gap:7px; min-height:74px; border-radius:9px; flex-direction:column; justify-content:flex-start; align-items:center; text-align:center; }
+  #hero nav a > svg { width:22px; }
+  #hero nav strong { font-size:12px; line-height:1.1; }
+  #hero nav a > span { padding:0; border:0; }
+  #hero nav a > span > span, #hero nav a > svg:last-child { display:none; }
+  #vehicle-lookup { padding-top:8px; }
+}
+@media(max-width:359px) {
+  #hero .hero-kicker { font-size:9px; gap:3px; }
+  #hero .hero-actions a { padding:0 10px; gap:6px; font-size:12px; }
+  #hero nav a { padding:10px 3px; gap:7px; }
+  #hero nav strong { font-size:10px; }
+
+  #hero nav a > span > span { font-size:10px; }
+  .mobile-callout { font-size:10px; padding:6px 8px; gap:5px; }
+}
+@media(min-width:640px) and (max-width:1023px) {
+  #hero .hero-stage { height:450px; }
+  #hero .hero-copy { width:53%; }
+  #hero-title { font-size:clamp(28px,4vw,40px); }
+  .hero-mobile-scene { left:auto; top:150px; right:-32px; width:66vw; }
+  .mobile-callout { font-size:12px; padding:8px 12px; }
+  .mobile-callout-performance { top:38%; }
+  #hero nav { grid-template-columns:repeat(4,minmax(0,1fr)); }
+  #hero nav a { flex-direction:row; align-items:flex-start; text-align:left; gap:10px; padding:14px 12px; }
+  #hero nav a > svg { width:22px; }
+  #hero nav strong { font-size:13px; }
+  #hero nav a > span > span { display:block; font-size:11px; line-height:1.35; }
+  #hero nav a > span { padding:0; border:0; }
+  #hero nav a > svg:last-child { display:none; }
+}
+
+/* Engine photo stays visible; scrim only where text needs contrast. */
+.lookup-scrim { background:linear-gradient(180deg,rgba(8,19,27,.72) 0%,rgba(8,19,27,.82) 100%); }
+@media(min-width:1024px) {
+  .lookup-scrim { background:linear-gradient(90deg,rgba(8,19,27,.94) 0%,rgba(8,19,27,.82) 30%,rgba(8,19,27,.45) 62%,rgba(8,19,27,.2) 100%); }
 }

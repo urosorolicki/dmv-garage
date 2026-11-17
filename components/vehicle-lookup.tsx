@@ -1,7 +1,8 @@
 "use client"
 
-import { useState, useRef, useEffect } from "react"
 import Script from "next/script"
+import { MessageCircle } from "lucide-react"
+import { whatsappUrl } from "@/lib/site-config"
 import { BENSKY_ORIGIN, useBenskyVehicle } from "@/hooks/use-bensky-vehicle"
 
 const WIDGET_ID = "1977"
@@ -30,116 +31,83 @@ declare global {
 // a "no permission" notice; it works on the registered production domain.
 
 export function VehicleLookup() {
-  const [isVisible, setIsVisible] = useState(false)
-  const sectionRef = useRef<HTMLElement>(null)
   const vehicleName = useBenskyVehicle()
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setIsVisible(true) },
-      { threshold: 0.1 }
-    )
-    if (sectionRef.current) observer.observe(sectionRef.current)
-    return () => observer.disconnect()
-  }, [])
-
   const waText = vehicleName
     ? `Zdravo! Zanima me chiptuning za ${vehicleName}. Možemo li dogovoriti termin?`
     : ""
 
   return (
     <section
-      ref={sectionRef}
       id="vehicle-lookup"
-      className="relative py-24 md:py-32 overflow-hidden"
+      className="relative overflow-hidden bg-[#061017] px-5 pb-12 pt-6 sm:px-8 lg:px-12 lg:pb-16"
     >
-      <div className="absolute inset-0 bg-[oklch(0.14_0_0)]" />
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: "radial-gradient(ellipse 80% 60% at 20% 50%, oklch(0.20 0 0), transparent)",
-        }}
-      />
-
-      <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12">
-
-        {/* Header */}
-        <div
-          className={`mb-12 transition-all duration-1000 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          <p className="text-muted-foreground text-xs tracking-[0.3em] uppercase mb-3">
-            Chiptuning kalkulator
-          </p>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-sans font-light tracking-[-0.03em] text-foreground">
-            Koliko možeš dobiti?
-          </h2>
-          <p className="mt-4 text-muted-foreground text-sm max-w-lg leading-relaxed">
-            Pronađi svoje vozilo i pogledaj procenjene vrednosti snage i obrtnog momenta nakon chiptuning remapa.
-          </p>
-        </div>
-
-        {/* Widget */}
-        <div
-          className={`border border-border rounded-sm overflow-hidden bg-background/40 transition-all duration-1000 delay-200 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
-        >
-          <div className="px-3 pt-3 md:px-5 md:pt-5">
-            <iframe
-              id={IFRAME_ID}
-              src={`${BENSKY_ORIGIN}/w.php?id=${WIDGET_ID}&${WIDGET_THEME}`}
-              title="Pretraga vozila — chiptuning"
-              referrerPolicy="origin"
-              width="100%"
-              height={200}
-              className="block w-full border-0"
-              style={{ transition: "height 0.5s", colorScheme: "normal" }}
-            />
-          </div>
-          <Script
-            src={`${BENSKY_ORIGIN}/assets/js/iframeResizer.min.js`}
-            strategy="afterInteractive"
-            onReady={() => window.iFrameResize?.(false, `#${IFRAME_ID}`)}
-          />
-
-          {/* CTA — appears once the widget reports a selected vehicle */}
+      <div className="relative z-10 mx-auto max-w-[1440px]">
+        <div className="relative isolate overflow-hidden rounded-xl border border-white/25 bg-[#09131a] shadow-[0_16px_50px_rgba(0,0,0,.27)]">
           <div
-            className="grid transition-all duration-500 ease-in-out"
+            className="pointer-events-none absolute inset-0 bg-cover bg-[position:center_55%]"
+            style={{ backgroundImage: 'url("/images/electronics-after-hd.jpg")' }}
+            aria-hidden="true"
+          />
+          <div className="lookup-scrim pointer-events-none absolute inset-0" aria-hidden="true" />
+          <div className="relative z-10 grid items-start gap-5 px-5 py-6 lg:grid-cols-[minmax(265px,0.36fr)_minmax(0,0.64fr)] lg:gap-6 lg:px-9 lg:py-8">
+            <div className="lg:border-r lg:border-white/25 lg:pr-6">
+              <span className="mb-3 block h-[3px] w-12 bg-[var(--brand)]" aria-hidden="true" />
+              <p className="mb-2 text-[10px] font-mono uppercase tracking-[.16em] text-white/60">Chiptuning kalkulator</p>
+              <h2 className="font-sans text-2xl font-black italic tracking-tight text-white sm:text-3xl">
+                Koliko snage dobijaš?
+              </h2>
+              <p className="mt-3 max-w-[350px] text-sm leading-6 text-white/75">
+                Pronađi marku, model i motor. Pogledaj procenjene rezultate snage i obrtnog momenta.
+              </p>
+            </div>
+            <div className="min-w-0">
+              <p className="mb-3 text-[10px] font-mono uppercase tracking-[.16em] text-[var(--cool-accent)]">
+                Izaberi svoje vozilo
+              </p>
+              <iframe
+                id={IFRAME_ID}
+                src={`${BENSKY_ORIGIN}/w.php?id=${WIDGET_ID}&${WIDGET_THEME}`}
+                title="Pretraga vozila — chiptuning"
+                referrerPolicy="origin"
+                width="100%"
+                height={200}
+                className="block w-full border-0"
+                style={{ transition: "height 0.5s", colorScheme: "normal" }}
+              />
+              <Script
+                src={`${BENSKY_ORIGIN}/assets/js/iframeResizer.min.js`}
+                strategy="afterInteractive"
+                onReady={() => window.iFrameResize?.(false, `#${IFRAME_ID}`)}
+              />
+            </div>
+          </div>
+          <div
+            className="relative z-10 grid transition-[grid-template-rows] duration-300"
             style={{ gridTemplateRows: vehicleName ? "1fr" : "0fr" }}
           >
             <div className="overflow-hidden">
-              <div className="bg-secondary/60 border-t border-border px-6 md:px-8 py-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+              <div className="flex flex-col items-start justify-between gap-4 border-t-2 border-[var(--brand)] bg-[#0c1a21] px-6 py-6 sm:flex-row sm:items-center lg:px-9">
                 <div>
-                  <p className="text-[10px] tracking-[0.3em] uppercase mb-1 font-mono" style={{ color: "var(--brand)" }}>
-                    Izabrano vozilo
-                  </p>
-                  <p className="text-sm text-foreground">{vehicleName}</p>
+                  <p className="mb-1 text-[10px] uppercase tracking-[.16em] text-[var(--brand)]">Tvoje vozilo</p>
+                  <p className="text-lg font-semibold text-white">{vehicleName}</p>
+                  <p className="mt-1 text-xs text-white/60">Pošalji nam upit — javljamo se sa terminom i cenom.</p>
                 </div>
                 <div className="flex flex-wrap gap-3">
                   <a
-                    href="#contact"
-                    className="px-6 py-3 text-xs tracking-[0.12em] uppercase border border-border text-foreground hover:bg-accent transition-colors duration-300"
-                  >
-                    Popuni formu
-                  </a>
-                  <a
-                    href={`https://wa.me/381628727274?text=${encodeURIComponent(waText)}`}
+                    href={whatsappUrl(waText)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-8 py-3 text-xs tracking-[0.12em] uppercase transition-opacity duration-300 hover:opacity-85 font-medium"
-                    style={{ background: "var(--brand)", color: "oklch(0.08 0 0)" }}
+                    className="inline-flex min-h-11 items-center gap-2 rounded-[5px] bg-[var(--brand)] px-6 text-sm font-bold text-[#071218] hover:bg-[var(--brand-bright)]"
                   >
-                    Zakaži chiptuning
+                    <MessageCircle size={17} aria-hidden="true" /> Zakaži preko WhatsApp-a
                   </a>
+                  <a href="#contact" className="inline-flex min-h-11 items-center rounded-[5px] border border-white/30 px-5 text-sm font-semibold text-white hover:bg-white/10">Popuni formu</a>
                 </div>
               </div>
             </div>
           </div>
         </div>
-
-        <p className="mt-4 text-xs text-muted-foreground leading-relaxed max-w-xl">
+        <p className="mt-3 text-xs text-white/50">
           * Procenjene vrednosti. Konačni rezultati zavise od stanja vozila.
         </p>
       </div>
