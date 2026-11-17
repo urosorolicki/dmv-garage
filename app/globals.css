@@ -94,6 +94,7 @@
   }
   html {
     scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
   }
   body {
     @apply bg-background text-foreground;
@@ -186,6 +187,7 @@ body::after {
 .hero-char { display: inline-block; animation: hero-char 0.7s cubic-bezier(0.16, 1, 0.3, 1) both; }
 .hero-line { transform-origin: left; animation: hero-line 1s cubic-bezier(0.16, 1, 0.3, 1) both; }
 @media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
   .hero-rise, .hero-char, .hero-line { animation: none; }
   body::after { animation: none; }
 }
