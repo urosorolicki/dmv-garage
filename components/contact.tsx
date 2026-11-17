@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { z } from "zod"
+import { track } from "@vercel/analytics"
 import { useBenskyVehicle } from "@/hooks/use-bensky-vehicle"
 
 const schema = z.object({
@@ -69,6 +70,7 @@ export function Contact() {
     // Popup blockers (and iOS Safari after the async validation) can block
     // window.open — fall back to navigating in the same tab
     const url = `https://wa.me/381628727274?text=${encodeURIComponent(text)}`
+    track("booking_whatsapp_open", { source: "contact_form", service: data.service })
     const win = window.open(url, "_blank")
     if (!win) window.location.href = url
     setSubmitted(true)
@@ -102,7 +104,7 @@ export function Contact() {
               Zakažite termin
             </h2>
             <p className="text-muted-foreground text-sm leading-relaxed mb-10">
-              Popunite formu i kontaktiraćemo vas putem WhatsApp-a. Dostupni smo
+              Popunite formu, a zatim pošaljite pripremljenu WhatsApp poruku da biste zatražili termin. Dostupni smo
               radnim danima 09–18h i subotom 09–15h.
             </p>
 

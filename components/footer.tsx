@@ -1,3 +1,7 @@
+"use client"
+
+import { track } from "@vercel/analytics"
+
 export function Footer() {
   return (
     <footer className="relative py-8 border-t" style={{ borderTopColor: "var(--brand)", borderTopWidth: "1px" }}>
@@ -32,7 +36,8 @@ export function Footer() {
       </div>
       <div className="max-w-[1440px] mx-auto px-6 lg:px-12 mt-6 flex justify-center">
         <a
-          href="https://foldnine.dev"
+          href="https://foldnine.dev/?utm_source=garagedmv&utm_medium=referral&utm_campaign=site_credit"
+          onClick={() => track("foldnine_referral_click", { source: "footer" })}
           target="_blank"
           rel="noopener"
           className="text-muted-foreground hover:text-foreground text-[10px] uppercase tracking-[0.2em] transition-colors duration-300"
