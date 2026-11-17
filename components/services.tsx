@@ -64,7 +64,7 @@ export function Services() {
     <section
       ref={sectionRef}
       id="services"
-      className="relative py-24 md:py-32 overflow-hidden"
+      className="relative py-16 md:py-32 overflow-hidden"
     >
       <div className="absolute inset-0 bg-background" />
       {/* Tehnicki blueprint grid — suptilan, "inženjering" osecaj */}
@@ -89,11 +89,12 @@ export function Services() {
         </div>
 
         {/* Spec-sheet kartice — hairline grid, mono podaci, bez tilt-a */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-[1px] bg-border/30">
+        {/* Phones: one swipeable row with the next card peeking; md+: grid */}
+        <div className="no-scrollbar -mx-6 flex snap-x snap-mandatory scroll-px-6 gap-3 overflow-x-auto px-6 pb-2 md:mx-0 md:grid md:grid-cols-2 md:gap-[1px] md:overflow-visible md:bg-border/30 md:p-0 lg:grid-cols-4">
           {services.map((service, index) => (
             <article
               key={service.number}
-              className={`group relative bg-background p-7 flex flex-col transition-all duration-500 hover:bg-secondary/40 ${
+              className={`group relative w-[82%] shrink-0 snap-start rounded-xl border border-white/15 bg-background p-5 md:w-auto md:rounded-none md:border-0 md:p-7 flex flex-col transition-all duration-500 hover:bg-secondary/40 ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
               style={{ transitionDelay: `${150 + index * 120}ms` }}
@@ -105,9 +106,9 @@ export function Services() {
               />
 
               {/* Header red: broj + spec, kao part-number / data sheet */}
-              <div className="flex items-baseline justify-between mb-5 font-mono text-[11px] tracking-wider">
+              <div className="flex items-baseline justify-between mb-4 md:mb-5 font-mono text-[11px] tracking-wider">
                 <span style={{ color: "var(--brand)" }}>{service.number}</span>
-                <span className="text-muted-foreground">{service.spec}</span>
+                <span className="hidden text-muted-foreground sm:inline">{service.spec}</span>
               </div>
 
               <div className="w-full aspect-[4/3] mb-5 overflow-hidden rounded-sm bg-secondary/30">

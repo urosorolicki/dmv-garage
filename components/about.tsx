@@ -6,7 +6,7 @@ import { SectionHeading } from "@/components/section-heading"
 const stats = [
   { value: "300+", label: "Vozila" },
   { value: "5+",   label: "Godina iskustva" },
-  { value: "4.4K+", label: "Pratilaca na Instagramu" },
+  { value: "4.4K+", label: "Na Instagramu" },
 ]
 
 const carBrands = [
@@ -40,7 +40,7 @@ export function About() {
     <section
       ref={sectionRef}
       id="about"
-      className="relative py-24 md:py-32 overflow-hidden"
+      className="relative py-16 md:py-32 overflow-hidden"
     >
       <div className="absolute inset-0 bg-secondary/20" />
       <div
@@ -67,12 +67,12 @@ export function About() {
 
         {/* Stats */}
         <div
-          className={`grid grid-cols-3 gap-[1px] bg-border/30 mb-20 transition-all duration-1000 delay-200 ${
+          className={`grid grid-cols-3 gap-[1px] bg-border/30 mb-12 md:mb-20 transition-all duration-1000 delay-200 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
           {stats.map((stat) => (
-            <div key={stat.label} className="bg-secondary/10 py-10 flex flex-col items-center justify-center text-center relative overflow-hidden group">
+            <div key={stat.label} className="bg-secondary/10 py-6 md:py-10 flex flex-col items-center justify-center text-center relative overflow-hidden group">
               <div className="absolute bottom-0 left-0 right-0 h-[2px] w-0 group-hover:w-full transition-all duration-500" style={{ background: "var(--brand)" }} />
               <span className="font-display text-4xl md:text-5xl font-extrabold italic" style={{ color: "var(--brand)" }}>
                 {stat.value}
@@ -84,7 +84,7 @@ export function About() {
           ))}
         </div>
 
-        <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
+        <div className="flex flex-col lg:flex-row gap-10 lg:gap-24">
           {/* Car brands */}
           <div
             className={`lg:w-1/2 transition-all duration-1000 delay-300 ${
