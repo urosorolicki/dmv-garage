@@ -42,7 +42,7 @@ export function About() {
       id="about"
       className="relative py-16 md:py-32 overflow-hidden"
     >
-      <div className="absolute inset-0 bg-secondary/20" />
+      <div className="absolute inset-0 bg-background glow-br" />
       <div
         className="absolute inset-0 opacity-10 pointer-events-none"
         style={{
@@ -60,24 +60,24 @@ export function About() {
           }`}
         >
           <SectionHeading kicker="O nama" title="Radionica u Zemunu" />
-          <p className="mt-6 text-lg md:text-xl font-sans font-light leading-relaxed text-foreground/85 text-balance">
+          <p className="mt-6 text-lg md:text-xl font-sans font-normal leading-relaxed text-foreground/85 text-balance">
             DMV Garage je specijalizovana radionica za unapređenje performansi i vizuelnog identiteta vozila. Preciznost, tehnologija i kvalitet su temelj svakog projekta.
           </p>
         </div>
 
         {/* Stats */}
         <div
-          className={`grid grid-cols-3 gap-[1px] bg-border/30 mb-12 md:mb-20 transition-all duration-1000 delay-200 ${
+          className={`orange-surface grid grid-cols-3 divide-x divide-black/15 overflow-hidden rounded-xl mb-12 md:mb-20 transition-all duration-1000 delay-200 ${
             isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
           {stats.map((stat) => (
-            <div key={stat.label} className="bg-secondary/10 py-6 md:py-10 flex flex-col items-center justify-center text-center relative overflow-hidden group">
-              <div className="absolute bottom-0 left-0 right-0 h-[2px] w-0 group-hover:w-full transition-all duration-500" style={{ background: "var(--brand)" }} />
-              <span className="font-display text-4xl md:text-5xl font-extrabold italic" style={{ color: "var(--brand)" }}>
+            <div key={stat.label} className="py-6 md:py-10 flex flex-col items-center justify-center text-center relative overflow-hidden group">
+              <div className="absolute bottom-0 left-0 right-0 h-[3px] w-0 bg-[#0b1216] group-hover:w-full transition-all duration-500" />
+              <span className="font-display text-5xl md:text-6xl font-extrabold italic text-[#0b1216]">
                 {stat.value}
               </span>
-              <span className="text-xs tracking-[0.2em] uppercase text-muted-foreground mt-2 font-mono">
+              <span className="text-xs tracking-[0.2em] uppercase text-[#0b1216]/75 mt-2 font-mono">
                 {stat.label}
               </span>
             </div>

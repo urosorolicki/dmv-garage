@@ -45,9 +45,9 @@ export function Navbar() {
       }`}
     >
       <nav className="garage-navigation flex items-center justify-between gap-4 px-6 lg:px-12 py-2 max-w-[1540px] mx-auto">
-        <Link href="/" className="flex items-center gap-2">
+        <Link href="/" className="flex min-h-11 items-center gap-2">
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src="/logo.png" alt="DMV Garage" width={64} height={64} className="h-14 md:h-16 w-auto" />
+          <img src="/logo-mark.png" alt="DMV Garage" width={640} height={280} className="h-11 md:h-14 w-auto" />
         </Link>
 
         {/* Desktop nav */}
