@@ -66,7 +66,7 @@ export function Services() {
       id="services"
       className="relative py-16 md:py-32 overflow-hidden"
     >
-      <div className="absolute inset-0 bg-background" />
+      <div className="absolute inset-0 bg-background glow-tl" />
       {/* Tehnicki blueprint grid — suptilan, "inženjering" osecaj */}
       <div
         className="absolute inset-0 opacity-[0.04] pointer-events-none"
@@ -88,52 +88,47 @@ export function Services() {
           <SectionHeading kicker="Šta nudimo" title="Usluge" />
         </div>
 
-        {/* Spec-sheet kartice — hairline grid, mono podaci, bez tilt-a */}
         {/* Phones: one swipeable row with the next card peeking; md+: grid */}
-        <div className="no-scrollbar -mx-6 flex snap-x snap-mandatory scroll-px-6 gap-3 overflow-x-auto px-6 pb-2 md:mx-0 md:grid md:grid-cols-2 md:gap-[1px] md:overflow-visible md:bg-border/30 md:p-0 lg:grid-cols-4">
+        <div className="no-scrollbar -mx-6 flex snap-x snap-mandatory scroll-px-6 gap-4 overflow-x-auto px-6 pb-2 md:mx-0 md:grid md:grid-cols-2 md:overflow-visible md:p-0 lg:grid-cols-4">
           {services.map((service, index) => (
             <article
               key={service.number}
-              className={`group relative w-[82%] shrink-0 snap-start rounded-xl border border-white/15 bg-background p-5 md:w-auto md:rounded-none md:border-0 md:p-7 flex flex-col transition-all duration-500 hover:bg-secondary/40 ${
+              className={`group relative flex min-h-[440px] w-[82%] shrink-0 snap-start flex-col justify-end overflow-hidden rounded-xl border border-white/15 bg-card transition-all duration-500 hover:border-[var(--brand)] md:w-auto lg:min-h-[500px] ${
                 isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
               }`}
               style={{ transitionDelay: `${150 + index * 120}ms` }}
             >
-              {/* Top redline — iscrtava se na hover (igla tahometra) */}
-              <div
-                className="absolute top-0 left-0 h-[2px] w-0 group-hover:w-full transition-all duration-500"
-                style={{ background: "var(--brand)" }}
+              <img
+                src={service.image}
+                alt=""
+                loading="lazy"
+                className="absolute inset-0 h-full w-full object-cover brightness-110 saturate-110 transition-transform duration-700 group-hover:scale-[1.06]"
               />
-
-              {/* Header red: broj + spec, kao part-number / data sheet */}
-              <div className="flex items-baseline justify-between mb-4 md:mb-5 font-mono text-[11px] tracking-wider">
-                <span style={{ color: "var(--brand)" }}>{service.number}</span>
-                <span className="hidden text-muted-foreground sm:inline">{service.spec}</span>
+              <div
+                className="absolute inset-0"
+                style={{ background: "linear-gradient(to top, var(--background) 4%, rgb(6 16 23 / .78) 30%, rgb(6 16 23 / .25) 58%, transparent 80%)" }}
+                aria-hidden="true"
+              />
+              <div className="absolute left-5 top-5 flex items-center gap-2 font-mono text-[11px] tracking-wider">
+                <span className="rounded-full bg-[var(--brand)] px-2.5 py-1 font-medium text-[#0b1216]">{service.number}</span>
+                <span className="hidden rounded-full bg-black/45 px-2.5 py-1 text-white/85 backdrop-blur-sm sm:inline">{service.spec}</span>
               </div>
 
-              <div className="w-full aspect-[4/3] mb-5 overflow-hidden rounded-sm bg-secondary/30">
-                <img
-                  src={service.image}
-                  alt={service.title}
-                  loading="lazy"
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-[1.04]"
-                />
+              <div className="relative p-6">
+                <h3 className="font-display text-2xl font-extrabold italic uppercase leading-tight text-heading">
+                  {service.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-foreground/85">
+                  {service.description}
+                </p>
+                <a
+                  href="#contact"
+                  onClick={() => requestService(service.value)}
+                  className="mt-3 inline-flex min-h-11 items-center gap-2 text-sm font-semibold text-[var(--brand)] hover:text-[var(--brand-bright)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
+                >
+                  Pitaj za svoj auto <span aria-hidden="true" className="transition-transform group-hover:translate-x-1">→</span>
+                </a>
               </div>
-
-              <h3 className="text-foreground text-lg font-sans tracking-wide uppercase mb-3">
-                {service.title}
-              </h3>
-              <p className="text-muted-foreground text-sm leading-relaxed">
-                {service.description}
-              </p>
-
-              <a
-                href="#contact"
-                onClick={() => requestService(service.value)}
-                className="mt-auto inline-flex min-h-11 items-center gap-2 pt-5 text-sm font-semibold text-[var(--brand)] hover:text-[var(--brand-bright)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white"
-              >
-                Pitaj za svoj auto <span aria-hidden="true">→</span>
-              </a>
             </article>
           ))}
         </div>

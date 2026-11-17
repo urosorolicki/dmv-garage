@@ -127,7 +127,7 @@ export function Contact() {
                 </p>
                 <a
                   href="tel:+381628727274"
-                  className="inline-flex min-h-11 items-center text-xl font-sans font-light text-foreground hover:opacity-70 transition-opacity duration-300 font-mono"
+                  className="inline-flex min-h-11 items-center text-xl font-sans font-normal text-foreground hover:opacity-70 transition-opacity duration-300 font-mono"
                 >
                   062 872 7274
                 </a>
@@ -142,7 +142,7 @@ export function Contact() {
                   href="https://instagram.com/dmv__garage"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex min-h-11 items-center text-xl font-sans font-light text-foreground hover:opacity-70 transition-opacity duration-300"
+                  className="inline-flex min-h-11 items-center text-xl font-sans font-normal text-foreground hover:opacity-70 transition-opacity duration-300"
                 >
                   @dmv__garage
                 </a>
@@ -158,7 +158,7 @@ export function Contact() {
                   href="https://www.google.com/maps?q=44.85585268309917,20.3525775137743"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-foreground/80 font-light leading-relaxed hover:text-foreground transition-colors duration-300 group inline-flex flex-col"
+                  className="text-sm text-foreground/80 font-normal leading-relaxed hover:text-foreground transition-colors duration-300 group inline-flex flex-col"
                 >
                   Ugrinovački put 19. deo 31
                   <span className="text-muted-foreground group-hover:text-foreground/60 transition-colors duration-300">
@@ -177,7 +177,7 @@ export function Contact() {
                 <p className="subhead mb-1">
                   Radno vreme
                 </p>
-                <p className="text-sm text-foreground/80 font-light leading-relaxed">
+                <p className="text-sm text-foreground/80 font-normal leading-relaxed">
                   Pon – Pet: 09:00 – 18:00
                   <br />
                   Sub: 09:00 – 15:00
@@ -199,7 +199,7 @@ export function Contact() {
                     <polyline points="20 6 9 17 4 12" />
                   </svg>
                 </div>
-                <p className="text-foreground font-light text-lg">Još jedan korak</p>
+                <p className="text-foreground font-normal text-lg">Još jedan korak</p>
                 <p className="text-muted-foreground text-sm max-w-xs">
                   Otvorili smo WhatsApp sa tvojom porukom — pritisni „Pošalji“ da potvrdiš termin. Ako se WhatsApp nije otvorio, pozovi nas na 062 872 7274.
                 </p>

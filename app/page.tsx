@@ -5,6 +5,7 @@ import { VehicleLookup } from "@/components/vehicle-lookup"
 import { Services } from "@/components/services"
 import { About } from "@/components/about"
 import { Gallery } from "@/components/gallery"
+import { CtaBand } from "@/components/cta-band"
 import { FAQ } from "@/components/faq"
 import { Contact } from "@/components/contact"
 import { Footer } from "@/components/footer"
@@ -19,6 +20,7 @@ export default function Page() {
       <Configurator />
       <About />
       <Gallery />
+      <CtaBand />
       <FAQ />
       <Contact />
       <Footer />

@@ -42,12 +42,12 @@ export function Gallery() {
         </div>
 
         {/* Preview grid */}
-        <div className="grid grid-cols-2 lg:grid-cols-3 gap-2">
+        <div className="grid grid-cols-2 auto-rows-[170px] gap-2 sm:auto-rows-[220px] lg:grid-cols-4 lg:auto-rows-[230px] lg:gap-3">
           {previewImages.map((image, index) => (
             <Link
               key={image.id}
               href={`/galerija?img=${image.id}`}
-              className={`group relative aspect-[3/4] sm:aspect-[4/5] overflow-hidden rounded-sm cursor-pointer focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${
+              className={`group relative overflow-hidden rounded-lg cursor-pointer ${index === 0 ? "col-span-2 row-span-2" : ""} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand ${
                 reducedMotion ? "opacity-100 translate-y-0" : `transition-all duration-700 ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`
               }`}
               style={reducedMotion ? undefined : { transitionDelay: `${200 + index * 80}ms` }}
@@ -58,9 +58,11 @@ export function Gallery() {
                 alt={image.alt}
                 fill
                 className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
-                sizes="(max-width: 1024px) 50vw, 33vw"
+                sizes={index === 0 ? "(max-width: 1024px) 100vw, 50vw" : "(max-width: 1024px) 50vw, 25vw"}
               />
-              <div className="absolute inset-0 bg-background/0 group-hover:bg-background/20 transition-colors duration-300" />
+              <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/80 to-transparent p-3 pt-10 opacity-100 transition-opacity duration-300 lg:opacity-0 lg:group-hover:opacity-100">
+                <p className="text-xs font-medium text-white sm:text-sm" aria-hidden="true">{image.alt}</p>
+              </div>
             </Link>
           ))}
         </div>

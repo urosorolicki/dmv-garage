@@ -56,7 +56,7 @@ export function FAQ() {
       id="faq"
       className="relative py-16 md:py-32 overflow-hidden"
     >
-      <div className="absolute inset-0 bg-background" />
+      <div className="absolute inset-0 bg-background glow-tl" />
 
       <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12">
         <div
@@ -83,7 +83,7 @@ export function FAQ() {
                 aria-expanded={openIndex === i}
               >
                 <span
-                  className={`text-sm md:text-base font-sans font-light leading-relaxed transition-colors duration-300 ${
+                  className={`text-sm md:text-base font-sans font-normal leading-relaxed transition-colors duration-300 ${
                     openIndex === i
                       ? "text-foreground"
                       : "text-muted-foreground group-hover:text-foreground"

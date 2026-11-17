@@ -17,7 +17,7 @@
   --secondary: #0f2029;
   --secondary-foreground: oklch(0.78 0.006 65);
   --muted: #0f2029;
-  --muted-foreground: oklch(0.68 0.006 65);
+  --muted-foreground: oklch(0.79 0.008 230);
   --accent: #152a35;
   --accent-foreground: oklch(0.85 0.006 65);
   --destructive: oklch(0.577 0.245 27.325);
@@ -246,8 +246,8 @@ body::after {
 /* Component classes live in the components layer so Tailwind utilities (hidden, px-*, text-*) can override them. */
 @layer components {
 /* Shared section heading: orange rule, mono kicker, extra-bold italic title */
-.section-kicker { display:block; margin-bottom:.5rem; font-family:var(--font-dm-mono), monospace; font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:rgb(255 255 255 / .6); }
-.section-title { font-family:var(--font-heading), 'Barlow', sans-serif; font-weight:800; font-style:italic; text-transform:uppercase; font-size:clamp(1.9rem,4.2vw,3.4rem); line-height:1.04; letter-spacing:-.01em; color:var(--heading); }
+.section-kicker { display:block; margin-bottom:.5rem; font-family:var(--font-dm-mono), monospace; font-size:12px; letter-spacing:.2em; text-transform:uppercase; color:var(--brand); }
+.section-title { font-family:var(--font-heading), 'Barlow', sans-serif; font-weight:800; font-style:italic; text-transform:uppercase; font-size:clamp(2.2rem,5.2vw,4.4rem); line-height:1; letter-spacing:-.01em; color:var(--heading); }
 .section-title-sm { font-size:clamp(1.6rem,2.6vw,2.1rem); }
 /* Orange mono label for sub-groups inside a section (Telefon, Adresa, Oprema…) */
 .subhead { display:block; font-family:var(--font-dm-mono), monospace; font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--brand); }
@@ -274,3 +274,10 @@ body::after {
     -webkit-mask-image:linear-gradient(180deg,#000 55%,transparent 100%); mask-image:linear-gradient(180deg,#000 55%,transparent 100%); }
   .contact-scrim { background:linear-gradient(180deg, rgb(6 16 23 / .5) 0%, rgb(6 16 23 / .66) 40%, rgb(6 16 23 / .92) 560px, var(--background) 640px); }
 }
+
+/* Warm workshop light leaking into a section corner */
+.glow-tl { background-image:radial-gradient(55% 45% at 0% 0%, rgb(255 138 0 / .13), transparent 70%); }
+.glow-br { background-image:radial-gradient(55% 50% at 100% 100%, rgb(255 138 0 / .11), transparent 70%); }
+
+/* Orange call-to-action band */
+.cta-band-stripes { background-image:repeating-linear-gradient(-55deg, rgb(0 0 0 / .06) 0 14px, transparent 14px 28px); }
