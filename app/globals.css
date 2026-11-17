@@ -7,6 +7,7 @@
   /* Workshop navy surfaces, shared by every section */
   --background: #061017;
   --foreground: oklch(0.92 0.006 65);
+  --heading: #f4f4f2;
   --card: #0a1820;
   --card-foreground: oklch(0.92 0.006 65);
   --popover: #0a1820;
@@ -52,6 +53,7 @@
   --font-mono: var(--font-dm-mono), 'DM Mono', monospace;
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-heading: var(--heading);
   --color-card: var(--card);
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
@@ -234,10 +236,14 @@ body::after {
   .lookup-scrim { background:linear-gradient(90deg,rgba(8,19,27,.94) 0%,rgba(8,19,27,.82) 30%,rgba(8,19,27,.45) 62%,rgba(8,19,27,.2) 100%); }
 }
 
+/* Component classes live in the components layer so Tailwind utilities (hidden, px-*, text-*) can override them. */
+@layer components {
 /* Shared section heading: orange rule, mono kicker, extra-bold italic title */
 .section-kicker { display:block; margin-bottom:.5rem; font-family:var(--font-dm-mono), monospace; font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:rgb(255 255 255 / .6); }
-.section-title { font-family:var(--font-heading), 'Barlow', sans-serif; font-weight:800; font-style:italic; text-transform:uppercase; font-size:clamp(1.9rem,4.2vw,3.4rem); line-height:1.04; letter-spacing:-.01em; color:#f4f4f2; }
+.section-title { font-family:var(--font-heading), 'Barlow', sans-serif; font-weight:800; font-style:italic; text-transform:uppercase; font-size:clamp(1.9rem,4.2vw,3.4rem); line-height:1.04; letter-spacing:-.01em; color:var(--heading); }
 .section-title-sm { font-size:clamp(1.6rem,2.6vw,2.1rem); }
+/* Orange mono label for sub-groups inside a section (Telefon, Adresa, Oprema…) */
+.subhead { display:block; font-family:var(--font-dm-mono), monospace; font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--brand); }
 
 /* Buttons — same shape as the hero CTAs */
 .btn { display:inline-flex; align-items:center; justify-content:center; gap:.6rem; min-height:48px; padding:0 1.5rem; border-radius:5px; font-size:.875rem; font-weight:700; transition:background-color .2s, border-color .2s, color .2s; }
@@ -246,3 +252,4 @@ body::after {
 .btn-primary:hover { background:var(--brand-bright); }
 .btn-secondary { border:1px solid rgb(255 255 255 / .5); background:rgb(9 20 26 / .7); color:#fff; font-weight:600; }
 .btn-secondary:hover { background:rgb(255 255 255 / .15); }
+}

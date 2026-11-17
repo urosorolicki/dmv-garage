@@ -260,7 +260,7 @@ export function Configurator() {
       <div
         className="absolute inset-0 opacity-30 pointer-events-none"
         style={{
-          background: "radial-gradient(ellipse 60% 40% at 60% 50%, oklch(0.16 0 0), transparent)",
+          background: "radial-gradient(ellipse 60% 40% at 60% 50%, var(--accent), transparent)",
         }}
       />
 

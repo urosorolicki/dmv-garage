@@ -39,10 +39,10 @@ export function VehicleLookup() {
   return (
     <section
       id="vehicle-lookup"
-      className="relative overflow-hidden bg-[#061017] px-5 pb-12 pt-6 sm:px-8 lg:px-12 lg:pb-16"
+      className="relative overflow-hidden bg-background px-5 pb-12 pt-6 sm:px-8 lg:px-12 lg:pb-16"
     >
       <div className="relative z-10 mx-auto max-w-[1440px]">
-        <div className="relative isolate overflow-hidden rounded-xl border border-white/25 bg-[#09131a] shadow-[0_16px_50px_rgba(0,0,0,.27)]">
+        <div className="relative isolate overflow-hidden rounded-xl border border-white/25 bg-card shadow-[0_16px_50px_rgba(0,0,0,.27)]">
           <div
             className="pointer-events-none absolute inset-0 bg-cover bg-[position:center_55%]"
             style={{ backgroundImage: 'url("/images/electronics-after-hd.jpg")' }}
@@ -86,7 +86,7 @@ export function VehicleLookup() {
             style={{ gridTemplateRows: vehicleName ? "1fr" : "0fr" }}
           >
             <div className="overflow-hidden" inert={!vehicleName}>
-              <div className="flex flex-col items-start justify-between gap-4 border-t-2 border-[var(--brand)] bg-[#0c1a21] px-6 py-6 sm:flex-row sm:items-center lg:px-9">
+              <div className="flex flex-col items-start justify-between gap-4 border-t-2 border-[var(--brand)] bg-card px-6 py-6 sm:flex-row sm:items-center lg:px-9">
                 <div>
                   <p className="mb-1 text-[10px] uppercase tracking-[.16em] text-[var(--brand)]">Tvoje vozilo</p>
                   <p className="text-lg font-semibold text-white">{vehicleName}</p>

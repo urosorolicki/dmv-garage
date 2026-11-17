@@ -89,7 +89,7 @@ export function Contact() {
   }
 
   const inputClass =
-    "w-full rounded-[5px] bg-[#0a1820] border border-white/40 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/70 focus:outline-none transition-all duration-200 focus:[border-color:var(--brand)] focus:[box-shadow:0_0_0_1px_var(--brand-subtle)]"
+    "w-full rounded-[5px] bg-card border border-white/40 px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground/70 focus:outline-none transition-all duration-200 focus:[border-color:var(--brand)] focus:[box-shadow:0_0_0_1px_var(--brand-subtle)]"
   const errorClass = "text-xs text-red-400 mt-1"
   const labelClass = "mb-1.5 block text-xs font-medium text-white/75"
 
@@ -119,7 +119,7 @@ export function Contact() {
             <div className="flex flex-col gap-6">
               {/* Phone */}
               <div>
-                <p className="text-xs tracking-[0.3em] uppercase mb-1 font-mono" style={{ color: "var(--brand)" }}>
+                <p className="subhead mb-1">
                   Telefon
                 </p>
                 <a
@@ -132,7 +132,7 @@ export function Contact() {
 
               {/* Instagram */}
               <div>
-                <p className="text-xs tracking-[0.3em] uppercase mb-1 font-mono" style={{ color: "var(--brand)" }}>
+                <p className="subhead mb-1">
                   Instagram
                 </p>
                 <a
@@ -148,7 +148,7 @@ export function Contact() {
 
               {/* Address */}
               <div>
-                <p className="text-xs tracking-[0.3em] uppercase mb-1 font-mono" style={{ color: "var(--brand)" }}>
+                <p className="subhead mb-1">
                   Adresa
                 </p>
                 <a
@@ -171,7 +171,7 @@ export function Contact() {
 
               {/* Working hours */}
               <div>
-                <p className="text-xs tracking-[0.3em] uppercase mb-1 font-mono" style={{ color: "var(--brand)" }}>
+                <p className="subhead mb-1">
                   Radno vreme
                 </p>
                 <p className="text-sm text-foreground/80 font-light leading-relaxed">

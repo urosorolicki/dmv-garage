@@ -125,7 +125,7 @@ export function FAQ() {
         </div>
 
         {/* Fills the empty right column with the next step */}
-        <div className="self-start rounded-xl border border-white/20 bg-[#0a1820] p-6 lg:sticky lg:top-28">
+        <div className="self-start rounded-xl border border-white/20 bg-card p-6 lg:sticky lg:top-28">
           <span className="mb-3 block h-[3px] w-10 bg-[var(--brand)]" aria-hidden="true" />
           <p className="text-lg font-semibold text-white">Nisi našao odgovor?</p>
           <p className="mt-2 text-sm leading-relaxed text-white/70">

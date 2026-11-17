@@ -20,6 +20,7 @@ Izvor istine u kodu:
 | `--accent` | `#152a35` | Jači hover |
 | `--border` | `#1d3340` | Tanke linije između elemenata (dekorativno) |
 | `--foreground` | `oklch(0.92 0.006 65)` | Glavni tekst |
+| `--heading` | `#f4f4f2` | Naslovi (`text-heading`) |
 | `--muted-foreground` | `oklch(0.68 0.006 65)` | Sporedni tekst (kontrast ≥ 4.5:1 na pozadini) |
 | `--brand` | `#ff8a00` | **Jedina** narandžasta: primarna dugmad, crte, akcenti |
 | `--brand-bright` | `#ffa52c` | Hover primarnog dugmeta |
@@ -39,7 +40,8 @@ Fontovi se učitavaju samo u `app/layout.tsx`. Ne dodavati nove.
 |---|---|---|
 | Naslovi (hero, sekcije, brojke) | Barlow 800 *italic*, verzal | `.section-title`, `#hero-title`, ili `font-display font-extrabold italic` |
 | Tekst | Barlow 300–600 | podrazumevano (`font-sans`) |
-| Male oznake iznad naslova, tehnički podaci | DM Mono | `.section-kicker`, `font-mono` |
+| Male oznake iznad naslova | DM Mono | `.section-kicker` (sivo) |
+| Oznake podgrupa u sekciji (Telefon, Adresa, Oprema…) | DM Mono | `.subhead` (narandžasto) |
 
 Veličine:
 - Naslov sekcije: `clamp(1.9rem, 4.2vw, 3.4rem)` (`.section-title`), manji u karticama: `.section-title-sm`
@@ -75,6 +77,8 @@ Narandžasta crta, mala oznaka, veliki kurzivni naslov. **Svaka** sekcija počin
 | Tekst-link | narandžasti tekst + `→`, `min-h-11` | Akcija unutar kartice: „Pitaj za svoj auto” |
 
 Stanja: visina 48 px (najmanje 44), hover posvetljuje, fokus = bela linija 2 px. Ikonica ide **ispred** teksta, 16–18 px, `aria-hidden`.
+
+Klase `.btn`, `.section-*` i `.subhead` su u `@layer components`, pa ih Tailwind klase mogu menjati (npr. `btn btn-primary hidden lg:inline-flex min-h-11`).
 
 Ne raditi: verzal sa razmaknutim slovima na dugmadi, oštre ivice bez radijusa, ručno pisani `style={{ background: "var(--brand)" }}` umesto klase.
 
@@ -116,17 +120,16 @@ Ne raditi: verzal sa razmaknutim slovima na dugmadi, oštre ivice bez radijusa, 
 
 ## Audit (17. 11. 2026, PR #7)
 
-**Ocena: 72/100.** Glavni tokeni i komponente postoje i koriste se na celoj početnoj stranici, ali ostaje dosta ručno upisanih vrednosti iz starijih delova.
+**Ocena: 90/100** (pre ispravki u PR #7: 72/100).
 
-| Kategorija | Stanje | Šta je ostalo |
-|---|---|---|
-| Boje | Tokeni definisani, jedna narandžasta | ~20 ručnih hex vrednosti (najviše u `hero.tsx` i `vehicle-lookup.tsx`); 6 komponenti i dalje koristi `style={{ … var(--brand) }}` umesto klasa |
-| Tipografija | 3 fonta, jedan stil naslova | 7 starih oznaka (`tracking-[0.3em]/[0.4em] uppercase`) u „O nama” i kontaktu ne koristi `.section-kicker`; 10 različitih vrednosti razmaka slova |
-| Dugmad | `.btn` u svim glavnim akcijama | Navbar „Zakaži termin” i dugme u lightbox-u galerije još imaju svoj stil |
-| Polja | Jedan stil, labele, greške | — |
-| Kod | — | 57 shadcn komponenti u `components/ui/` se **ne koristi nigde** |
+| Kategorija | Stanje |
+|---|---|
+| Boje | Sve boje u komponentama idu preko tokena (`bg-background`, `bg-card`, `bg-accent`, `text-heading`, `--brand`). Izuzeci: WhatsApp zelena i ikonica na klizaču pre/posle. Hero CSS u `globals.css` još ima nekoliko svojih vrednosti za mobilne oznake. |
+| Tipografija | 3 fonta, jedan stil naslova, `.section-kicker` i `.subhead` za sve oznake. |
+| Dugmad | `.btn` svuda, uključujući navigaciju i prikaz slike u galeriji. |
+| Polja | Jedan stil, vidljive labele, greške povezane sa poljima. |
+| Kod | Nekorišćene shadcn komponente i 38 paketa uklonjeni. |
 
-Prioriteti:
-1. Zameniti ručne hex vrednosti u `hero.tsx` i `vehicle-lookup.tsx` tokenima (`--background`, `--card`).
-2. Prebaciti preostale oznake i navbar/lightbox dugmad na `.section-kicker` i `.btn`.
-3. Obrisati nekorišćene `components/ui/*` i njihove pakete (Radix i sl.), posle provere da ih ne koristi ni `/galerija`.
+Šta je ostalo:
+1. Prebaciti boje mobilnih oznaka iz hero CSS-a (`.mobile-callout`, `.mobile-booking`) na tokene.
+2. Razmaci slova (`tracking-[…]`) još imaju više vrednosti u starijim delovima; svesti na `.2em` za oznake i bez razmaka za tekst.

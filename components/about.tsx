@@ -47,7 +47,7 @@ export function About() {
         className="absolute inset-0 opacity-10 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 70% 50% at 50% 50%, oklch(0.25 0 0), transparent)",
+            "radial-gradient(ellipse 70% 50% at 50% 50%, var(--accent), transparent)",
         }}
       />
 
@@ -91,7 +91,7 @@ export function About() {
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
-            <p className="text-xs tracking-[0.4em] uppercase mb-6 font-mono" style={{ color: "var(--brand)" }}>
+            <p className="subhead mb-6">
               Kompatibilne marke
             </p>
             <div className="flex flex-wrap gap-2">
@@ -115,7 +115,7 @@ export function About() {
               isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
-            <p className="text-xs tracking-[0.4em] uppercase mb-6 font-mono" style={{ color: "var(--brand)" }}>
+            <p className="subhead mb-6">
               Oprema i softver
             </p>
             <div className="grid grid-cols-2 gap-3">

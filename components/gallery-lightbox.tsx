@@ -1,6 +1,7 @@
 "use client"
 
 import { useCallback, useEffect, useState } from "react"
+import { whatsappUrl } from "@/lib/site-config"
 import * as Dialog from "@radix-ui/react-dialog"
 import useEmblaCarousel from "embla-carousel-react"
 import { cdnSrcSet, cdnWidth, type GalleryImage } from "@/lib/gallery-data"
@@ -147,17 +148,16 @@ function LightboxCarousel({
       {/* Caption + CTA */}
       <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 md:px-8 py-4 pb-[max(1rem,env(safe-area-inset-bottom))]">
         <div className="min-w-0">
-          <p className="text-[10px] tracking-[0.3em] uppercase font-mono mb-1" style={{ color: "var(--brand)" }}>
+          <p className="subhead mb-1">
             {current.category}
           </p>
           <Dialog.Title className="text-sm md:text-base text-foreground truncate">{current.alt}</Dialog.Title>
         </div>
         <a
-          href={`https://wa.me/381628727274?text=${encodeURIComponent(waText)}`}
+          href={whatsappUrl(waText)}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex-shrink-0 inline-flex items-center justify-center px-5 py-3 text-xs tracking-[0.12em] uppercase font-medium hover:opacity-85 transition-opacity"
-          style={{ background: "var(--brand)", color: "oklch(0.08 0 0)" }}
+          className="btn btn-primary flex-shrink-0 px-5"
         >
           Želim isto
         </a>

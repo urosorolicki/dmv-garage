@@ -23,7 +23,7 @@ export function Hero() {
   const [active, setActive] = useState<ServiceID>("lighting")
 
   return (
-    <section id="hero" aria-labelledby="hero-title" className="relative isolate overflow-hidden bg-[#061017]">
+    <section id="hero" aria-labelledby="hero-title" className="relative isolate overflow-hidden bg-background">
       {/* One stationary image, never a faux 3D configurator. The licensed Bensky
           selection tool remains in its own section immediately below. */}
       {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -40,23 +40,23 @@ export function Hero() {
         className="hero-scrim pointer-events-none absolute inset-0"
         aria-hidden="true"
         style={{
-          background: "linear-gradient(90deg,rgba(3,11,16,.78),rgba(3,11,16,.4) 33%,rgba(3,11,16,.04) 67%),linear-gradient(0deg,#061017 0%,transparent 30%,rgba(3,9,13,.17) 100%)",
+          background: "linear-gradient(90deg,rgba(3,11,16,.78),rgba(3,11,16,.4) 33%,rgba(3,11,16,.04) 67%),linear-gradient(0deg,var(--background) 0%,transparent 30%,rgba(3,9,13,.17) 100%)",
         }}
       />
 
       <div className="hero-shell relative mx-auto max-w-[1540px] px-5 pb-7 pt-[107px] sm:px-8 lg:px-12 lg:pb-[22px] lg:pt-[100px]">
         <div className="hero-stage relative min-h-[475px] lg:min-h-0 lg:h-[390px]">
           <div className="hero-copy relative z-10 max-w-[600px]">
-            <p className="hero-kicker mb-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] font-medium uppercase tracking-[.02em] text-[#e3e2df]/80 sm:text-xs">
+            <p className="hero-kicker mb-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] font-medium uppercase tracking-[.02em] text-foreground/80 sm:text-xs">
               <span className="mr-1 h-5 w-1 skew-x-[-17deg] bg-[var(--brand)]" aria-hidden="true" />
               Chiptuning <span className="text-[var(--brand)]">/</span> LED ugradnja <span className="text-[var(--brand)]">/</span> Auto elektronika
             </p>
-            <h1 id="hero-title" className="max-w-[620px] text-[clamp(2rem,3.1vw,3.4rem)] font-black italic uppercase leading-[1.08] tracking-[-.025em] text-[#f4f4f2]">
+            <h1 id="hero-title" className="max-w-[620px] text-[clamp(2rem,3.1vw,3.4rem)] font-black italic uppercase leading-[1.08] tracking-[-.025em] text-heading">
               <span className="block whitespace-nowrap">Više snage.</span>
               <span className="block whitespace-nowrap">Bolji izgled.</span>
               <span className="block text-[var(--brand)] sm:whitespace-nowrap">Potpuna kontrola.</span>
             </h1>
-            <p className="hero-description mt-6 max-w-[415px] text-sm leading-6 text-[#d9dddf] md:text-base md:leading-7">
+            <p className="hero-description mt-6 max-w-[415px] text-sm leading-6 text-foreground md:text-base md:leading-7">
               Specijalizovani za chiptuning, LED ugradnju i napredna elektronska rešenja za tvoje vozilo.
             </p>
             <div className="hero-actions mt-6 flex flex-wrap gap-3">
@@ -115,8 +115,8 @@ export function Hero() {
           >
             {services.map((s) => (
               <g key={s.id}>
-                <line x1={s.line.x} y1={s.line.y} x2={s.point.x} y2={s.point.y} style={{ stroke: active === s.id ? "var(--brand)" : "#f4f6f4" }} strokeOpacity=".9" strokeWidth="1.5" />
-                <circle cx={s.point.x} cy={s.point.y} r="7" style={{ fill: "var(--brand)" }} stroke="#f4f5f3" strokeWidth="2" />
+                <line x1={s.line.x} y1={s.line.y} x2={s.point.x} y2={s.point.y} style={{ stroke: active === s.id ? "var(--brand)" : "var(--heading)" }} strokeOpacity=".9" strokeWidth="1.5" />
+                <circle cx={s.point.x} cy={s.point.y} r="7" style={{ fill: "var(--brand)", stroke: "var(--heading)" }} strokeWidth="2" />
                 <circle cx={s.point.x} cy={s.point.y} r="14" fill="none" style={{ stroke: "var(--brand)" }} strokeOpacity=".6" />
               </g>
             ))}
@@ -130,7 +130,7 @@ export function Hero() {
                 onMouseEnter={() => setActive(s.id)}
                 onFocus={() => setActive(s.id)}
                 aria-label={s.label + ": " + s.detail}
-                className={"absolute z-20 hidden min-w-[180px] gap-3 rounded-[6px] border px-4 py-3 text-left text-white shadow-[0_14px_25px_rgba(0,0,0,.55)] backdrop-blur-md transition-colors hover:border-[var(--brand)] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-white xl:flex " + s.className + (active === s.id ? " border-[var(--brand)] bg-[#07151c]/95" : " border-white/55 bg-[#060c10]/90")}
+                className={"absolute z-20 hidden min-w-[180px] gap-3 rounded-[6px] border px-4 py-3 text-left text-white shadow-[0_14px_25px_rgba(0,0,0,.55)] backdrop-blur-md transition-colors hover:border-[var(--brand)] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-white xl:flex " + s.className + (active === s.id ? " border-[var(--brand)] bg-card/95" : " border-white/55 bg-background/90")}
               >
                 <Icon size={22} strokeWidth={1.6} className="mt-1 shrink-0 text-[var(--brand)]" aria-hidden="true" />
                 <span>
@@ -150,7 +150,7 @@ export function Hero() {
               <a
                 key={link.label}
                 href={link.href}
-                className={"service-link " + (index === 1 ? "service-link-light " : "") + "group flex min-h-[76px] items-center gap-3 rounded-[12px] border border-white/25 bg-[#091116]/90 px-4 transition-all hover:border-[var(--brand)] hover:bg-[#11232b] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:px-5"}
+                className={"service-link " + (index === 1 ? "service-link-light " : "") + "group flex min-h-[76px] items-center gap-3 rounded-[12px] border border-white/25 bg-card/90 px-4 transition-all hover:border-[var(--brand)] hover:bg-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white sm:px-5"}
               >
                 <Icon size={25} strokeWidth={1.6} className={"shrink-0 " + (index === 1 ? "text-[var(--cool-accent)]" : "text-[var(--brand)]")} aria-hidden="true" />
                 <span className="min-w-0 border-l border-white/20 pl-3">

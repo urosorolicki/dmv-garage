@@ -67,7 +67,7 @@ export const metadata: Metadata = {
 }
 
 export const viewport: Viewport = {
-  themeColor: '#141414',
+  themeColor: '#061017',
 }
 
 // Local business data for Google (map pack, knowledge panel)
