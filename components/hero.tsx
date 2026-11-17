@@ -57,13 +57,13 @@ export function Hero() {
               <span className="block text-[var(--brand)] sm:whitespace-nowrap">Potpuna kontrola.</span>
             </h1>
             <p className="hero-description mt-6 max-w-[415px] text-sm leading-6 text-[#d9dddf] md:text-base md:leading-7">
-              Specijalizovani za chiptuning, LED ugradnju i napredna elektronska rešenja za vaše vozilo.
+              Specijalizovani za chiptuning, LED ugradnju i napredna elektronska rešenja za tvoje vozilo.
             </p>
             <div className="hero-actions mt-6 flex flex-wrap gap-3">
-              <a href="#vehicle-lookup" className="inline-flex min-h-12 items-center justify-center gap-3 rounded-[5px] bg-[var(--brand)] px-6 text-sm font-bold text-[#0b1216] transition-colors hover:bg-[var(--brand-bright)] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
+              <a href="#vehicle-lookup" className="btn btn-primary">
                 <Gauge size={18} aria-hidden="true" /> Proveri snagu
               </a>
-              <a href="#gallery" className="inline-flex min-h-12 items-center justify-center gap-3 rounded-[5px] border border-white/50 bg-[#09141a]/70 px-5 text-sm font-semibold text-white transition-colors hover:bg-white/15 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white">
+              <a href="#gallery" className="btn btn-secondary">
                 <Play size={18} aria-hidden="true" /> Pogledaj radove
               </a>
             </div>

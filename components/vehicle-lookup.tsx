@@ -85,7 +85,7 @@ export function VehicleLookup() {
             className="relative z-10 grid transition-[grid-template-rows] duration-300"
             style={{ gridTemplateRows: vehicleName ? "1fr" : "0fr" }}
           >
-            <div className="overflow-hidden">
+            <div className="overflow-hidden" inert={!vehicleName}>
               <div className="flex flex-col items-start justify-between gap-4 border-t-2 border-[var(--brand)] bg-[#0c1a21] px-6 py-6 sm:flex-row sm:items-center lg:px-9">
                 <div>
                   <p className="mb-1 text-[10px] uppercase tracking-[.16em] text-[var(--brand)]">Tvoje vozilo</p>
@@ -97,11 +97,11 @@ export function VehicleLookup() {
                     href={whatsappUrl(waText)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex min-h-11 items-center gap-2 rounded-[5px] bg-[var(--brand)] px-6 text-sm font-bold text-[#071218] hover:bg-[var(--brand-bright)]"
+                    className="btn btn-primary"
                   >
                     <MessageCircle size={17} aria-hidden="true" /> Zakaži preko WhatsApp-a
                   </a>
-                  <a href="#contact" className="inline-flex min-h-11 items-center rounded-[5px] border border-white/30 px-5 text-sm font-semibold text-white hover:bg-white/10">Popuni formu</a>
+                  <a href="#contact" className="btn btn-secondary">Popuni formu</a>
                 </div>
               </div>
             </div>

@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Barlow, Bebas_Neue, DM_Mono } from 'next/font/google'
+import { Barlow, DM_Mono } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
 import { business, OG_IMAGE, SITE_URL } from '@/lib/site-config'
@@ -10,10 +10,12 @@ const _barlow = Barlow({
   variable: '--font-barlow',
 })
 
-const _bebas = Bebas_Neue({
+// Section headings: one face only (extra-bold italic), matching the hero.
+const _heading = Barlow({
   subsets: ['latin', 'latin-ext'],
-  weight: '400',
-  variable: '--font-bebas',
+  weight: '800',
+  style: 'italic',
+  variable: '--font-heading',
 })
 
 const _dmMono = DM_Mono({
@@ -106,7 +108,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="sr" data-scroll-behavior="smooth">
-      <body className={`${_barlow.variable} ${_bebas.variable} ${_dmMono.variable} font-sans antialiased`}>
+      <body className={`${_barlow.variable} ${_heading.variable} ${_dmMono.variable} font-sans antialiased`}>
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(businessJsonLd) }} />
         {children}
         <Analytics />

@@ -117,13 +117,13 @@ export function Navbar() {
         }`}
       >
         <div className="px-6 pb-6 bg-background/95 backdrop-blur-xl border-b border-border/30">
-          <ul className="flex flex-col gap-4">
+          <ul className="flex flex-col">
             {navLinks.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
-                  className="text-white/90 hover:text-white text-sm transition-colors duration-300 block py-2"
+                  className="text-white/90 hover:text-white text-base transition-colors duration-300 block py-3"
                 >
                   {link.label}
                 </Link>
@@ -133,8 +133,7 @@ export function Navbar() {
           <a
             href="/#contact"
             onClick={() => setMenuOpen(false)}
-            className="mt-4 inline-flex items-center justify-center gap-2 px-5 py-3 text-sm tracking-[0.06em] uppercase font-medium w-full"
-            style={{ background: "var(--brand)", color: "oklch(0.08 0 0)" }}
+            className="btn btn-primary mt-4 w-full"
           >
             <CalendarDays size={17} aria-hidden="true" /> Zakaži termin
           </a>

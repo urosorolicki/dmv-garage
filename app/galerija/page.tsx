@@ -1,4 +1,5 @@
 import { Navbar } from "@/components/navbar"
+import { SectionHeading } from "@/components/section-heading"
 import { BackButton } from "@/components/back-button"
 import { Footer } from "@/components/footer"
 import { GalleryFull } from "@/components/gallery-full"
@@ -29,10 +30,7 @@ export default function GalerijaPage() {
         <BackButton />
 
         <div className="mt-8">
-          <p className="text-xs tracking-[0.4em] uppercase mb-3 font-mono" style={{ color: "var(--brand)" }}>Portfolio</p>
-          <h1 className="font-display text-5xl md:text-6xl lg:text-7xl text-foreground tracking-wide uppercase">
-            Galerija radova
-          </h1>
+          <SectionHeading as="h1" kicker="Portfolio" title="Galerija radova" />
           <p className="mt-3 text-muted-foreground text-sm max-w-lg leading-relaxed">
             LED ugradnja, chiptuning, auto elektronika i enterijer — radovi iz naše radionice u Beogradu.
           </p>

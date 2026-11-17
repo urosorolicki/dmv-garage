@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { SectionHeading } from "@/components/section-heading"
 import { cdnThumb, previewImages, galleryImages } from "@/lib/gallery-data"
 
 export function Gallery() {
@@ -37,12 +38,7 @@ export function Gallery() {
       <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12">
         {/* Header */}
         <div className={`mb-10 ${reducedMotion ? "" : "transition-all duration-1000"} ${isVisible || reducedMotion ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"}`}>
-          <p className="text-muted-foreground text-xs tracking-[0.3em] uppercase mb-3">
-            Portfolio
-          </p>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-sans font-light tracking-[-0.03em] text-foreground">
-            Galerija
-          </h2>
+          <SectionHeading kicker="Portfolio" title="Galerija" />
         </div>
 
         {/* Preview grid */}
@@ -77,7 +73,7 @@ export function Gallery() {
         >
           <Link
             href="/galerija"
-            className="inline-flex items-center gap-3 px-6 py-3 border border-foreground/20 text-sm tracking-[0.15em] uppercase text-foreground hover:bg-foreground hover:text-background transition-all duration-300 rounded-sm"
+            className="btn btn-secondary"
           >
             Vidi sve radove
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
