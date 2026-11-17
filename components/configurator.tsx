@@ -230,17 +230,7 @@ function CompareSlider({ beforeSrc, afterSrc, label, resetSignal }: CompareSlide
 export function Configurator() {
   const [activeOption, setActiveOption] = useState(0)
   const [resetSignal, setResetSignal] = useState(0)
-  const [isVisible, setIsVisible] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setIsVisible(true) },
-      { threshold: 0.15 }
-    )
-    if (sectionRef.current) observer.observe(sectionRef.current)
-    return () => observer.disconnect()
-  }, [])
 
   const handleOptionClick = useCallback((index: number) => {
     if (index === activeOption) return
@@ -267,19 +257,15 @@ export function Configurator() {
       <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12">
         {/* Header */}
         <div
-          className={`mb-16 transition-all duration-1000 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
+          className={`mb-16 transition-all duration-1000`}
         >
-          <SectionHeading kicker="Pre / posle" title="Pogledaj razliku" />
+          <SectionHeading kicker="Radovi" title="Pre i posle ugradnje" />
         </div>
 
         <div className="flex flex-col lg:flex-row gap-5 lg:gap-16">
           {/* Left panel */}
           <div
-            className={`lg:w-[300px] flex-shrink-0 transition-all duration-1000 delay-200 ${
-              isVisible ? "opacity-100 translate-x-0" : "opacity-0 -translate-x-8"
-            }`}
+            className={`lg:w-[300px] flex-shrink-0 transition-all duration-1000 delay-200`}
           >
             <div className="no-scrollbar flex gap-2 overflow-x-auto lg:flex-col lg:gap-1 lg:overflow-visible">
               {configOptions.map((opt, index) => (
@@ -344,9 +330,7 @@ export function Configurator() {
 
           {/* Right panel — compare slider */}
           <div
-            className={`flex-1 transition-all duration-1000 delay-400 ${
-              isVisible ? "opacity-100 translate-x-0" : "opacity-0 translate-x-8"
-            }`}
+            className={`flex-1 transition-all duration-1000 delay-400`}
           >
             <CompareSlider
               beforeSrc={option.beforeImage}

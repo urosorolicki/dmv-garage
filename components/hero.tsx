@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { ChevronRight, Play, Cpu, Gauge, Lightbulb, Armchair, SlidersHorizontal, Laptop } from "lucide-react"
+import { ChevronRight, CalendarDays, Cpu, Gauge, Lightbulb, Armchair, SlidersHorizontal, Laptop } from "lucide-react"
 
 type ServiceID = "performance" | "lighting" | "interior" | "electronics"
 
@@ -47,31 +47,27 @@ export function Hero() {
       <div className="hero-shell relative mx-auto max-w-[1540px] px-5 pb-7 pt-[107px] sm:px-8 lg:px-12 lg:pb-[22px] lg:pt-[100px]">
         <div className="hero-stage relative min-h-[475px] lg:min-h-0 lg:h-[390px]">
           <div className="hero-copy relative z-10 max-w-[600px]">
-            <p className="hero-kicker mb-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-[10px] font-medium uppercase tracking-[.02em] text-foreground/80 sm:text-xs">
-              <span className="mr-1 h-5 w-1 skew-x-[-17deg] bg-[var(--brand)]" aria-hidden="true" />
-              Chiptuning <span className="text-[var(--brand)]">/</span> LED ugradnja <span className="text-[var(--brand)]">/</span> Auto elektronika
-            </p>
             <h1 id="hero-title" className="max-w-[620px] text-[clamp(2rem,3.1vw,3.4rem)] font-black italic uppercase leading-[1.08] tracking-[-.025em] text-heading">
-              <span className="block whitespace-nowrap">Više snage.</span>
-              <span className="block whitespace-nowrap">Bolji izgled.</span>
-              <span className="block text-[var(--brand)] sm:whitespace-nowrap">Potpuna kontrola.</span>
+              <span className="block whitespace-nowrap">Chiptuning</span>
+              <span className="block whitespace-nowrap">i LED ugradnja</span>
+              <span className="block text-[var(--brand)] sm:whitespace-nowrap">u Zemunu</span>
             </h1>
             <p className="hero-description mt-6 max-w-[415px] text-sm leading-6 text-foreground md:text-base md:leading-7">
-              Specijalizovani za chiptuning, LED ugradnju i napredna elektronska rešenja za tvoje vozilo.
+              Stage 1–3 remap, LED farovi, ambijentalno svetlo, kodiranje i dijagnostika. <span className="whitespace-nowrap">Pon–pet 9–18,</span> <span className="whitespace-nowrap">sub 9–15.</span>
             </p>
             <div className="hero-actions mt-6 flex flex-wrap gap-3">
-              <a href="#vehicle-lookup" className="btn btn-primary">
-                <Gauge size={18} aria-hidden="true" /> Proveri snagu
+              <a href="#contact" className="btn btn-primary">
+                <CalendarDays size={18} aria-hidden="true" /> Zakaži termin
               </a>
-              <a href="#gallery" className="btn btn-secondary">
-                <Play size={18} aria-hidden="true" /> Pogledaj radove
+              <a href="#vehicle-lookup" className="btn btn-secondary">
+                <Gauge size={18} aria-hidden="true" /> Izračunaj snagu
               </a>
             </div>
             {/* No fabricated gain claims, customer totals or review scores. */}
             <div className="hero-meta mt-8 flex flex-wrap gap-x-5 gap-y-2 text-[11px] font-medium tracking-[.08em] text-white/75">
               <span>ECU remap</span>
               <span className="border-l border-white/30 pl-5">LED / Enterijer</span>
-              <span className="border-l border-white/30 pl-5">Zemun, Beograd</span>
+              <span className="border-l border-white/30 pl-5">Ugrinovački put, Zemun</span>
             </div>
           </div>
 

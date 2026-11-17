@@ -34,19 +34,8 @@ const faqs = [
 
 export function FAQ() {
   const sectionRef = useRef<HTMLElement>(null)
-  const [isVisible, setIsVisible] = useState(false)
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setIsVisible(true)
-      },
-      { threshold: 0.1 }
-    )
-    if (sectionRef.current) observer.observe(sectionRef.current)
-    return () => observer.disconnect()
-  }, [])
 
   const toggle = (i: number) => setOpenIndex(openIndex === i ? null : i)
 
@@ -60,9 +49,7 @@ export function FAQ() {
 
       <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12">
         <div
-          className={`mb-16 transition-all duration-1000 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
+          className={`mb-16 transition-all duration-1000`}
         >
           <SectionHeading kicker="FAQ" title="Česta pitanja" />
         </div>
@@ -72,11 +59,8 @@ export function FAQ() {
           {faqs.map((faq, i) => (
             <div
               key={i}
-              className={`border-b border-border/40 transition-all duration-700 ${
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
-              }`}
-              style={{ transitionDelay: `${200 + i * 80}ms` }}
-            >
+              className={`border-b border-border/40 transition-all duration-700`}
+              >
               <button
                 onClick={() => toggle(i)}
                 className="w-full flex items-center justify-between gap-6 py-6 text-left group"
@@ -127,13 +111,13 @@ export function FAQ() {
         {/* Fills the empty right column with the next step */}
         <div className="orange-surface self-start rounded-xl p-6 lg:sticky lg:top-28">
           <span className="mb-3 block h-[3px] w-10 bg-[#0b1216]" aria-hidden="true" />
-          <p className="font-display text-2xl font-extrabold italic uppercase text-[#0b1216]">Nisi našao odgovor?</p>
+          <p className="font-display text-2xl font-extrabold italic uppercase text-[#0b1216]">Pitanja preko WhatsApp-a</p>
           <p className="mt-2 text-sm leading-relaxed text-[#0b1216]/80">
             Pošalji model vozila i pitanje — javićemo ti se u radnom vremenu (pon–pet 09–18, sub 09–15).
           </p>
           <div className="mt-5 flex flex-wrap gap-3">
             <a href={whatsappUrl("Zdravo! Imam pitanje:")} target="_blank" rel="noopener noreferrer" className="btn bg-[#0b1216] text-white hover:bg-black focus-visible:outline-[#0b1216]">
-              <MessageCircle size={17} aria-hidden="true" /> Piši na WhatsApp
+              <MessageCircle size={17} aria-hidden="true" /> Pošalji na WhatsApp
             </a>
             <a href={`tel:${business.phone}`} className="btn border-2 border-[#0b1216] text-[#0b1216] hover:bg-[#0b1216]/10 focus-visible:outline-[#0b1216]">
               <Phone size={16} aria-hidden="true" /> Pozovi

@@ -255,6 +255,7 @@ body::after {
 /* Buttons — same shape as the hero CTAs */
 .btn { display:inline-flex; align-items:center; justify-content:center; gap:.6rem; min-height:48px; padding:0 1.5rem; border-radius:5px; font-size:.875rem; font-weight:700; transition:background-color .2s, border-color .2s, color .2s; }
 .btn:focus-visible { outline:2px solid #fff; outline-offset:3px; }
+.btn:active { transform:translateY(1px) scale(.98); }
 .btn-primary { background:var(--brand); color:#0b1216; }
 .btn-primary:hover { background:var(--brand-bright); }
 .btn-secondary { border:1px solid rgb(255 255 255 / .5); background:rgb(9 20 26 / .7); color:#fff; font-weight:600; }

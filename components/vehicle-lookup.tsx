@@ -54,7 +54,7 @@ export function VehicleLookup() {
               <span className="mb-3 block h-[3px] w-12 bg-[var(--brand)]" aria-hidden="true" />
               <p className="mb-2 text-[10px] font-mono uppercase tracking-[.16em] text-white/60">Chiptuning kalkulator</p>
               <h2 className="font-sans text-2xl font-black italic tracking-tight text-white sm:text-3xl">
-                Koliko snage dobijaš?
+                Procena snage posle remapa
               </h2>
               <p className="mt-3 max-w-[350px] text-sm leading-6 text-white/75">
                 Pronađi marku, model i motor. Pogledaj procenjene rezultate snage i obrtnog momenta.
@@ -99,7 +99,7 @@ export function VehicleLookup() {
                     rel="noopener noreferrer"
                     className="btn btn-primary"
                   >
-                    <MessageCircle size={17} aria-hidden="true" /> Zakaži preko WhatsApp-a
+                    <MessageCircle size={17} aria-hidden="true" /> Pošalji na WhatsApp
                   </a>
                   <a href="#contact" className="btn btn-secondary">Popuni formu</a>
                 </div>

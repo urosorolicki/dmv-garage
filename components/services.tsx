@@ -47,18 +47,7 @@ const services = [
 
 export function Services() {
   const sectionRef = useRef<HTMLElement>(null)
-  const [isVisible, setIsVisible] = useState(false)
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setIsVisible(true)
-      },
-      { threshold: 0.15 }
-    )
-    if (sectionRef.current) observer.observe(sectionRef.current)
-    return () => observer.disconnect()
-  }, [])
 
   return (
     <section
@@ -81,9 +70,7 @@ export function Services() {
 
       <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12">
         <div
-          className={`mb-16 transition-all duration-1000 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
+          className={`mb-16 transition-all duration-1000`}
         >
           <SectionHeading kicker="Šta nudimo" title="Usluge" />
         </div>
@@ -93,16 +80,13 @@ export function Services() {
           {services.map((service, index) => (
             <article
               key={service.number}
-              className={`group relative flex min-h-[440px] w-[82%] shrink-0 snap-start flex-col justify-end overflow-hidden rounded-xl border border-white/15 bg-card transition-all duration-500 hover:border-[var(--brand)] md:w-auto lg:min-h-[500px] ${
-                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-              }`}
-              style={{ transitionDelay: `${150 + index * 120}ms` }}
-            >
+              className={`group relative flex min-h-[440px] w-[82%] shrink-0 snap-start flex-col justify-end overflow-hidden rounded-xl border border-white/15 bg-card transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--brand)] md:w-auto lg:min-h-[500px]`}
+              >
               <img
                 src={service.image}
                 alt=""
                 loading="lazy"
-                className="absolute inset-0 h-full w-full object-cover brightness-110 saturate-110 transition-transform duration-700 group-hover:scale-[1.06]"
+                className="absolute inset-0 h-full w-full object-cover brightness-110 saturate-110 transition-transform duration-700 group-hover:scale-[1.03]"
               />
               <div
                 className="absolute inset-0"

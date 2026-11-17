@@ -159,7 +159,7 @@ function LightboxCarousel({
           rel="noopener noreferrer"
           className="btn btn-primary flex-shrink-0 px-5"
         >
-          Želim isto
+          Pošalji na WhatsApp
         </a>
       </div>
     </>

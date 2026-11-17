@@ -23,18 +23,7 @@ const equipment = [
 
 export function About() {
   const sectionRef = useRef<HTMLElement>(null)
-  const [isVisible, setIsVisible] = useState(false)
 
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) setIsVisible(true)
-      },
-      { threshold: 0.15 }
-    )
-    if (sectionRef.current) observer.observe(sectionRef.current)
-    return () => observer.disconnect()
-  }, [])
 
   return (
     <section
@@ -42,7 +31,7 @@ export function About() {
       id="about"
       className="relative py-16 md:py-32 overflow-hidden"
     >
-      <div className="absolute inset-0 bg-background glow-br" />
+      <div className="section-alt absolute inset-0" />
       <div
         className="absolute inset-0 opacity-10 pointer-events-none"
         style={{
@@ -55,9 +44,7 @@ export function About() {
 
         {/* Quote */}
         <div
-          className={`max-w-[900px] mb-16 transition-all duration-[1500ms] ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"
-          }`}
+          className={`max-w-[900px] mb-16 transition-all duration-[1500ms]`}
         >
           <SectionHeading kicker="O nama" title="Radionica u Zemunu" />
           <p className="mt-6 text-lg md:text-xl font-sans font-normal leading-relaxed text-foreground/85 text-balance">
@@ -67,9 +54,7 @@ export function About() {
 
         {/* Stats */}
         <div
-          className={`orange-surface grid grid-cols-3 divide-x divide-black/15 overflow-hidden rounded-xl mb-12 md:mb-20 transition-all duration-1000 delay-200 ${
-            isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
+          className={`orange-surface grid grid-cols-3 divide-x divide-black/15 overflow-hidden rounded-xl mb-12 md:mb-20 transition-all duration-1000 delay-200`}
         >
           {stats.map((stat) => (
             <div key={stat.label} className="py-6 md:py-10 flex flex-col items-center justify-center text-center relative overflow-hidden group">
@@ -87,9 +72,7 @@ export function About() {
         <div className="flex flex-col lg:flex-row gap-10 lg:gap-24">
           {/* Car brands */}
           <div
-            className={`lg:w-1/2 transition-all duration-1000 delay-300 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
+            className={`lg:w-1/2 transition-all duration-1000 delay-300`}
           >
             <p className="subhead mb-6">
               Kompatibilne marke
@@ -111,9 +94,7 @@ export function About() {
 
           {/* Equipment */}
           <div
-            className={`lg:w-1/2 transition-all duration-1000 delay-400 ${
-              isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
+            className={`lg:w-1/2 transition-all duration-1000 delay-400`}
           >
             <p className="subhead mb-6">
               Oprema i softver

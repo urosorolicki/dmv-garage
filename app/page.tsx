@@ -7,6 +7,7 @@ import { About } from "@/components/about"
 import { Gallery } from "@/components/gallery"
 import { CtaBand } from "@/components/cta-band"
 import { ServiceTicker } from "@/components/service-ticker"
+import { Process } from "@/components/process"
 import { FAQ } from "@/components/faq"
 import { Contact } from "@/components/contact"
 import { Footer } from "@/components/footer"
@@ -20,6 +21,7 @@ export default function Page() {
       <Services />
       <ServiceTicker />
       <Configurator />
+      <Process />
       <About />
       <Gallery />
       <CtaBand />
