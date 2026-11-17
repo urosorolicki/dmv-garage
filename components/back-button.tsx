@@ -6,7 +6,7 @@ export function BackButton() {
   return (
     <Link
       href="/#gallery"
-      className="inline-flex items-center gap-2 -ml-2 px-2 py-2 text-muted-foreground text-xs hover:text-foreground transition-colors"
+      className="press inline-flex min-h-11 items-center gap-2 -ml-2 px-2 text-muted-foreground text-sm hover:text-foreground transition-[color,transform]"
     >
       <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         <polyline points="15 18 9 12 15 6" />

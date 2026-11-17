@@ -10,10 +10,10 @@ const WIDGET_ID = "1977"
 // Widget look — Bensky reads these from the URL (hex without "#")
 const WIDGET_THEME = new URLSearchParams({
   theme: "dark",
-  color: "f64b00",          // accent — brand orange
+  color: "fcd805",          // accent — the logo yellow, same as the rest of the site
   textcolor: "b8b3ad",      // labels / body text
-  buttontext: "141414",     // dark text on orange buttons, as on the rest of the site
-  differencecolor: "f64b00", // performance gain figures
+  buttontext: "141517",     // dark text on yellow buttons, as on the rest of the site
+  differencecolor: "fcd805", // performance gain figures
 }).toString()
 const IFRAME_ID = "dmv-tuning-widget"
 

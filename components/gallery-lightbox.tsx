@@ -23,9 +23,9 @@ export function GalleryLightbox({ images, index, onIndexChange, onClose, onClose
   return (
     <Dialog.Root open={open} onOpenChange={(o) => { if (!o) onClose() }}>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 z-[60] bg-black/60 data-[state=open]:animate-in data-[state=open]:fade-in-0 motion-reduce:animate-none" />
+        <Dialog.Overlay className="fixed inset-0 z-[60] bg-black/60 data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 duration-200" />
         <Dialog.Content
-          className="fixed inset-0 z-[61] flex flex-col bg-black/95 backdrop-blur-xl outline-none data-[state=open]:animate-in data-[state=open]:fade-in-0 motion-reduce:animate-none"
+          className="fixed inset-0 z-[61] flex flex-col bg-black/95 outline-none data-[state=open]:animate-in data-[state=open]:fade-in-0 data-[state=open]:zoom-in-[.98] data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-[.98] duration-200 motion-reduce:data-[state=open]:zoom-in-100 motion-reduce:data-[state=closed]:zoom-out-100"
           aria-describedby={undefined}
           onCloseAutoFocus={onCloseAutoFocus}
         >
@@ -90,11 +90,11 @@ function LightboxCarousel({
     <>
       {/* Top bar */}
       <div className="relative z-10 flex items-center justify-between px-4 md:px-8 py-4">
-        <p className="text-xs text-muted-foreground tabular-nums" aria-live="polite">
+        <p className="small-print text-muted-foreground tabular-nums" aria-live="polite">
           {index + 1} / {images.length}
         </p>
         <Dialog.Close
-          className="w-11 h-11 -mr-2 flex items-center justify-center rounded-full text-foreground/80 hover:text-foreground hover:bg-white/10 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-foreground"
+          className="press w-11 h-11 -mr-2 flex items-center justify-center rounded-full text-foreground/80 hover:text-foreground hover:bg-white/10 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-foreground"
           aria-label="Zatvori"
         >
           <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -172,7 +172,7 @@ function NavButton({ side, label, onClick }: { side: "left" | "right"; label: st
       type="button"
       onClick={onClick}
       aria-label={label}
-      className={`hidden md:flex absolute top-1/2 -translate-y-1/2 ${side === "left" ? "left-4" : "right-4"} w-12 h-12 items-center justify-center rounded-full bg-black/50 border border-white/10 text-foreground/80 hover:text-foreground hover:bg-black/70 transition-colors backdrop-blur-sm focus-visible:outline focus-visible:outline-2 focus-visible:outline-foreground`}
+      className={`hidden md:flex absolute top-1/2 -mt-6 ${side === "left" ? "left-4" : "right-4"} w-12 h-12 items-center justify-center rounded-full bg-[#202225]/90 border border-white/15 text-foreground/80 hover:text-foreground hover:bg-[#2b2d31] transition-[background-color,color,transform] duration-100 active:scale-95 motion-reduce:active:scale-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-foreground`}
     >
       <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
         {side === "left" ? <polyline points="15 18 9 12 15 6" /> : <polyline points="9 18 15 12 9 6" />}

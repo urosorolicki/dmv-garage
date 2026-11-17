@@ -29,109 +29,194 @@ const configOptions = [
 ]
 
 // ─── Drag-to-compare slider ──────────────────────────────────────────────────
+// Built on the fluid-interface rules: the divider follows the finger 1:1 and
+// keeps the offset from where it was grabbed, every animation is a spring that
+// starts from the on-screen value (so it can be grabbed mid-flight), and the
+// edges resist progressively instead of stopping dead.
 
 interface CompareSliderProps {
   beforeSrc: string
   afterSrc: string
   label: string
-  resetSignal: number // increments when option changes → triggers reset animation
+  resetSignal: number // increments when option changes → springs back to the middle
 }
+
+const MIN = 2 // keeps the handle on screen at either end
+const MAX = 98
+const EDGE_GIVE_PX = 40 // the most the divider can be pulled past an edge
+const HANDLE_HIT_PX = 32 // grabbing within this distance of the divider keeps the grab offset
+const DRAG_THRESHOLD_PX = 6
+
+// Critically damped spring (damping ratio 1, no overshoot), response in seconds
+function springStep(x: number, v: number, target: number, dt: number, response = 0.35) {
+  const omega = (2 * Math.PI) / response
+  const a = -omega * omega * (x - target) - 2 * omega * v
+  const nv = v + a * dt
+  return { x: x + nv * dt, v: nv }
+}
+
+// Further past the edge, less follow-through — real things slow before they stop
+function rubberband(overshoot: number, dimension: number, constant = 0.55) {
+  return (overshoot * dimension * constant) / (dimension + constant * Math.abs(overshoot))
+}
+
+const clampPos = (v: number) => Math.max(MIN, Math.min(MAX, v))
 
 function CompareSlider({ beforeSrc, afterSrc, label, resetSignal }: CompareSliderProps) {
   const containerRef = useRef<HTMLDivElement>(null)
-  const [position, setPosition] = useState(50)
-  const [animating, setAnimating] = useState(false)
+  const handleRef = useRef<HTMLDivElement>(null)
+  const pos = useRef(50) // presentation value, in % of width
+  const vel = useRef(0) // %/s
+  const frame = useRef<number | null>(null)
+  const drag = useRef<{
+    id: number
+    startX: number
+    offset: number // pos − pointer%, captured from the live value
+    active: boolean
+    history: { t: number; p: number }[]
+  } | null>(null)
   const [hintVisible, setHintVisible] = useState(true)
-  const isDragging = useRef(false)
-  const hasInteracted = useRef(false)
 
-  // Reset to center when option changes
-  useEffect(() => {
-    setAnimating(true)
-    setPosition(50)
-    setHintVisible(true)
-    hasInteracted.current = false
-    const t = setTimeout(() => setAnimating(false), 500)
-    return () => clearTimeout(t)
-  }, [resetSignal])
-
-  const clamp = (v: number) => Math.max(2, Math.min(98, v))
-
-  const updateFromClientX = useCallback((clientX: number) => {
-    const container = containerRef.current
-    if (!container) return
-    const rect = container.getBoundingClientRect()
-    setPosition(clamp(((clientX - rect.left) / rect.width) * 100))
+  const render = useCallback((value: number) => {
+    pos.current = value
+    containerRef.current?.style.setProperty("--pos", String(value))
+    const handle = handleRef.current
+    if (handle) {
+      const rounded = String(Math.round(clampPos(value)))
+      handle.setAttribute("aria-valuenow", rounded)
+      handle.setAttribute("aria-valuetext", `${rounded}% posle`)
+    }
   }, [])
 
-  // Mouse
-  const onMouseDown = (e: React.MouseEvent) => {
-    e.preventDefault()
-    isDragging.current = true
-    if (!hasInteracted.current) {
-      hasInteracted.current = true
-      setHintVisible(false)
-    }
-    updateFromClientX(e.clientX)
+  const stop = () => {
+    if (frame.current !== null) cancelAnimationFrame(frame.current)
+    frame.current = null
   }
 
-  // Also allow dragging from anywhere on the container
-  const onContainerMouseDown = (e: React.MouseEvent) => {
-    isDragging.current = true
-    if (!hasInteracted.current) {
-      hasInteracted.current = true
-      setHintVisible(false)
+  const animateTo = useCallback((target: number, initialVelocity = vel.current) => {
+    stop()
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      vel.current = 0
+      render(target)
+      return
     }
-    updateFromClientX(e.clientX)
-  }
+    vel.current = initialVelocity
+    let last = performance.now()
+    const tick = (now: number) => {
+      const dt = Math.min((now - last) / 1000, 1 / 30)
+      last = now
+      const next = springStep(pos.current, vel.current, target, dt)
+      vel.current = next.v
+      if (Math.abs(next.x - target) < 0.05 && Math.abs(next.v) < 0.5) {
+        vel.current = 0
+        render(target)
+        frame.current = null
+        return
+      }
+      render(next.x)
+      frame.current = requestAnimationFrame(tick)
+    }
+    frame.current = requestAnimationFrame(tick)
+  }, [render])
 
+  useEffect(() => stop, [])
+
+  // New option: spring back to the middle from wherever the divider is now
+  const firstReset = useRef(true)
   useEffect(() => {
-    const onMouseMove = (e: MouseEvent) => {
-      if (!isDragging.current) return
-      updateFromClientX(e.clientX)
+    if (firstReset.current) {
+      firstReset.current = false
+      render(50)
+      return
     }
-    const onMouseUp = () => { isDragging.current = false }
+    setHintVisible(true)
+    animateTo(50, 0)
+  }, [resetSignal, animateTo, render])
 
-    window.addEventListener("mousemove", onMouseMove)
-    window.addEventListener("mouseup", onMouseUp)
-    return () => {
-      window.removeEventListener("mousemove", onMouseMove)
-      window.removeEventListener("mouseup", onMouseUp)
-    }
-  }, [updateFromClientX])
-
-  // Touch
-  const onTouchStart = (e: React.TouchEvent) => {
-    isDragging.current = true
-    if (!hasInteracted.current) {
-      hasInteracted.current = true
-      setHintVisible(false)
-    }
-    updateFromClientX(e.touches[0].clientX)
-  }
-  const onTouchMove = (e: React.TouchEvent) => {
-    e.preventDefault()
-    updateFromClientX(e.touches[0].clientX)
+  const toPercent = (clientX: number) => {
+    const rect = containerRef.current!.getBoundingClientRect()
+    return ((clientX - rect.left) / rect.width) * 100
   }
 
-  // Keyboard accessibility
+  // Raw drag value → on-screen value, rubber-banded outside 0–100
+  const banded = (raw: number) => {
+    const width = containerRef.current?.getBoundingClientRect().width ?? 1
+    if (raw >= MIN && raw <= MAX) return raw
+    const edge = raw < MIN ? MIN : MAX
+    const overshootPx = ((raw - edge) / 100) * width
+    return edge + (rubberband(overshootPx, EDGE_GIVE_PX) / width) * 100
+  }
+
+  const onPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.button !== 0) return
+    const el = containerRef.current
+    if (!el) return
+    el.setPointerCapture(e.pointerId)
+    setHintVisible(false)
+    stop() // grab it mid-flight: the live value becomes the starting point
+    const rect = el.getBoundingClientRect()
+    const pointer = toPercent(e.clientX)
+    const nearHandle = Math.abs(((pointer - pos.current) / 100) * rect.width) <= HANDLE_HIT_PX
+    drag.current = {
+      id: e.pointerId,
+      startX: e.clientX,
+      offset: nearHandle ? pos.current - pointer : 0,
+      active: nearHandle, // on the handle, track immediately
+      history: [{ t: e.timeStamp, p: pos.current }],
+    }
+    // Tapped away from the divider: glide there; a drag that follows takes over from the live value
+    if (!nearHandle) animateTo(clampPos(pointer), 0)
+  }
+
+  const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    const d = drag.current
+    if (!d || d.id !== e.pointerId) return
+    if (!d.active) {
+      if (Math.abs(e.clientX - d.startX) < DRAG_THRESHOLD_PX) return
+      stop()
+      d.active = true
+      d.offset = pos.current - toPercent(e.clientX)
+    }
+    const value = banded(toPercent(e.clientX) + d.offset)
+    render(value)
+    d.history.push({ t: e.timeStamp, p: value })
+    if (d.history.length > 5) d.history.shift()
+  }
+
+  const onPointerEnd = (e: React.PointerEvent<HTMLDivElement>) => {
+    const d = drag.current
+    if (!d || d.id !== e.pointerId) return
+    drag.current = null
+    if (!d.active) return // a tap: its glide is already running
+    // Release velocity from recent history, handed to the spring so there is no seam
+    const first = d.history[0]
+    const last = d.history[d.history.length - 1]
+    const dt = (last.t - first.t) / 1000
+    const v = dt > 0 ? (last.p - first.p) / dt : 0
+    if (pos.current < MIN || pos.current > MAX) animateTo(clampPos(pos.current), v)
+  }
+
   const onKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "ArrowLeft")  setPosition((p) => clamp(p - 5))
-    if (e.key === "ArrowRight") setPosition((p) => clamp(p + 5))
-    if (!hasInteracted.current) {
-      hasInteracted.current = true
-      setHintVisible(false)
-    }
+    const steps: Record<string, number> = { ArrowLeft: -5, ArrowDown: -5, ArrowRight: 5, ArrowUp: 5, PageDown: -20, PageUp: 20 }
+    let target: number | null = null
+    if (e.key in steps) target = clampPos(pos.current + steps[e.key])
+    if (e.key === "Home") target = MIN
+    if (e.key === "End") target = MAX
+    if (target === null) return
+    e.preventDefault()
+    setHintVisible(false)
+    animateTo(target, 0)
   }
 
   return (
     <div
       ref={containerRef}
-      className="relative aspect-[16/10] rounded-sm overflow-hidden bg-secondary/30 select-none"
-      style={{ cursor: isDragging.current ? "ew-resize" : "col-resize" }}
-      onMouseDown={onContainerMouseDown}
-      onTouchStart={onTouchStart}
-      onTouchMove={onTouchMove}
+      className="relative aspect-[16/10] overflow-hidden rounded-sm bg-secondary/30 select-none cursor-col-resize [container-type:inline-size] [touch-action:pan-y] [-webkit-tap-highlight-color:transparent]"
+      style={{ "--pos": 50 } as React.CSSProperties}
+      onPointerDown={onPointerDown}
+      onPointerMove={onPointerMove}
+      onPointerUp={onPointerEnd}
+      onPointerCancel={onPointerEnd}
     >
       {/* Before image — full width base */}
       <Image
@@ -143,14 +228,8 @@ function CompareSlider({ beforeSrc, afterSrc, label, resetSignal }: CompareSlide
         draggable={false}
       />
 
-      {/* After image — clipped from left by slider position */}
-      <div
-        className="absolute inset-0"
-        style={{
-          clipPath: `inset(0 0 0 ${position}%)`,
-          transition: animating ? "clip-path 0.5s cubic-bezier(0.4,0,0.2,1)" : "none",
-        }}
-      >
+      {/* After image — clipped from the left at the divider */}
+      <div className="absolute inset-0" style={{ clipPath: "inset(0 0 0 clamp(0%, calc(var(--pos) * 1%), 100%))" }}>
         <Image
           src={afterSrc}
           alt={`${label} - posle`}
@@ -161,53 +240,43 @@ function CompareSlider({ beforeSrc, afterSrc, label, resetSignal }: CompareSlide
         />
       </div>
 
-      {/* Divider line */}
+      {/* Divider and handle move with a transform (no layout per frame) */}
       <div
-        className="absolute top-0 bottom-0 w-[1.5px] bg-white/80 z-20 pointer-events-none"
-        style={{
-          left: `${position}%`,
-          transition: animating ? "left 0.5s cubic-bezier(0.4,0,0.2,1)" : "none",
-        }}
+        className="pointer-events-none absolute inset-y-0 left-0 z-20 w-[1.5px] bg-white/85"
+        style={{ translate: "calc(var(--pos) * 1cqw - 50%) 0" }}
       />
-
-      {/* Drag handle */}
       <div
+        ref={handleRef}
         role="slider"
-        aria-label="Prevuci za poređenje pre/posle"
-        aria-valuenow={Math.round(position)}
-        aria-valuemin={2}
-        aria-valuemax={98}
+        aria-label="Poređenje pre i posle"
+        aria-valuemin={MIN}
+        aria-valuemax={MAX}
+        aria-valuenow={50}
+        aria-orientation="horizontal"
         tabIndex={0}
         onKeyDown={onKeyDown}
-        onMouseDown={onMouseDown}
-        className="absolute top-1/2 z-30 -translate-y-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-white shadow-[0_0_0_2px_rgba(255,255,255,0.3),0_4px_20px_rgba(0,0,0,0.4)] flex items-center justify-center cursor-ew-resize focus:outline-none focus:ring-2 focus:ring-white/50"
-        style={{
-          left: `${position}%`,
-          transition: animating ? "left 0.5s cubic-bezier(0.4,0,0.2,1)" : "none",
-        }}
+        className="absolute left-0 top-1/2 z-30 flex h-11 w-11 items-center justify-center rounded-full bg-white shadow-[0_0_0_2px_rgba(255,255,255,0.3),0_4px_20px_rgba(0,0,0,0.4)] cursor-ew-resize focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand)]"
+        style={{ translate: "calc(var(--pos) * 1cqw - 50%) -50%" }}
       >
-        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
           <path d="M6 9H12M6 9L4 7M6 9L4 11M12 9L14 7M12 9L14 11" stroke="#111" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </div>
 
       {/* Before / After labels */}
       <div className="absolute top-4 left-4 z-10 pointer-events-none">
-        <span className="text-sm font-medium text-white bg-[#141517]/85 px-2.5 py-1">
-          Pre
-        </span>
+        <span className="text-sm font-medium text-white bg-[#141517]/85 px-2.5 py-1">Pre</span>
       </div>
       <div className="absolute top-4 right-4 z-10 pointer-events-none">
-        <span className="text-sm font-medium text-white bg-[#141517]/85 px-2.5 py-1">
-          Posle
-        </span>
+        <span className="text-sm font-medium text-white bg-[#141517]/85 px-2.5 py-1">Posle</span>
       </div>
 
-      {/* Drag hint — fades out after first interaction */}
+      {/* Drag hint — fades on the first touch, returns when the photo changes */}
       <div
-        className={`absolute inset-0 z-10 flex items-center justify-center pointer-events-none transition-opacity duration-500 ${
+        className={`absolute inset-x-0 bottom-5 z-10 flex justify-center pointer-events-none transition-opacity duration-300 ${
           hintVisible ? "opacity-100" : "opacity-0"
         }`}
+        aria-hidden="true"
       >
         <div className="flex items-center gap-3 bg-[#141517]/85 px-4 py-2">
           <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -216,7 +285,6 @@ function CompareSlider({ beforeSrc, afterSrc, label, resetSignal }: CompareSlide
           <span className="text-sm font-medium text-white">Prevuci</span>
         </div>
       </div>
-
     </div>
   )
 }
@@ -252,24 +320,19 @@ export function Configurator() {
 
       <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12">
         {/* Header */}
-        <div
-          className={`mb-16 transition-all duration-1000`}
-        >
-          <SectionHeading title="Pre i posle" intro="Prevuci klizač i pogledaj razliku na pravim autima iz radionice." />
-        </div>
+        <SectionHeading title="Pre i posle" intro="Prevuci klizač i pogledaj razliku na pravim autima iz radionice." className="mb-12 md:mb-16" />
 
         <div className="flex flex-col lg:flex-row gap-5 lg:gap-16">
           {/* Left panel */}
-          <div
-            className={`lg:w-[300px] flex-shrink-0 transition-all duration-1000 delay-200`}
-          >
-            <div className="no-scrollbar flex gap-2 overflow-x-auto lg:flex-col lg:gap-1 lg:overflow-visible">
+          <div className="lg:w-[300px] flex-shrink-0">
+            <div className="no-scrollbar flex gap-2 overflow-x-auto lg:flex-col lg:gap-1 lg:overflow-visible" role="group" aria-label="Izaberi primer">
               {configOptions.map((opt, index) => (
                 <button
                   key={opt.id}
                   onClick={() => handleOptionClick(index)}
-                  className={`group shrink-0 text-left min-h-11 px-3.5 py-2.5 border border-border lg:border-0 lg:px-5 lg:py-4 transition-all duration-300 ${
-                    activeOption === index ? "bg-background" : "hover:bg-background/60"
+                  aria-pressed={activeOption === index}
+                  className={`press group shrink-0 text-left min-h-11 px-3.5 py-2.5 border lg:border-0 lg:px-5 lg:py-4 transition-[background-color,border-color,transform] duration-200 ${
+                    activeOption === index ? "bg-background border-[var(--brand)]" : "border-border hover:bg-background/60"
                   }`}
                 >
                   <div className="flex items-start gap-4">
@@ -303,31 +366,10 @@ export function Configurator() {
                 </button>
               ))}
             </div>
-
-            {/* Step indicator */}
-            <div className="mt-3 px-5 hidden lg:flex gap-2">
-              {configOptions.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => handleOptionClick(i)}
-                  className="group flex-1 py-[21px]"
-                  aria-label={configOptions[i].label}
-                  aria-pressed={i === activeOption}
-                >
-                  <span
-                    className={`block h-[2px] rounded-full transition-all duration-500 ${
-                      i === activeOption ? "bg-foreground" : "bg-border group-hover:bg-muted-foreground/40"
-                    }`}
-                  />
-                </button>
-              ))}
-            </div>
           </div>
 
           {/* Right panel — compare slider */}
-          <div
-            className={`flex-1 transition-all duration-1000 delay-400`}
-          >
+          <div className="flex-1">
             <CompareSlider
               beforeSrc={option.beforeImage}
               afterSrc={option.afterImage}

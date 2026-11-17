@@ -113,7 +113,23 @@ Ne raditi: verzal sa razmaknutim slovima na dugmadi, oštre ivice bez radijusa, 
 - Vidljiv fokus na svemu interaktivnom.
 - Ništa skriveno ne sme biti dostupno tastaturom (skriveni blokovi dobijaju `inert`).
 - Slike koje nose sadržaj imaju `alt`, dekorativne `alt=""` / `aria-hidden`.
-- Poštovati `prefers-reduced-motion` (bez animacija).
+- Poštovati `prefers-reduced-motion`: bez pomeranja, zumiranja i pritiska, ostaju samo promene boje i providnosti.
+- Poštovati `prefers-reduced-transparency` i `prefers-contrast: more`: `.material` postaje puna pozadina, ivice jače.
+
+## 7. Pokret i interakcija (apple-design skill)
+Pravila iz Apple-ovih WWDC predavanja o fluidnim interfejsima, primenjena na sajt.
+
+- **Odgovor na pritisak, ne na puštanje.** Dugmad (`.btn`) i ikone (`.press`) se smanjuju na `scale(.97)` za 100 ms čim se pritisnu. Velike pločice (usluge, galerija) samo `scale(.98–.99)`.
+- **Bez veštačkih kašnjenja.** Ništa se ne pojavljuje „posle 2 sekunde”; WhatsApp dugme je tu od prvog trenutka.
+- **Prevlačenje prati prst 1:1.** Klizač pre/posle (`components/configurator.tsx`) koristi Pointer Events sa `setPointerCapture`, pamti gde je uhvaćen i ne skače na prst.
+- **Svaka animacija može da se prekine.** Klizač animira oprugom (kritično prigušena, odziv 0,35 s) koja kreće od vrednosti koja je trenutno na ekranu, pa može da se uhvati usred kretanja.
+- **Meke ivice.** Preko ivice klizač pruža otpor (rubber-band, najviše ~40 px), pa se oprugom vraća.
+- **Isti put unutra i napolje.** Mobilni meni pada ispod trake i vraća se gore; lightbox se pojavljuje i nestaje istim fade/zoom-om.
+- **Animira se samo `transform` i `opacity`.** Ne `width`, `max-height` ili `left`.
+- **Providna traka umesto pune.** Navigacija i filteri galerije koriste `.material` (zamućenje + poluprovidna pozadina) i `.scroll-edge` (meka senka umesto linije od 1 px). Nikad dva providna sloja jedan na drugom.
+- **Gde sam.** Navigacija označava sekciju koja je trenutno na ekranu (`aria-current="location"`).
+- **Validacija odmah.** Forma proverava polje kad se napusti, ne tek na slanje.
+- **Razmak slova prati veličinu.** Veliki naslovi `-.01em`, tekst `0`, sitne oznake `.01em` (`.subhead`, `.small-print`). Veličine u `rem`.
 - Proveriti axe-core pre merge-a: 0 grešaka.
 
 ---

@@ -1,29 +1,18 @@
-"use client"
-
-import { useState, useEffect } from "react"
-
+// Available from the first frame — no artificial delay before it can be tapped.
 export function WhatsAppButton() {
-  const [visible, setVisible] = useState(false)
-
-  useEffect(() => {
-    const timer = setTimeout(() => setVisible(true), 2000)
-    return () => clearTimeout(timer)
-  }, [])
-
   return (
     <a
       href="https://wa.me/381628727274"
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Pišite nam na WhatsApp"
-      className={`fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#25D366] flex items-center justify-center shadow-[0_4px_24px_rgba(37,211,102,0.35)] hover:bg-[#20c55e] hover:scale-110 transition-all duration-300 ${
-        visible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-      }`}
+      className="press fixed bottom-[max(1.5rem,env(safe-area-inset-bottom))] right-6 z-50 w-14 h-14 rounded-full bg-[#25D366] flex items-center justify-center shadow-[0_4px_24px_rgba(37,211,102,0.35)] hover:bg-[#20c55e] transition-[background-color,transform] [-webkit-tap-highlight-color:transparent] focus-visible:outline-2 focus-visible:outline-offset-3 focus-visible:outline-foreground"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
         fill="white"
+        aria-hidden="true"
         width="28"
         height="28"
       >

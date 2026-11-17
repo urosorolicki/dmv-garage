@@ -48,23 +48,21 @@ export function FAQ() {
       <div className="absolute inset-0 bg-background" />
 
       <div className="relative z-10 max-w-[1440px] mx-auto px-6 lg:px-12">
-        <div
-          className={`mb-16 transition-all duration-1000`}
-        >
-          <SectionHeading title="Česta pitanja" />
-        </div>
+        <SectionHeading title="Česta pitanja" className="mb-12 md:mb-16" />
 
         <div className="grid gap-12 lg:grid-cols-[minmax(0,800px)_minmax(280px,1fr)] lg:gap-16">
         <div>
           {faqs.map((faq, i) => (
             <div
               key={i}
-              className={`border-b border-border/40 transition-all duration-700`}
-              >
+              className="border-b border-border"
+            >
               <button
                 onClick={() => toggle(i)}
-                className="w-full flex items-center justify-between gap-6 py-6 text-left group"
+                className="w-full flex items-center justify-between gap-6 py-6 text-left group [-webkit-tap-highlight-color:transparent] active:opacity-70 transition-opacity duration-100"
                 aria-expanded={openIndex === i}
+                aria-controls={`faq-answer-${i}`}
+                id={`faq-question-${i}`}
               >
                 <span
                   className={`text-[17px] md:text-lg font-medium leading-snug transition-colors duration-300 ${
@@ -95,7 +93,11 @@ export function FAQ() {
               </button>
 
               <div
-                className="grid transition-all duration-300 ease-in-out"
+                id={`faq-answer-${i}`}
+                role="region"
+                aria-labelledby={`faq-question-${i}`}
+                inert={openIndex !== i}
+                className="grid transition-[grid-template-rows] duration-300 ease-out motion-reduce:transition-none"
                 style={{ gridTemplateRows: openIndex === i ? "1fr" : "0fr" }}
               >
                 <div className="overflow-hidden">
@@ -110,7 +112,7 @@ export function FAQ() {
 
         {/* Fills the empty right column with the next step */}
         <div className="self-start border-l-4 border-[var(--brand)] bg-card p-6 lg:sticky lg:top-28">
-          <p className="signage text-[40px] text-heading">Pitaj nas direktno</p>
+          <p className="signage text-[2.5rem] text-heading">Pitaj nas direktno</p>
           <p className="mt-3 text-base leading-relaxed text-muted-foreground">
             Pošalji model vozila i pitanje — javićemo ti se u radnom vremenu (pon–pet 09–18, sub 09–15).
           </p>
