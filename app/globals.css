@@ -22,12 +22,14 @@
   --destructive-foreground: oklch(0.577 0.245 27.325);
   --border: oklch(0.17 0 0);
   --input: oklch(0.17 0 0);
-  --ring: oklch(0.65 0.22 40);
-  /* Brand — burning orange */
-  --brand: oklch(0.65 0.22 40);
-  --brand-dim: oklch(0.45 0.16 40);
-  --brand-subtle: oklch(0.65 0.22 40 / 0.12);
-  --chart-1: oklch(0.65 0.22 40);
+  --ring: #f3a05b;
+  /* Warm copper / cool workshop light */
+  --brand: #f3a05b;
+  --brand-bright: #ffb475;
+  --brand-dim: #b76a3c;
+  --brand-subtle: rgb(243 160 91 / 0.12);
+  --cool-accent: #78c5d5;
+  --chart-1: #f3a05b;
   --chart-2: oklch(0.60 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
   --chart-4: oklch(0.828 0.189 84.429);
@@ -40,7 +42,7 @@
   --sidebar-accent: oklch(0.18 0 0);
   --sidebar-accent-foreground: oklch(0.85 0.006 65);
   --sidebar-border: oklch(0.17 0 0);
-  --sidebar-ring: oklch(0.65 0.22 40);
+  --sidebar-ring: #f3a05b;
 }
 
 @theme inline {
