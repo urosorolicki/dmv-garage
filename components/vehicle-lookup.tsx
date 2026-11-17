@@ -36,7 +36,6 @@ export function VehicleLookup() {
 
   return (
     <section
-      ref={sectionRef}
       id="vehicle-lookup"
       className="relative overflow-hidden bg-[#061017] px-5 pb-12 pt-2 sm:px-8 lg:px-12 lg:pb-16"
     >
