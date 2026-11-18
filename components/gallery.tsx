@@ -25,14 +25,14 @@ export function Gallery() {
             <Link
               key={image.id}
               href={`/galerija?img=${image.id}`}
-              className={`group relative overflow-hidden cursor-pointer ${index === 0 ? "col-span-2 row-span-2" : ""} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand`}
+              className={`group relative overflow-hidden cursor-pointer transition-transform duration-100 ease-out active:scale-[.98] motion-reduce:active:scale-100 [-webkit-tap-highlight-color:transparent] ${index === 0 ? "col-span-2 row-span-2" : ""} focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand`}
               aria-label={image.alt}
             >
               <Image
                 src={cdnThumb(image.id)}
                 alt={image.alt}
                 fill
-                className="object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+                className="zoom-on-hover object-cover group-hover:scale-[1.03]"
                 sizes={index === 0 ? "(max-width: 1024px) 100vw, 50vw" : "(max-width: 1024px) 50vw, 25vw"}
               />
             </Link>
@@ -49,7 +49,7 @@ export function Gallery() {
           >
             Vidi sve radove
           </Link>
-          <span className="text-muted-foreground text-[15px]">
+          <span className="text-muted-foreground text-[0.9375rem]">
             {previewImages.length} od {galleryImages.length} radova
           </span>
         </div>

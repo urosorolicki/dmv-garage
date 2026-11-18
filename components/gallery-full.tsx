@@ -107,7 +107,7 @@ export function GalleryFull() {
   return (
     <div className="max-w-[1440px] mx-auto px-4 sm:px-6 lg:px-12 pb-16">
       {/* Filters — sticky under the navbar */}
-      <div className="sticky top-[88px] md:top-[96px] z-30 -mx-4 sm:-mx-6 lg:-mx-12 px-4 sm:px-6 lg:px-12 py-3 mb-6 bg-background/85 backdrop-blur-xl border-b border-border/40">
+      <div className="material scroll-edge sticky top-[60px] md:top-[72px] z-30 -mx-4 sm:-mx-6 lg:-mx-12 px-4 sm:px-6 lg:px-12 py-3 mb-6">
         <div className="flex items-center gap-2 overflow-x-auto no-scrollbar" role="group" aria-label="Filtriraj po kategoriji">
           {categories.map((cat) => {
             const count = cat === "Sve" ? galleryImages.length : galleryImages.filter((i) => i.category === cat).length
@@ -118,7 +118,7 @@ export function GalleryFull() {
                 type="button"
                 onClick={() => selectCategory(cat)}
                 aria-pressed={active}
-                className={`flex-shrink-0 px-4 py-2.5 text-xs rounded-sm transition-colors duration-300 ${
+                className={`press flex-shrink-0 min-h-11 px-4 text-sm font-medium rounded-sm transition-[background-color,border-color,color,transform] duration-200 ${
                   active
                     ? "bg-foreground text-background"
                     : "border border-border text-muted-foreground hover:text-foreground hover:border-foreground/30"
@@ -140,15 +140,15 @@ export function GalleryFull() {
             type="button"
             onClick={() => openImage(index)}
             data-image-id={image.id}
-            className="group relative aspect-[3/4] overflow-hidden rounded-sm bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand)]"
+            className="group relative aspect-[3/4] overflow-hidden rounded-sm bg-secondary transition-transform duration-100 ease-out active:scale-[.98] motion-reduce:active:scale-100 [-webkit-tap-highlight-color:transparent] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand)]"
             aria-label={`Otvori sliku: ${image.alt}`}
           >
             <Tile id={image.id} alt={image.alt} eager={index < EAGER_TILES} />
             <div className="absolute inset-x-0 bottom-0 p-2.5 md:p-3 bg-gradient-to-t from-black/80 via-black/30 to-transparent text-left md:opacity-0 md:group-hover:opacity-100 md:group-focus-visible:opacity-100 transition-opacity duration-300">
-              <p className="text-[13px]" style={{ color: "var(--brand)" }}>
+              <p className="small-print font-medium" style={{ color: "var(--brand)" }}>
                 {image.category}
               </p>
-              <p className="text-[11px] md:text-xs text-white/90 leading-snug line-clamp-2">{image.alt}</p>
+              <p className="small-print text-white/90 leading-snug line-clamp-2">{image.alt}</p>
             </div>
           </button>
         ))}
@@ -188,7 +188,7 @@ function Tile({ id, alt, eager }: { id: string; alt: string; eager: boolean }) {
       fetchPriority={eager ? "high" : "auto"}
       decoding="async"
       onLoad={() => setLoaded(true)}
-      className={`absolute inset-0 w-full h-full object-cover transition-[opacity,transform] duration-500 ease-out group-hover:scale-105 motion-reduce:transition-none ${
+      className={`absolute inset-0 w-full h-full object-cover transition-[opacity,transform] duration-500 ease-out group-hover:scale-[1.03] motion-reduce:transition-none motion-reduce:group-hover:scale-100 ${
         loaded ? "opacity-100" : "opacity-0"
       }`}
     />

@@ -51,14 +51,14 @@ export function Services() {
               href="#contact"
               onClick={() => requestService(service.value)}
               aria-label={`${service.title}: pitaj za svoj auto`}
-              className="group relative block aspect-[16/11] overflow-hidden bg-card focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand)] md:aspect-[16/10]"
+              className="group relative block aspect-[16/11] overflow-hidden bg-card transition-transform duration-100 ease-out active:scale-[.99] motion-reduce:active:scale-100 [-webkit-tap-highlight-color:transparent] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--brand)] md:aspect-[16/10]"
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src={service.image}
                 alt=""
                 loading="lazy"
-                className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+                className="zoom-on-hover h-full w-full object-cover group-hover:scale-[1.03]"
               />
               {/* Name plate, like a number plate on the car */}
               <div className="absolute bottom-0 left-0 max-w-[85%] bg-background px-5 py-4 md:px-7 md:py-5">

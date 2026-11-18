@@ -31,7 +31,7 @@ export default function GalerijaPage() {
 
         <div className="mt-8">
           <SectionHeading as="h1" title="Galerija radova" />
-          <p className="mt-3 text-muted-foreground text-sm max-w-lg leading-relaxed">
+          <p className="section-intro">
             LED ugradnja, chiptuning, auto elektronika i enterijer — radovi iz naše radionice u Beogradu.
           </p>
         </div>

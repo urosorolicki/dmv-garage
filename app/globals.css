@@ -103,6 +103,8 @@
   }
   body {
     @apply bg-background text-foreground;
+    line-height: 1.5;
+    font-optical-sizing: auto;
   }
 }
 
@@ -125,9 +127,31 @@
 .hero-enter { animation: enter .8s .1s cubic-bezier(.2,.7,.2,1) both; }
 .hero-photo { animation: photo-in 1.4s cubic-bezier(.2,.7,.2,1) both; }
 
+/* Reduced motion keeps feedback but drops movement: no slides, zooms or
+   presses, only colour and opacity changes. */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .hero-enter, .hero-photo { animation: none; }
+  .press:active, .btn:active { transform: none; }
+  .zoom-on-hover { transition: none !important; transform: none !important; }
+}
+
+/* Translucent chrome: the navigation bar and the gallery filter bar float
+   over the content as a dark material instead of an opaque strip. */
+.material {
+  background: rgb(20 21 23 / .72);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  backdrop-filter: blur(20px) saturate(160%);
+}
+/* Scroll edge: a soft shadow where content slides under the bar, not a hard line */
+.scroll-edge { box-shadow: 0 1px 0 rgb(236 235 228 / .06), 0 10px 24px -12px rgb(0 0 0 / .6); }
+@media (prefers-reduced-transparency: reduce) {
+  .material { background: var(--background); -webkit-backdrop-filter: none; backdrop-filter: none; }
+}
+@media (prefers-contrast: more) {
+  .material { background: var(--background); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .scroll-edge { box-shadow: 0 1px 0 var(--input); }
+  :root { --border: rgb(236 235 228 / .4); --muted-foreground: #c3c7cc; }
 }
 
 /* Navigation */
@@ -143,17 +167,26 @@
 /* Component classes live in the components layer so Tailwind utilities can override them. */
 @layer components {
 /* Signage type: Archivo at its narrowest width, heavy, set in capitals */
-.signage { font-stretch:62%; font-weight:850; text-transform:uppercase; line-height:.88; letter-spacing:-.005em; }
-.section-title { font-stretch:62%; font-weight:800; text-transform:uppercase; font-size:clamp(44px, 5.4vw, 84px); line-height:.9; color:var(--heading); }
-.section-title-sm { font-size:clamp(32px, 3vw, 44px); }
+.signage { font-stretch:62%; font-weight:850; text-transform:uppercase; line-height:.88; letter-spacing:-.01em; }
+/* Tracking follows size: tighter as headings grow, near 0 for body,
+   slightly open for small labels. Sizes in rem so they follow the
+   visitor's text-size setting. */
+.section-title { font-stretch:62%; font-weight:800; text-transform:uppercase; font-size:clamp(2.75rem, 5.4vw, 5.25rem); line-height:.9; letter-spacing:-.01em; color:var(--heading); }
+.section-title-sm { font-size:clamp(2rem, 3vw, 2.75rem); letter-spacing:-.005em; }
 .section-intro { max-width:36rem; margin-top:1.25rem; font-size:1.125rem; line-height:1.6; color:var(--muted-foreground); }
 /* Label for sub-groups inside a section (Telefon, Adresa, Oprema…) */
-.subhead { display:block; font-size:14px; font-weight:500; color:var(--muted-foreground); }
+.subhead { display:block; font-size:.875rem; font-weight:500; letter-spacing:.01em; color:var(--muted-foreground); }
+.small-print { font-size:.8125rem; letter-spacing:.012em; }
+
+/* Press feedback lives on pointer-down and is instant */
+.press { transition:transform 100ms ease-out; }
+.press:active { transform:scale(.97); }
+.zoom-on-hover { transition:transform 500ms cubic-bezier(.2,.7,.2,1); }
 
 /* Buttons: yellow primary with dark text, chalk outline secondary, near-square corners */
-.btn { display:inline-flex; align-items:center; justify-content:center; gap:.6rem; min-height:52px; padding:0 1.6rem; border-radius:2px; font-size:1rem; font-weight:600; line-height:1.2; transition:background-color .2s, border-color .2s, color .2s; }
+.btn { display:inline-flex; align-items:center; justify-content:center; gap:.6rem; min-height:3.25rem; padding:0 1.6rem; border-radius:2px; font-size:1rem; font-weight:600; line-height:1.2; -webkit-tap-highlight-color:transparent; touch-action:manipulation; transition:background-color .2s, border-color .2s, color .2s, transform 100ms ease-out; }
 .btn:focus-visible { outline:2px solid var(--foreground); outline-offset:3px; }
-.btn:active { transform:translateY(1px); }
+.btn:active { transform:scale(.97); }
 .btn-primary { background:var(--brand); color:#141517; }
 .btn-primary:hover { background:var(--brand-bright); }
 .btn-secondary { border:1.5px solid var(--foreground); color:var(--foreground); }
